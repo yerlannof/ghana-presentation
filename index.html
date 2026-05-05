@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghana Au — Технический анализ портфеля · Май 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F7F5F0; --bg-card:#FFFFFF; --line:#E0DCD2; --line-soft:#EBE7DD;
+  --ink:#14110D; --ink-2:#3A352E; --ink-mute:#6B645A;
+  --accent:#1F4D3D; --accent-2:#2C6B55; --accent-light:#E8EFEB;
+  --gold:#A07B2A; --gold-light:#F5EDD5;
+  --warn:#B33C2D; --warn-bg:#F9EDEB; --good:#4A7A4A;
+  --tier-a-bg:#EAF4EA; --tier-a:#2D6A2D;
+  --tier-b-bg:#EEF3FA; --tier-b:#2B4E8C;
+  --tier-c-bg:#FFF3E0; --tier-c:#A05A00;
+  --tier-t-bg:#F5F0FA; --tier-t:#6B4A8A;
+  --tier-e-bg:#F5F5F5; --tier-e:#666666;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;}
+
+/* Topbar */
+.topbar{position:sticky;top:0;z-index:100;background:var(--ink);color:#fff;padding:10px 40px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.topbar-brand{display:flex;align-items:center;gap:12px;}
+.topbar-seal{width:30px;height:30px;border:1.5px solid rgba(255,255,255,0.7);border-radius:50%;display:grid;place-items:center;font-family:'Source Serif 4',serif;font-size:14px;font-weight:600;}
+.topbar-title{font-size:13px;font-weight:600;letter-spacing:0.02em;}
+.topbar-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.55);}
+.slide-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.nav-dot{width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;display:grid;place-items:center;text-decoration:none;transition:all 0.2s;}
+.nav-dot:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.7);color:#fff;}
+
+/* Layout */
+.container{max-width:1180px;margin:0 auto;padding:0 40px;}
+section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60px;}
+.slide-label{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-light);padding:5px 12px;border-radius:20px;margin-bottom:20px;text-transform:uppercase;letter-spacing:0.08em;}
+.slide-title{font-family:'Source Serif 4',serif;font-size:clamp(26px,3.5vw,40px);font-weight:600;line-height:1.15;color:var(--ink);margin-bottom:12px;}
+.slide-subtitle{font-size:17px;color:var(--ink-mute);max-width:720px;line-height:1.6;margin-bottom:40px;}
+
+/* Tooltip term */
+.term{border-bottom:1px dashed var(--accent);cursor:help;color:var(--accent-2);}
+
+/* Hero cards */
+.hero-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:32px;}
+.hero-card{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:24px 20px;text-align:center;}
+.hero-number{font-family:'Source Serif 4',serif;font-size:48px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:8px;}
+.hero-unit{font-size:13px;color:var(--ink-mute);line-height:1.4;}
+.hero-explain{font-size:11px;color:var(--accent-2);margin-top:8px;line-height:1.4;font-style:italic;}
+
+/* Callout */
+.callout{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 20px;font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:24px;}
+.callout strong{color:var(--accent);}
+.callout-warn{background:var(--warn-bg);border-left-color:var(--warn);}
+.callout-warn strong{color:var(--warn);}
+.callout-gold{background:var(--gold-light);border-left-color:var(--gold);}
+.callout-gold strong{color:var(--gold);}
+
+/* Ranking table */
+.rank-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px;background:var(--bg-card);border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+.rank-table th{background:var(--ink);color:rgba(255,255,255,0.85);padding:12px 16px;text-align:left;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;word-wrap:break-word;overflow-wrap:break-word;}
+.rank-table td{padding:14px 16px;border-bottom:1px solid var(--line-soft);vertical-align:middle;word-wrap:break-word;overflow-wrap:break-word;}
+.rank-table tr:last-child td{border-bottom:none;}
+.rank-table tr:hover td{background:var(--bg);}
+.rank-num{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--accent);}
+.concession-name{font-weight:600;color:var(--ink);}
+.concession-sub{font-size:12px;color:var(--ink-mute);}
+
+.tier-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.04em;}
+.tier-a{background:var(--tier-a-bg);color:var(--tier-a);}
+.tier-b{background:var(--tier-b-bg);color:var(--tier-b);}
+.tier-c{background:var(--tier-c-bg);color:var(--tier-c);}
+.tier-t{background:var(--tier-t-bg);color:var(--tier-t);}
+.tier-e{background:var(--tier-e-bg);color:var(--tier-e);}
+.tier-new{background:#FEF3C7;color:#92400E;}
+
+.score-bar-wrap{display:flex;align-items:center;gap:8px;}
+.score-bar{flex:1;height:6px;background:var(--line-soft);border-radius:3px;overflow:hidden;}
+.score-fill{height:100%;border-radius:3px;background:var(--accent);}
+.score-val{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--ink-2);min-width:36px;}
+
+/* Score tooltip row */
+.score-col-header{display:flex;align-items:center;gap:6px;}
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;font-weight:700;cursor:help;flex-shrink:0;}
+
+/* Grade charts */
+.grade-chart-wrap{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:24px;}
+.grade-chart-wrap img{width:100%;display:block;}
+.chart-caption{padding:16px 20px;border-top:1px solid var(--line-soft);background:var(--bg);}
+.chart-caption p{font-size:14px;color:var(--ink-2);line-height:1.6;margin-bottom:6px;}
+.chart-caption p:last-child{margin-bottom:0;}
+
+/* Map */
+.map-wrap{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:24px;}
+.map-wrap img{width:100%;display:block;}
+.map-legend{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:20px;border-top:1px solid var(--line-soft);}
+.legend-cluster{background:var(--bg);border-radius:8px;padding:14px 16px;}
+.legend-cluster h4{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:6px;}
+.legend-cluster p{font-size:13px;color:var(--ink-2);line-height:1.5;}
+
+/* Per-concession */
+.concession-header{background:var(--accent);color:#fff;padding:28px 32px;border-radius:12px 12px 0 0;}
+.concession-rank-line{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:6px;}
+.concession-title-main{font-family:'Source Serif 4',serif;font-size:28px;font-weight:600;margin-bottom:10px;}
+.concession-meta-row{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,0.75);}
+.concession-meta-item strong{color:#fff;}
+.concession-body{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--line);border-top:none;border-radius:0 0 12px 12px;overflow:hidden;}
+.concession-images{border-right:1px solid var(--line-soft);padding:20px;display:flex;flex-direction:column;gap:16px;}
+.concession-img-block img{width:100%;border-radius:8px;border:1px solid var(--line-soft);display:block;}
+.concession-img-block figcaption{font-size:12px;color:var(--ink-mute);margin-top:6px;font-family:'JetBrains Mono',monospace;}
+.concession-text{padding:24px;}
+.info-section{margin-bottom:20px;}
+.info-section h4{font-size:11px;font-weight:700;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line-soft);}
+.info-row{display:flex;gap:8px;font-size:13px;padding:4px 0;border-bottom:1px solid var(--line-soft);}
+.info-row:last-child{border-bottom:none;}
+.info-label{color:var(--ink-mute);min-width:170px;flex-shrink:0;}
+.info-value{color:var(--ink-2);font-weight:500;}
+.info-value.highlight{color:var(--accent);font-weight:700;}
+.info-value.warn{color:var(--warn);font-weight:700;}
+.info-value.gold{color:var(--gold);font-weight:700;}
+.next-steps{background:var(--accent-light);border-radius:8px;padding:14px 16px;margin-top:16px;}
+.next-steps h4{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+.next-steps ul{padding-left:16px;font-size:13px;color:var(--ink-2);line-height:1.6;}
+.next-steps li{margin-bottom:4px;}
+
+/* Valuation */
+.val-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:20px;}
+.val-card{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.val-card-header{background:var(--ink);color:#fff;padding:16px 20px 14px;}
+.val-card-title{font-size:16px;font-weight:700;margin-bottom:4px;}
+.val-card-meta{font-size:12px;color:rgba(255,255,255,0.55);}
+.val-scenarios{display:grid;grid-template-columns:1fr 1fr 1fr;}
+@media (max-width: 600px) {
+  .val-scenarios{grid-template-columns:1fr;}
+}
+.val-scenario{padding:16px 12px;text-align:center;border-right:1px solid var(--line-soft);}
+.val-scenario:last-child{border-right:none;}
+.val-sc-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;}
+.val-sc-amount{font-size:18px;font-weight:800;line-height:1.1;margin-bottom:4px;}
+.val-sc-note{font-size:10px;color:var(--ink-mute);line-height:1.3;}
+.optimistic{background:#F0FDF4;} .optimistic .val-sc-label{color:#15803D;} .optimistic .val-sc-amount{color:#16A34A;}
+.realistic{background:#FFFBEB;} .realistic .val-sc-label{color:#92400E;} .realistic .val-sc-amount{color:#B45309;}
+.pessimistic{background:#FEF2F2;} .pessimistic .val-sc-label{color:#991B1B;} .pessimistic .val-sc-amount{color:#DC2626;}
+.val-ask-row{background:#FFF7ED;border-top:1px solid #FED7AA;padding:10px 16px;font-size:13px;}
+.val-ask-row strong{color:#C2410C;}
+
+/* Roadmap */
+.roadmap-tiers{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.roadmap-tier{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.roadmap-tier-header{padding:14px 20px;font-weight:700;font-size:14px;}
+.roadmap-tier-body{padding:16px 20px;font-size:14px;color:var(--ink-2);line-height:1.6;}
+.roadmap-tier-body ul{padding-left:16px;}
+.roadmap-tier-body li{margin-bottom:5px;}
+.budget-line{display:flex;gap:8px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--accent);padding-top:12px;border-top:1px solid var(--line-soft);margin-top:12px;}
+
+/* Neighbors */
+.neighbors-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.neighbor-card{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:20px;}
+.neighbor-name{font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.neighbor-lic{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-mute);margin-bottom:12px;}
+.neighbor-why{font-size:14px;color:var(--ink-2);line-height:1.6;margin-bottom:12px;}
+.neighbor-action{font-size:13px;font-weight:600;color:var(--accent);padding:8px 12px;background:var(--accent-light);border-radius:6px;}
+
+/* Pemeso */
+.pemeso-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.pemeso-img img{width:100%;border-radius:8px;border:1px solid var(--line);}
+
+/* Short card */
+.short-card{background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:28px 32px;max-width:700px;}
+.short-card h3{font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;margin-bottom:12px;}
+.short-card p{font-size:15px;color:var(--ink-2);line-height:1.65;margin-bottom:10px;}
+
+/* Glossary panel */
+.glossary-toggle{position:fixed;bottom:24px;right:24px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;}
+.glossary-panel{position:fixed;bottom:80px;right:24px;z-index:199;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;width:360px;max-height:60vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.15);display:none;}
+.glossary-panel.open{display:block;}
+.glossary-panel h3{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em;}
+.glossary-panel table{width:100%;border-collapse:collapse;font-size:12px;}
+.glossary-panel td{padding:5px 8px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+.glossary-panel tr:last-child td{border-bottom:none;}
+.glossary-panel td:first-child{color:var(--ink-mute);font-weight:600;white-space:nowrap;padding-right:12px;}
+.glossary-panel td:last-child{color:var(--ink-2);}
+
+/* Responsive */
+@media(max-width:800px){
+  .container{padding:0 20px;}
+  .topbar{padding:10px 20px;}
+  .concession-body{grid-template-columns:1fr;}
+  .concession-images{border-right:none;border-bottom:1px solid var(--line-soft);}
+  .val-grid{grid-template-columns:1fr;}
+  .roadmap-tiers{grid-template-columns:1fr;}
+  .neighbors-grid{grid-template-columns:1fr;}
+  .pemeso-grid{grid-template-columns:1fr;}
+  .map-legend{grid-template-columns:1fr;}
+  section{padding:48px 0;}
+  .glossary-panel{width:calc(100vw - 48px);right:24px;}
+}
+@media(min-width:1280px){
+  .val-grid{grid-template-columns:repeat(3,1fr);}
+}
+
+/* ============ PDF PRINT STYLES ============ */
+@media print, screen and (max-width: 950px) {
+  /* Ranking table — make it fit A4 width */
+  .rank-table {
+    font-size: 10pt !important;
+    table-layout: fixed;
+    width: 100%;
+  }
+  .rank-table th, .rank-table td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    padding: 8px 6px !important;
+  }
+  .rank-table th:nth-child(1) { width: 4%; }   /* # */
+  .rank-table th:nth-child(2) { width: 15%; }  /* Участок */
+  .rank-table th:nth-child(3) { width: 9%; }   /* Площадь */
+  .rank-table th:nth-child(4) { width: 14%; }  /* Доказательная база */
+  .rank-table th:nth-child(5) { width: 11%; }  /* Оценка */
+  .rank-table th:nth-child(6) { width: 23%; }  /* Сильная сторона */
+  .rank-table th:nth-child(7) { width: 24%; }  /* Слабая сторона */
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+
+/* Per-concession slides — avoid awkward page breaks */
+.concession-body {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.concession-images, .concession-text {
+  page-break-inside: avoid;
+}
+.val-card, .neighbor-card, .roadmap-tier-card {
+  page-break-inside: avoid;
+}
+
+/* Hide elements that don't print nicely */
+@media print {
+  .nav-dots, .glossary-toggle, .glossary-panel, .glossary-overlay {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+  }
+  /* Force section starts on new page */
+  section {
+    page-break-before: always;
+    break-before: page;
+  }
+  section:first-of-type {
+    page-break-before: auto;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Glossary button -->
+<button class="glossary-toggle" onclick="document.querySelector('.glossary-panel').classList.toggle('open')" title="Словарь терминов">?</button>
+<div class="glossary-panel">
+  <h3>Словарь терминов</h3>
+  <table>
+    <tr><td>Лицензионный участок</td><td>Территория с официальным разрешением на разведку или добычу (concession)</td></tr>
+    <tr><td>Официальный реестр лицензий</td><td>База данных Ghana Minerals Commission — проверяем кто владеет каждым участком (кадастр)</td></tr>
+    <tr><td>Уровень доказательной базы А</td><td>Высокий — есть ТЭО, лабораторные пробы, расчёт запасов (Tier A)</td></tr>
+    <tr><td>Уровень доказательной базы Б</td><td>Средний — есть отдельные пробы или геофизика (Tier B)</td></tr>
+    <tr><td>Уровень доказательной базы В</td><td>Низкий — только план разведки (Tier C)</td></tr>
+    <tr><td>Только лицензия</td><td>Никаких геологических данных, лишь сама лицензия (title_only)</td></tr>
+    <tr><td>Пусто</td><td>Даже карты нет — только упоминание (empty)</td></tr>
+    <tr><td>Россыпное золото</td><td>Золото в гравии в долинах рек — проще добывать (alluvial/placer)</td></tr>
+    <tr><td>Коренное золото</td><td>Золото в скале — нужно дробить породу (hard-rock)</td></tr>
+    <tr><td>Смешанное</td><td>Оба типа на одном участке (mixed)</td></tr>
+    <tr><td>ТЭО</td><td>Технико-экономическое обоснование — расчёт что добыча рентабельна (Feasibility Study)</td></tr>
+    <tr><td>Лицензия на добычу</td><td>Право добывать, не только разведывать (Mining Lease / ML)</td></tr>
+    <tr><td>Лицензия на разведку</td><td>Право только изучать — без добычи (Prospecting Licence / PL)</td></tr>
+    <tr><td>Запасы признанные банком</td><td>Подтверждённые независимым геологом по международному стандарту — банк даст кредит (bankable resource)</td></tr>
+    <tr><td>Оценочная стоимость</td><td>Расчётная ценность проекта с учётом рисков и затрат (NPV)</td></tr>
+    <tr><td>Вложения до запуска</td><td>Капиталовложения до начала добычи (CAPEX)</td></tr>
+    <tr><td>Расходы на добычу</td><td>Операционные затраты уже работающего рудника (OPEX)</td></tr>
+    <tr><td>Доказанные запасы</td><td>Высший уровень уверенности — подтверждено бурением (P&P)</td></tr>
+    <tr><td>Предполагаемые запасы</td><td>Оценочные — нужна доразведка (Inferred)</td></tr>
+    <tr><td>ппб (1 ппб = 0,001 г/т)</td><td>Миллиардная доля — единица для очень малых концентраций (ppb)</td></tr>
+    <tr><td>Анализ осадков рек</td><td>Первый этап разведки — смываем пробу из русла реки (BLEG)</td></tr>
+    <tr><td>Проба почвы</td><td>Берём грунт и проверяем на золото в лаборатории (soil sample)</td></tr>
+    <tr><td>Штуфная проба</td><td>Кусок породы с поверхности (rock chip)</td></tr>
+    <tr><td>Шурф</td><td>Вертикальная яма 1×1 м для оценки россыпи (test pit)</td></tr>
+    <tr><td>Буровая скважина</td><td>Бурим в глубину чтобы взять керн (drillhole)</td></tr>
+    <tr><td>Магнитное поле</td><td>Спутниковый сигнал — показывает железо в породах под землёй (TMI)</td></tr>
+    <tr><td>Минералогия по спутнику</td><td>Анализ типов пород без полевой работы (Crosta PCA / ASTER)</td></tr>
+    <tr><td>Разломы со спутника</td><td>Трещины и разломы видны на радарных снимках (lineament)</td></tr>
+    <tr><td>Нелегальная добыча</td><td>Мелкие кустари — признак что золото там есть (galamsey)</td></tr>
+    <tr><td>Высота над водотоком</td><td>Низкая = долина = хорошо для россыпи (HAND)</td></tr>
+    <tr><td>Канадский стандарт NI 43-101</td><td>Международный стандарт подтверждения запасов — требуют биржи и банки</td></tr>
+  </table>
+</div>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-seal">G</div>
+    <div>
+      <div class="topbar-title">Ghana Au — Технический анализ портфеля</div>
+      <div class="topbar-meta">КОНФИДЕНЦИАЛЬНО · Май 2026 · Спутниковая разведка + анализ документов</div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <a href="#s1" class="nav-dot" title="Что сделано">1</a>
+    <a href="#s2" class="nav-dot" title="Оценка">2</a>
+    <a href="#s3" class="nav-dot" title="Содержание золота">3</a>
+    <a href="#s4" class="nav-dot" title="Карта">4</a>
+    <a href="#s5" class="nav-dot" title="Amenam">5</a>
+    <a href="#s6" class="nav-dot" title="Oworam">6</a>
+    <a href="#s7" class="nav-dot" title="Akim">7</a>
+    <a href="#s8" class="nav-dot" title="Bodukwan">8</a>
+    <a href="#s9" class="nav-dot" title="MG Emmanuel">9</a>
+    <a href="#s10" class="nav-dot" title="Pemeso">10</a>
+    <a href="#s11" class="nav-dot" title="FGM">11</a>
+    <a href="#s12" class="nav-dot" title="Grey Dew">12</a>
+    <a href="#s13" class="nav-dot" title="Obomeng">13</a>
+    <a href="#s14" class="nav-dot" title="Стоимость">14</a>
+    <a href="#s15" class="nav-dot" title="Следующие шаги">15</a>
+    <a href="#s16" class="nav-dot" title="Соседи">16</a>
+  </div>
+</nav>
+
+<!-- ===== SLIDE 1 ===== -->
+<section id="s1">
+<div class="container">
+  <div class="slide-label">01 · Что было сделано</div>
+  <h1 class="slide-title">Анализ 9 золотодобывающих участков в Гане</h1>
+  <p class="slide-subtitle">Что мы сделали и какие данные за этим стоят.</p>
+
+  <div class="hero-grid">
+    <div class="hero-card">
+      <div class="hero-number">22</div>
+      <div class="hero-unit">документа от продавцов прочитано</div>
+      <div class="hero-explain">Лицензии, ТЭО, отчёты по бурению — всего 444 страницы</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-number">1296</div>
+      <div class="hero-unit">фрагментов в умном поиске</div>
+      <div class="hero-explain">Можем за секунду найти любую цифру в этих документах</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-number">500+</div>
+      <div class="hero-unit">проб почвы из участка Pemeso</div>
+      <div class="hero-explain">Анализ грунта на содержание золота — компания Newmont делала эту разведку раньше, до нас</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-number">8</div>
+      <div class="hero-unit">типов спутниковых данных</div>
+      <div class="hero-explain">Цвет, тепло, радар, магнитное поле, рельеф, гиперспектр, освоение земли</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-number">56+</div>
+      <div class="hero-unit">независимых замеров на каждом участке</div>
+      <div class="hero-explain">Каждый участок проверен с разных ракурсов</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-number">1079</div>
+      <div class="hero-unit">лицензий из официального реестра Ганы проверено</div>
+      <div class="hero-explain">Чтобы понять что вокруг нас, кто соседи, есть ли свободные блоки</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-number">6 лет</div>
+      <div class="hero-unit">наблюдений со спутника-радара</div>
+      <div class="hero-explain">С 2020 года смотрим как меняется поверхность каждого участка</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-number">49</div>
+      <div class="hero-unit">тепловых снимков ASTER</div>
+      <div class="hero-explain">Тепловые снимки показывают какие минералы под поверхностью</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 2 — RANKING ===== -->
+<section id="s2">
+<div class="container">
+  <div class="slide-label">02 · Итоговая оценка</div>
+  <h2 class="slide-title">Итоговая оценка 9 участков</h2>
+  <p class="slide-subtitle">Оценка = спутниковый сигнал × качество документов от продавцов. Чем больше данных подтверждают спутник — тем выше место.</p>
+
+  <div class="callout callout-gold" style="margin-bottom:20px;">
+    <strong>Уровни доказательной базы:</strong>
+    <span class="term" title="Высокий уровень — есть ТЭО, лабораторные пробы, расчёт запасов">А = высокий</span> (ТЭО + лаборатория) &nbsp;·&nbsp;
+    <span class="term" title="Средний уровень — есть отдельные пробы или геофизика">Б = средний</span> (отдельные пробы) &nbsp;·&nbsp;
+    <span class="term" title="Низкий уровень — только план разведки">В = низкий</span> (план разведки) &nbsp;·&nbsp;
+    <span class="term" title="Только сама лицензия — никаких геологических данных">Только лицензия</span> &nbsp;·&nbsp;
+    <span class="term" title="Даже карты нет">Пусто</span>
+  </div>
+
+  <div style="overflow-x:auto;margin-bottom:24px;">
+  <table class="rank-table">
+    <colgroup>
+      <col style="width:4%">   <!-- # -->
+      <col style="width:15%">  <!-- Участок -->
+      <col style="width:9%">   <!-- Площадь -->
+      <col style="width:14%">  <!-- Доказательная база -->
+      <col style="width:11%">  <!-- Оценка -->
+      <col style="width:23%">  <!-- Сильная сторона -->
+      <col style="width:24%">  <!-- Слабая сторона -->
+    </colgroup>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Участок</th>
+        <th>Площадь</th>
+        <th>Доказательная база</th>
+        <th>
+          <div class="score-col-header">
+            ОЦЕНКА (0–100)
+            <span class="info-icon" title="Наша собственная оценка — учитывает спутниковые сигналы (геология) и качество документов от продавцов. 100 = идеально, 50 = средне, ниже 30 = слабо">i</span>
+          </div>
+        </th>
+        <th>Сильная сторона</th>
+        <th>Слабая сторона</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rank-num">1</td>
+        <td><div class="concession-name">Amenam</div><div class="concession-sub">Birim North, Eastern Region</div></td>
+        <td>9.77 км²</td>
+        <td><span class="tier-badge tier-a" title="Высокий уровень: есть ТЭО 109 стр., 91 шурф, расчёт запасов">Уровень А — высокий</span></td>
+        <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:90%"></div></div><span class="score-val">45.3</span></div></td>
+        <td style="font-size:13px;color:#3A352E">91 шурф, ТЭО 109 стр., 84 968 унций @ 0.92 г/м³ — лучшее содержание россыпи</td>
+        <td style="font-size:13px;color:#B33C2D">Не найден в официальном реестре, тот же специалист что и Oworam</td>
+      </tr>
+      <tr>
+        <td class="rank-num">2</td>
+        <td><div class="concession-name">Oworam</div><div class="concession-sub">West Akim, Eastern Region</div></td>
+        <td>126.7 км²</td>
+        <td><span class="tier-badge tier-a" title="Высокий уровень: ТЭО 107 стр., 94 шурфа">Уровень А — высокий</span></td>
+        <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:84%"></div></div><span class="score-val">42.0</span></div></td>
+        <td style="font-size:13px;color:#3A352E">94 шурфа, ТЭО 107 стр., 127 965 унций @ 0.80 г/м³ — крупнейшие запасы</td>
+        <td style="font-size:13px;color:#B33C2D">Площадь в реестре 126 км² vs в ТЭО 32 км² — в 4 раза больше, нужно объяснение</td>
+      </tr>
+      <tr>
+        <td class="rank-num">3</td>
+        <td><div class="concession-name">Akim Apapam</div><div class="concession-sub">Abuakwa South, Eastern Region</div></td>
+        <td>8.4 км²</td>
+        <td><span class="tier-badge tier-a" title="Высокий уровень: 6 лабораторных проб, ТЭО 126 стр.">Уровень А — высокий</span></td>
+        <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:74%"></div></div><span class="score-val">37.3</span></div></td>
+        <td style="font-size:13px;color:#3A352E">6 лабораторных проб ALS Ghana, среднее <strong>8.09 г/т</strong> — уровень рудника Obuasi</td>
+        <td style="font-size:13px;color:#B33C2D">Не найден в реестре — критичный флаг</td>
+      </tr>
+      <tr>
+        <td class="rank-num">4</td>
+        <td><div class="concession-name">Bodukwan / Moseaso</div><div class="concession-sub">Amansie West, Western North Region</div></td>
+        <td>65.1 км²</td>
+        <td><span class="tier-badge tier-b" title="Средний уровень: одна лабораторная проба, геофизика">Уровень Б — средний</span></td>
+        <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:74%"></div></div><span class="score-val">37.0</span></div></td>
+        <td style="font-size:13px;color:#3A352E">Сильнейший спутниковый сигнал железа в портфеле, одна проба 18.26 г/т</td>
+        <td style="font-size:13px;color:#B33C2D">Только 1 лабораторная проба, лицензия на разведку истекает октябрь 2026</td>
+      </tr>
+      <tr>
+        <td class="rank-num">5</td>
+        <td><div class="concession-name">MG Emmanuel Afosu</div><div class="concession-sub">Birim North, Eastern Region</div></td>
+        <td>2.74 км²</td>
+        <td><span class="tier-badge tier-c" title="Низкий уровень: только план разведки, нет проб">Уровень В — низкий</span></td>
+        <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:54%"></div></div><span class="score-val">26.9</span></div></td>
+        <td style="font-size:13px;color:#3A352E">Сильный спутниковый сигнал (2-е место), подтверждён в реестре до 2028</td>
+        <td style="font-size:13px;color:#B33C2D">Нет проб, нет шурфов — только план на бумаге</td>
+      </tr>
+      <tr>
+        <td class="rank-num">6</td>
+        <td><div class="concession-name">FGM Birim North</div><div class="concession-sub">Birim North, Eastern Region</div></td>
+        <td>44.3 км²</td>
+        <td><span class="tier-badge tier-t" title="Только лицензия — никаких геологических данных">Только лицензия</span></td>
+        <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:53%"></div></div><span class="score-val">26.4</span></div></td>
+        <td style="font-size:13px;color:#3A352E">Сильнейший спутниковый сигнал изменения пород, лицензия на добычу с 2018</td>
+        <td style="font-size:13px;color:#B33C2D">Нет ни одного документа с геологическими данными</td>
+      </tr>
+      <tr>
+        <td class="rank-num">7</td>
+        <td><div class="concession-name">Obomeng</div><div class="concession-sub">Konongo, Ashanti Region</div></td>
+        <td>~25 км²</td>
+        <td><span class="tier-badge tier-e" title="Пусто — даже карты нет">Пусто — нет данных</span></td>
+        <td><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:35%;background:#999"></div></div><span class="score-val">17.4</span></div></td>
+        <td style="font-size:13px;color:#3A352E">Хорошая позиция в долине реки — потенциал для россыпи</td>
+        <td style="font-size:13px;color:#B33C2D">Только скриншот карты из мессенджера, нет координат, нет реестра</td>
+      </tr>
+      <tr style="background:#FFF9E6;">
+        <td class="rank-num" style="color:#A07B2A">—</td>
+        <td><div class="concession-name">Pemeso (Aspire Resources)</div><div class="concession-sub">Wassa West — НОВЫЙ УЧАСТОК</div></td>
+        <td>65 км²</td>
+        <td><span class="tier-badge tier-new">НОВЫЙ · Уровень Б</span></td>
+        <td style="font-size:13px;color:#6B645A">Неполный анализ</td>
+        <td style="font-size:13px;color:#3A352E">500+ проб почвы (Newmont исследовал), рядом Tarkwa / Bogoso</td>
+        <td style="font-size:13px;color:#B33C2D">Не найден в реестре 2026 — юридический статус надо уточнить</td>
+      </tr>
+      <tr style="background:#FFF9E6;">
+        <td class="rank-num" style="color:#A07B2A">—</td>
+        <td><div class="concession-name">Grey Dew Limited</div><div class="concession-sub">Prestea Huni Valley — НОВЫЙ УЧАСТОК</div></td>
+        <td>14 км²</td>
+        <td><span class="tier-badge tier-new">НОВЫЙ · Только лицензия</span></td>
+        <td style="font-size:13px;color:#6B645A">Неполный анализ</td>
+        <td style="font-size:13px;color:#3A352E">Хороший район (пояс Prestea–Bogoso)</td>
+        <td style="font-size:13px;color:#B33C2D">Только план землеотвода, нет геологических данных, не в реестре</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout callout-gold">
+    <strong>Методология оценки:</strong> Итоговый балл = спутниковый композитный сигнал × коэффициент уверенности (Уровень А = 1.0, Б = 0.8, В = 0.65, только лицензия = 0.55, пусто = 0.50). Таким образом сильный спутниковый сигнал без документов не завышает итоговый ранг.
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 3 — GRADES ===== -->
+<section id="s3">
+<div class="container">
+  <div class="slide-label">03 · Содержание золота</div>
+  <h2 class="slide-title">Где мы на фоне Ганы</h2>
+  <p class="slide-subtitle">Сравнение содержания золота с действующими рудниками страны.</p>
+
+  <div class="grade-chart-wrap">
+    <img src="png_previews/grades_hardrock_comparison_v2.png" alt="Содержание золота в породе: наши участки vs рудники Ганы">
+    <div class="chart-caption">
+      <p><strong>Akim Apapam (8.09 г/т)</strong> — на уровне рудника Obuasi (7–10 г/т), в 4–5 раз выше чем Tarkwa и Akyem. Это первоклассное содержание по мировым стандартам. Получено по 6 пробам из лаборатории ALS Ghana.</p>
+      <p><strong>Bodukwan, проба из канавы 18.26 г/т</strong> — выше любого действующего рудника Ганы. Это одна проба — требует повторного подтверждения. Но геология района (твёрдые породы с кварцевыми жилами) делает этот результат реальным.</p>
+    </div>
+  </div>
+
+  <div class="grade-chart-wrap">
+    <img src="png_previews/grades_alluvial_comparison_v2.png" alt="Содержание россыпного золота">
+    <div class="chart-caption">
+      <p><strong>Россыпные запасы Amenam (0.92 г/м³)</strong> и <strong>Oworam (0.80 г/м³)</strong> — выше типичной границы окупаемости (0.3 г/м³) более чем вдвое. Запасы задокументированы 91 и 94 шурфами соответственно.</p>
+      <p>Большинство коммерческих россыпных операций в Западной Африке работают при 0.4–0.6 г/м³. Наши участки имеют двойной запас прочности.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 4 — MAP ===== -->
+<section id="s4">
+<div class="container">
+  <div class="slide-label">04 · Карта Ганы</div>
+  <h2 class="slide-title">Расположение 9 наших участков и действующих рудников Ганы</h2>
+  <p class="slide-subtitle">Два географических кластера с разным профилем и разными соседями.</p>
+
+  <div class="map-wrap">
+    <img src="png_previews/master_map_v4.png" alt="Карта Ганы — 9 участков и действующие рудники">
+    <div class="map-legend">
+      <div class="legend-cluster">
+        <h4>Восточный кластер (регион Eastern)</h4>
+        <p><strong>FGM + Amenam + MG Emmanuel + Akim Apapam + Oworam + Obomeng</strong> — 6 участков. Золотоносный пояс Birim. Newmont (5 лицензий, ~190 км²) окружает этот кластер кольцом — потенциальный стратегический покупатель при выходе из проекта.</p>
+      </div>
+      <div class="legend-cluster">
+        <h4>Западный кластер (пояс Prestea–Bogoso)</h4>
+        <p><strong>Bodukwan + Pemeso + Grey Dew</strong> — 3 участка. Один из исторически богатейших золотых поясов Ганы (Bogoso, Tarkwa, Damang — все в 15–30 км). Pure Caratage (жёлтый пунктир, 140 км²) — срок лицензии истёк в 2023, статус требует проверки.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 5 — AMENAM ===== -->
+<section id="s5">
+<div class="container">
+  <div class="slide-label">05 · Участок №1 по оценке</div>
+  <h2 class="slide-title" style="margin-bottom:24px;">Amenam</h2>
+
+  <div class="concession-header">
+    <div class="concession-rank-line">Ранг #1 · Оценка 45.3 · Уровень А · Уверенность 100%</div>
+    <div class="concession-title-main">Amenam — россыпное золото</div>
+    <div class="concession-meta-row">
+      <span>Лицензия: <strong>на рассмотрении</strong></span>
+      <span>Площадь: <strong>9.77 км²</strong></span>
+      <span>Район: <strong>Birim North, Eastern Region</strong></span>
+      <span>Оператор: <strong>Ignite Machinery Rentals &amp; Mining Ltd</strong></span>
+    </div>
+  </div>
+
+  <div class="concession-body">
+    <div class="concession-images">
+      <figure class="concession-img-block">
+        <img src="png_previews/amenam_signals.png" alt="Amenam — спутниковые сигналы">
+        <figcaption>Спутниковые сигналы (оптика / радар / тепло / рельеф)</figcaption>
+      </figure>
+      <figure class="concession-img-block">
+        <img src="png_previews/amenam_dem3d.png" alt="Amenam — 3D рельеф">
+        <figcaption>3D рельеф — цветовая шкала: высота над уровнем воды</figcaption>
+      </figure>
+    </div>
+    <div class="concession-text">
+      <div class="info-section">
+        <h4>Что в документах</h4>
+        <div class="info-row"><span class="info-label">Шурфы (ямы 1×1 м)</span><span class="info-value highlight">91 шурф по сетке AMPIT</span></div>
+        <div class="info-row"><span class="info-label">ТЭО</span><span class="info-value highlight">109 страниц</span></div>
+        <div class="info-row"><span class="info-label">Доказанные запасы</span><span class="info-value highlight">84 968 унций @ 0.92 г/м³</span></div>
+        <div class="info-row"><span class="info-label">Объём россыпи</span><span class="info-value">2 872 558 м³</span></div>
+        <div class="info-row"><span class="info-label">Независимый геолог</span><span class="info-value">Zaid Tetteh-Yemoh (рег. 584)</span></div>
+        <div class="info-row"><span class="info-label">Официальный реестр</span><span class="info-value warn">Не найден — требует сверки</span></div>
+      </div>
+      <div class="info-section">
+        <h4>Спутниковые сигналы</h4>
+        <div class="info-row"><span class="info-label">Оценка по спутнику</span><span class="info-value highlight">45.3 (#3 в портфеле)</span></div>
+        <div class="info-row"><span class="info-label">Спектральная проспективность</span><span class="info-value highlight">0.251 — сильный сигнал</span></div>
+        <div class="info-row"><span class="info-label">Минералогия (кварц / карбонат)</span><span class="info-value">1.013 / 0.947</span></div>
+        <div class="info-row"><span class="info-label">Высота над водотоком</span><span class="info-value highlight">3.72 м — россыпная позиция</span></div>
+        <div class="info-row"><span class="info-label">Магнитное поле</span><span class="info-value">−9.26 нТл</span></div>
+        <div class="info-row"><span class="info-label">Поверхностные нарушения</span><span class="info-value">3.95% площади</span></div>
+      </div>
+      <div class="info-section">
+        <h4>Тип месторождения</h4>
+        <div class="info-row"><span class="info-label">Классификация</span><span class="info-value">Россыпное золото — малый уклон (3.83°), низкая позиция в долине</span></div>
+        <div class="info-row"><span class="info-label">Геологический пояс</span><span class="info-value">Birim Supracrustals</span></div>
+        <div class="info-row"><span class="info-label">Потенциал коренного золота</span><span class="info-value">Предположительно ~62 тыс. унций — не оценён</span></div>
+      </div>
+      <div class="next-steps">
+        <h4>Следующий шаг для повышения уверенности</h4>
+        <ul>
+          <li>Верификация 5–7 дополнительных шурфов независимым геологом</li>
+          <li>Сверка координат с Ghana Minerals Commission (не в реестре)</li>
+          <li>Независимый геолог-рецензент (другой специалист)</li>
+          <li>Буровые скважины для оценки коренного золота под россыпью</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 6 — OWORAM ===== -->
+<section id="s6">
+<div class="container">
+  <div class="slide-label">06 · Участок №2 по оценке</div>
+  <h2 class="slide-title" style="margin-bottom:24px;">Oworam</h2>
+
+  <div class="concession-header">
+    <div class="concession-rank-line">Ранг #2 · Оценка 42.0 · Уровень А · Уверенность 100%</div>
+    <div class="concession-title-main">Oworam — крупнейшие запасы в портфеле</div>
+    <div class="concession-meta-row">
+      <span>Лицензия на разведку: <strong>PL (G)-5/819</strong></span>
+      <span>Площадь: <strong>126.7 км²</strong></span>
+      <span>Район: <strong>West Akim, Eastern Region</strong></span>
+      <span>Оператор: <strong>Ignite Machinery Rentals And Mining Ltd</strong></span>
+    </div>
+  </div>
+
+  <div class="concession-body">
+    <div class="concession-images">
+      <figure class="concession-img-block">
+        <img src="png_previews/oworam_signals.png" alt="Oworam — спутниковые сигналы">
+        <figcaption>Спутниковые сигналы (оптика / радар / тепло / рельеф)</figcaption>
+      </figure>
+      <figure class="concession-img-block">
+        <img src="png_previews/oworam_dem3d.png" alt="Oworam — 3D рельеф">
+        <figcaption>3D рельеф — разветвлённая речная система (5-й порядок)</figcaption>
+      </figure>
+    </div>
+    <div class="concession-text">
+      <div class="info-section">
+        <h4>Что в документах</h4>
+        <div class="info-row"><span class="info-label">Шурфы (ямы 1×1 м)</span><span class="info-value highlight">94 шурфа (AYENSU grid)</span></div>
+        <div class="info-row"><span class="info-label">ТЭО</span><span class="info-value highlight">107 страниц</span></div>
+        <div class="info-row"><span class="info-label">Доказанные запасы</span><span class="info-value highlight">127 965 унций @ 0.80 г/м³</span></div>
+        <div class="info-row"><span class="info-label">Объём россыпи</span><span class="info-value">4 975 128 м³ (8 км² активной зоны)</span></div>
+        <div class="info-row"><span class="info-label">Независимый геолог</span><span class="info-value">Zaid Tetteh-Yemoh (рег. 584)</span></div>
+        <div class="info-row"><span class="info-label">Официальный реестр</span><span class="info-value highlight">Подтверждён (2024–2027)</span></div>
+        <div class="info-row"><span class="info-label">Несоответствие площади</span><span class="info-value warn">126.7 км² (реестр) vs 32.6 км² (ТЭО) — нужно объяснение</span></div>
+      </div>
+      <div class="info-section">
+        <h4>Спутниковые сигналы</h4>
+        <div class="info-row"><span class="info-label">Оценка по спутнику</span><span class="info-value">42.0 (#4 в портфеле)</span></div>
+        <div class="info-row"><span class="info-label">Разломы со спутника</span><span class="info-value">0.172/км² — умеренный</span></div>
+        <div class="info-row"><span class="info-label">Сигнал железа (спутник)</span><span class="info-value">264.8 — умеренный</span></div>
+        <div class="info-row"><span class="info-label">Высота над водотоком</span><span class="info-value">3.66 м — россыпная позиция</span></div>
+        <div class="info-row"><span class="info-label">Разветвлённость речной сети</span><span class="info-value highlight">Максимальный порядок 5 — наибольший в портфеле</span></div>
+        <div class="info-row"><span class="info-label">Поверхностные нарушения</span><span class="info-value">11.7% площади</span></div>
+      </div>
+      <div class="next-steps">
+        <h4>Следующий шаг для повышения уверенности</h4>
+        <ul>
+          <li>Прояснить несоответствие 126.7 км² vs 32.6 км² — это площадь лицензии или опробования?</li>
+          <li>Независимый рецензент методологии шурфования</li>
+          <li>Геологическая съёмка коренного золота под россыпью</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 7 — AKIM APAPAM ===== -->
+<section id="s7">
+<div class="container">
+  <div class="slide-label">07 · Участок №3 по оценке</div>
+  <h2 class="slide-title" style="margin-bottom:24px;">Akim Apapam</h2>
+
+  <div class="concession-header" style="background:#1A3D60;">
+    <div class="concession-rank-line">Ранг #3 · Оценка 37.3 · Уровень А · Уверенность 94%</div>
+    <div class="concession-title-main">Akim Apapam — содержание золота на уровне рудника Obuasi</div>
+    <div class="concession-meta-row">
+      <span>Лицензия: <strong>на рассмотрении (не в реестре)</strong></span>
+      <span>Площадь: <strong>8.4 км²</strong></span>
+      <span>Район: <strong>Abuakwa South, Eastern Region</strong></span>
+      <span>Оператор: <strong>Hujak Mining Company Ltd</strong></span>
+    </div>
+  </div>
+
+  <div class="concession-body">
+    <div class="concession-images">
+      <figure class="concession-img-block">
+        <img src="png_previews/akim_apapam_signals.png" alt="Akim Apapam — спутниковые сигналы">
+        <figcaption>Сигнал железа = 295.9, разломы со спутника = 0.157/км²</figcaption>
+      </figure>
+      <figure class="concession-img-block">
+        <img src="png_previews/akim_apapam_dem3d.png" alt="Akim Apapam — 3D рельеф">
+        <figcaption>3D рельеф — крутой склон (14.35°): признак коренного золота в скале</figcaption>
+      </figure>
+    </div>
+    <div class="concession-text">
+      <div class="info-section">
+        <h4>Что в документах</h4>
+        <div class="info-row"><span class="info-label">Лабораторные пробы (ALS Ghana)</span><span class="info-value highlight">6 проб, метод огневого пробирования</span></div>
+        <div class="info-row"><span class="info-label">Среднее содержание</span><span class="info-value gold">8.09 г/т (диапазон 6.90–9.03)</span></div>
+        <div class="info-row"><span class="info-label">Шурфы (россыпь)</span><span class="info-value">135 шурфов, 42 000 унций @ 0.45 г/м³</span></div>
+        <div class="info-row"><span class="info-label">ТЭО</span><span class="info-value">126 страниц</span></div>
+        <div class="info-row"><span class="info-label">Оценка коренного золота</span><span class="info-value warn">НЕ выполнена — только поверхностные пробы</span></div>
+        <div class="info-row"><span class="info-label">Официальный реестр</span><span class="info-value warn">Не найден — критичный флаг</span></div>
+      </div>
+      <div class="info-section">
+        <h4>Спутниковые сигналы</h4>
+        <div class="info-row"><span class="info-label">Сигнал железа (спутник)</span><span class="info-value">295.9 — умеренно-сильный</span></div>
+        <div class="info-row"><span class="info-label">Разломы со спутника</span><span class="info-value">0.157/км²</span></div>
+        <div class="info-row"><span class="info-label">Средний уклон местности</span><span class="info-value highlight">14.35° — наибольший в портфеле (признак коренного золота)</span></div>
+        <div class="info-row"><span class="info-label">Высота над водотоком</span><span class="info-value">6.91 м</span></div>
+        <div class="info-row"><span class="info-label">Поверхностные нарушения</span><span class="info-value">14.4% площади</span></div>
+      </div>
+      <div class="callout callout-gold" style="margin-top:16px;margin-bottom:0;">
+        <strong>6 лабораторных проб @ 8.09 г/т</strong> — первоклассное содержание. Значительный потенциал конверсии в подтверждённые запасы при бурении. Коренное золото в скале не оценено совсем.
+      </div>
+      <div class="next-steps">
+        <h4>Следующий шаг для повышения уверенности</h4>
+        <ul>
+          <li><strong>Немедленно:</strong> сверить координаты с Minerals Commission (не в реестре)</li>
+          <li>Буровые скважины для оценки объёма коренного золота (минимум 10–15)</li>
+          <li>Независимый геолог для расчёта запасов по международному стандарту</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 8 — BODUKWAN ===== -->
+<section id="s8">
+<div class="container">
+  <div class="slide-label">08 · Участок №4 по оценке</div>
+  <h2 class="slide-title" style="margin-bottom:24px;">Bodukwan / Moseaso</h2>
+
+  <div class="concession-header" style="background:#3D2B1A;">
+    <div class="concession-rank-line">Ранг #4 · Оценка 37.0 · Уровень Б · Уверенность 80%</div>
+    <div class="concession-title-main">Bodukwan — сильнейший спутниковый сигнал железа в портфеле</div>
+    <div class="concession-meta-row">
+      <span>Лицензия на разведку: <strong>PL2/803 (истекает октябрь 2026)</strong></span>
+      <span>Площадь: <strong>65.1 км²</strong></span>
+      <span>Район: <strong>Amansie West, Western North Region</strong></span>
+      <span>Оператор: <strong>Bodukwan Holding Company Limited</strong></span>
+    </div>
+  </div>
+
+  <div class="concession-body">
+    <div class="concession-images">
+      <figure class="concession-img-block">
+        <img src="png_previews/bodukwan_moseaso_signals.png" alt="Bodukwan — спутниковые сигналы">
+        <figcaption>Сигнал железа = 368 (рекорд портфеля), индекс кварца = 1.042</figcaption>
+      </figure>
+      <figure class="concession-img-block">
+        <img src="png_previews/bodukwan_moseaso_dem3d.png" alt="Bodukwan — 3D рельеф">
+        <figcaption>3D рельеф — высота над водотоком 3.01 м (ближайшая к воде в портфеле)</figcaption>
+      </figure>
+    </div>
+    <div class="concession-text">
+      <div class="info-section">
+        <h4>Что в документах</h4>
+        <div class="info-row"><span class="info-label">Лабораторная проба из канавы</span><span class="info-value gold">1 проба: 18.26 г/т (канава 25MOCH002)</span></div>
+        <div class="info-row"><span class="info-label">Независимый геолог</span><span class="info-value">Charles Kusi-Manu MAusIMM(CP) FGhIG</span></div>
+        <div class="info-row"><span class="info-label">Тип породы</span><span class="info-value">Твёрдые сланцы с кварцевыми жилами</span></div>
+        <div class="info-row"><span class="info-label">Несоответствие площади</span><span class="info-value warn">65.07 км² (реестр) vs 33.81 км² (отчёт)</span></div>
+        <div class="info-row"><span class="info-label">Срок лицензии</span><span class="info-value warn">Истекает 19.10.2026 — продление срочно</span></div>
+      </div>
+      <div class="info-section">
+        <h4>Спутниковые сигналы</h4>
+        <div class="info-row"><span class="info-label">Сигнал железа (спутник)</span><span class="info-value highlight">368.2 — наивысшее в портфеле</span></div>
+        <div class="info-row"><span class="info-label">Индекс кварца (тепловой спутник)</span><span class="info-value highlight">1.042 — наивысшее в портфеле</span></div>
+        <div class="info-row"><span class="info-label">Разломы со спутника</span><span class="info-value">0.199/км² — 2-е место</span></div>
+        <div class="info-row"><span class="info-label">Магнитное поле</span><span class="info-value highlight">+43.07 нТл — региональная аномалия (возможен интрузив)</span></div>
+        <div class="info-row"><span class="info-label">Высота над водотоком</span><span class="info-value">3.01 м — наиболее близко к воде</span></div>
+        <div class="info-row"><span class="info-label">Поверхностные нарушения</span><span class="info-value">13.0% площади</span></div>
+      </div>
+      <div class="next-steps">
+        <h4>Следующий шаг для повышения уверенности</h4>
+        <ul>
+          <li>Расширить отбор проб из канавы до 15+ по простиранию жилы</li>
+          <li>Структурный геологический анализ для определения расположения жил</li>
+          <li><strong>Продление лицензии до октября 2026 — действовать сейчас</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 9 — MG EMMANUEL ===== -->
+<section id="s9">
+<div class="container">
+  <div class="slide-label">09 · Участок №5 по оценке</div>
+  <h2 class="slide-title" style="margin-bottom:24px;">MG Emmanuel Afosu</h2>
+
+  <div class="concession-header" style="background:#4A3A1A;">
+    <div class="concession-rank-line">Ранг #5 · Оценка 26.9 · Уровень В · Уверенность 65%</div>
+    <div class="concession-title-main">MG Emmanuel — сильный спутниковый сигнал, нет проб</div>
+    <div class="concession-meta-row">
+      <span>Лицензия на разведку: <strong>PL (G)-5/836</strong></span>
+      <span>Площадь: <strong>2.74 км²</strong></span>
+      <span>Район: <strong>Birim North, Eastern Region</strong></span>
+      <span>Оператор: <strong>MG Emmanuel Mining Limited Company</strong></span>
+    </div>
+  </div>
+
+  <div class="concession-body">
+    <div class="concession-images">
+      <figure class="concession-img-block">
+        <img src="png_previews/mg_emmanuel_afosu_signals.png" alt="MG Emmanuel — спутниковые сигналы">
+        <figcaption>Спектральная проспективность = 0.328 (2-е место в портфеле)</figcaption>
+      </figure>
+      <figure class="concession-img-block">
+        <img src="png_previews/mg_emmanuel_afosu_dem3d.png" alt="MG Emmanuel — 3D рельеф">
+        <figcaption>Малая площадь (2.74 км²), высота над водотоком 3.38 м</figcaption>
+      </figure>
+    </div>
+    <div class="concession-text">
+      <div class="info-section">
+        <h4>Что в документах</h4>
+        <div class="info-row"><span class="info-label">Лабораторные пробы / шурфы</span><span class="info-value warn">0 / 0 — только рабочая программа</span></div>
+        <div class="info-row"><span class="info-label">План разведки (год 1–2)</span><span class="info-value">220 проб почвы + 200 м траншей</span></div>
+        <div class="info-row"><span class="info-label">План разведки (год 3)</span><span class="info-value">1000 м бурения</span></div>
+        <div class="info-row"><span class="info-label">Официальный реестр</span><span class="info-value highlight">Подтверждён (2025–2028)</span></div>
+      </div>
+      <div class="info-section">
+        <h4>Спутниковые сигналы</h4>
+        <div class="info-row"><span class="info-label">Спектральная проспективность</span><span class="info-value highlight">0.328 — 2-е место в портфеле</span></div>
+        <div class="info-row"><span class="info-label">Сигнал железа (спутник)</span><span class="info-value">204.6 — умеренный</span></div>
+        <div class="info-row"><span class="info-label">Высота над водотоком</span><span class="info-value">3.38 м — россыпная позиция</span></div>
+        <div class="info-row"><span class="info-label">Плотность речной сети</span><span class="info-value">0.407/км² — высокая</span></div>
+        <div class="info-row"><span class="info-label">Поверхностные нарушения</span><span class="info-value">5.7% площади</span></div>
+      </div>
+      <div class="next-steps">
+        <h4>Следующий шаг для повышения уверенности</h4>
+        <ul>
+          <li>Запросить у оператора отчёт о выполнении плана разведки</li>
+          <li>Если пробы почвы за год 1 не взяты — задать вопрос оператору</li>
+          <li>Сильный спутниковый сигнал заслуживает геохимической проверки</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 10 — PEMESO ===== -->
+<section id="s10">
+<div class="container">
+  <div class="slide-label">10 · Новый участок</div>
+  <h2 class="slide-title">Pemeso — новый участок</h2>
+  <p class="slide-subtitle">Aspire Resources Limited · 65 км² · Wassa West · Ранее изучался компанией Newmont</p>
+
+  <div class="callout callout-gold">
+    <strong>Потенциально сильнейшее добавление к портфелю</strong> по техническим данным: Newmont провёл анализ осадков рек, пробы почвы, магнитную и гравитационную съёмку — 500+ проб. Район — пояс Prestea–Bogoso, в 15 км от Bogoso и рядом с Tarkwa, Damang.
+  </div>
+
+  <div class="pemeso-grid">
+    <div>
+      <div style="background:var(--bg-card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:20px;">
+        <img src="png_previews/pemeso_aspire_dem3d.png" alt="Pemeso — 3D рельеф" style="width:100%;display:block;">
+        <div style="padding:14px 16px;font-size:13px;color:var(--ink-mute);border-top:1px solid var(--line-soft);">
+          3D рельеф Pemeso (Wassa West) — геоморфология совместима с россыпным и коренным потенциалом
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="info-section">
+        <h4>Параметры участка</h4>
+        <div class="info-row"><span class="info-label">Оператор</span><span class="info-value">Aspire Resources Limited</span></div>
+        <div class="info-row"><span class="info-label">Предыдущий оператор</span><span class="info-value highlight">Eastern Mining (+ соглашение с Newmont)</span></div>
+        <div class="info-row"><span class="info-label">Площадь</span><span class="info-value">65 км²</span></div>
+        <div class="info-row"><span class="info-label">Район</span><span class="info-value">Wassa West District</span></div>
+        <div class="info-row"><span class="info-label">До Bogoso</span><span class="info-value">~15 км</span></div>
+        <div class="info-row"><span class="info-label">Соседи</span><span class="info-value">Tarkwa, Damang, Wassa Mine</span></div>
+      </div>
+      <div class="info-section">
+        <h4>Геологические данные Newmont</h4>
+        <div class="info-row"><span class="info-label">Пробы почвы</span><span class="info-value highlight">500+ проб — анализ грунта на Au</span></div>
+        <div class="info-row"><span class="info-label">Пик содержания Au</span><span class="info-value gold">1.2 г/т Au в почве</span></div>
+        <div class="info-row"><span class="info-label">Виды съёмки</span><span class="info-value">Пробы из рек, почвы, магнитная, гравитационная</span></div>
+        <div class="info-row"><span class="info-label">Статус Newmont</span><span class="info-value">Вышли из соглашения — данные остались</span></div>
+      </div>
+      <div class="callout callout-warn">
+        <strong>Важная оговорка:</strong> Pemeso не найдена в официальном реестре Ghana Minerals Commission (снимок 04.05.2026). <strong>Юридический статус необходимо проверить до любых финансовых договорённостей.</strong>
+      </div>
+      <div class="next-steps">
+        <h4>Следующий шаг</h4>
+        <ul>
+          <li>Запрос статуса в Ghana Minerals Commission</li>
+          <li>Получить полный отчёт Newmont (интерпретация проб, магнитные профили)</li>
+          <li>Полный спутниковый анализ как для базовых 7 участков</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 11 — FGM ===== -->
+<section id="s11">
+<div class="container">
+  <div class="slide-label">11 · Участок №6 по оценке</div>
+  <h2 class="slide-title" style="margin-bottom:24px;">FGM Birim North</h2>
+
+  <div class="concession-header" style="background:#2D1A4A;">
+    <div class="concession-rank-line">Ранг #6 · Оценка 26.4 · Только лицензия · Уверенность 55%</div>
+    <div class="concession-title-main">FGM — сильнейший спутниковый сигнал, нет документов</div>
+    <div class="concession-meta-row">
+      <span>Лицензия на добычу: <strong>PL5/152L (2018–2031, действующая)</strong></span>
+      <span>Площадь: <strong>44.3 км²</strong></span>
+      <span>Район: <strong>Birim North, Eastern Region</strong></span>
+      <span>Оператор: <strong>FGM Resources Ghana Limited</strong></span>
+    </div>
+  </div>
+
+  <div class="concession-body">
+    <div class="concession-images">
+      <figure class="concession-img-block">
+        <img src="png_previews/fgm_birim_north_signals.png" alt="FGM — спутниковые сигналы">
+        <figcaption>Сигнал изменения пород = 53.1 (рекорд портфеля) — без документального подтверждения</figcaption>
+      </figure>
+      <figure class="concession-img-block">
+        <img src="png_previews/fgm_birim_north_dem3d.png" alt="FGM — 3D рельеф">
+        <figcaption>Высота над водотоком 4.69 м, уклон 4.55° — умеренный рельеф</figcaption>
+      </figure>
+    </div>
+    <div class="concession-text">
+      <div class="info-section">
+        <h4>Что в документах</h4>
+        <div class="info-row"><span class="info-label">ТЭО / геологический отчёт</span><span class="info-value warn">НЕТ в архиве</span></div>
+        <div class="info-row"><span class="info-label">Лабораторные пробы</span><span class="info-value warn">0</span></div>
+        <div class="info-row"><span class="info-label">Шурфы</span><span class="info-value warn">0</span></div>
+        <div class="info-row"><span class="info-label">Лицензия на добычу</span><span class="info-value highlight">2018–2031 (действующая)</span></div>
+        <div class="info-row"><span class="info-label">Несоответствие площади</span><span class="info-value warn">44.32 км² (реестр) vs 13.23 км² (в ссылке)</span></div>
+      </div>
+      <div class="info-section">
+        <h4>Спутниковые сигналы</h4>
+        <div class="info-row"><span class="info-label">Оценка по спутнику</span><span class="info-value highlight">47.9 — №1 по спутнику в портфеле</span></div>
+        <div class="info-row"><span class="info-label">Сигнал изменения пород</span><span class="info-value highlight">53.14 — наивысшее в портфеле</span></div>
+        <div class="info-row"><span class="info-label">Индекс железа</span><span class="info-value">1.059</span></div>
+        <div class="info-row"><span class="info-label">Индекс кварца / карбонатов</span><span class="info-value">1.021 / 0.956</span></div>
+        <div class="info-row"><span class="info-label">Поверхностные нарушения</span><span class="info-value">3.95% площади (179 га)</span></div>
+      </div>
+      <div class="callout callout-warn" style="margin-top:16px;margin-bottom:0;">
+        <strong>Главный парадокс FGM:</strong> лучший спутниковый сигнал в портфеле при полном отсутствии документации. 8 лет с лицензией на добычу должны были породить производственные отчёты — они должны быть в Minerals Commission. <strong>Документы — единственный путь к переоценке этого актива.</strong>
+      </div>
+      <div class="next-steps">
+        <h4>Следующий шаг для повышения уверенности</h4>
+        <ul>
+          <li>Запросить геологический отчёт и производственные данные у FGM Resources Ghana Ltd</li>
+          <li>8 лет лицензии → данные должны быть в Minerals Commission</li>
+          <li>Полевой осмотр для понимания текущего статуса операций</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 12 — GREY DEW ===== -->
+<section id="s12">
+<div class="container">
+  <div class="slide-label">12 · Новый участок</div>
+  <h2 class="slide-title">Grey Dew Limited Company</h2>
+
+  <div class="short-card">
+    <h3>Grey Dew — 14 км², Prestea Huni Valley</h3>
+    <p><strong>Уровень данных: только лицензия</strong> — в архиве только план землеотвода. Никаких геологических данных: ни лабораторных проб, ни шурфов, ни рабочей программы.</p>
+    <p><strong>Официальный реестр:</strong> не найден в Ghana Minerals Commission (снимок 04.05.2026). Лицензия либо в стадии оформления, либо не была зарегистрирована.</p>
+    <p><strong>Район:</strong> Prestea Huni Valley — хороший геологический пояс (Prestea–Bogoso), рядом с действующим рудником Blue Gold Bogoso Prestea (лицензия на добычу до 2040). Потенциально привлекательная локация.</p>
+    <p><strong>Соседство:</strong> граничит с лицензией иностранной компании SDIM (до 2027) — возможное пересечение границ требует проверки по координатам.</p>
+    <div class="next-steps" style="margin-top:0;">
+      <h4>Следующий шаг</h4>
+      <ul>
+        <li>Проверить статус регистрации в Minerals Commission</li>
+        <li>Запросить точные координаты границ для проверки пересечений</li>
+        <li>До получения геологического отчёта или плана разведки — технический анализ преждевременен</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 13 — OBOMENG ===== -->
+<section id="s13">
+<div class="container">
+  <div class="slide-label">13 · Участок №7 по оценке</div>
+  <h2 class="slide-title">Obomeng</h2>
+
+  <div class="short-card">
+    <h3>Obomeng — ~25 км², Konongo, Ashanti Region</h3>
+    <p><strong>Уровень данных: нулевой.</strong> В архиве — один скриншот карты из мессенджера. Ни точных координат, ни номера лицензии, ни названия оператора. Не найден в официальном реестре Ghana Minerals Commission.</p>
+    <p><strong>Спутниковый анализ</strong> выполнен на приблизительных координатах центроида (~район Konongo). Все результаты условны. Оценка 17.4 — наименьшая в портфеле.</p>
+    <p><strong>Потенциал россыпи</strong> по рельефу умеренный (высота над водотоком 5.4 м). Никаких лабораторных проб, никаких шурфов.</p>
+    <div class="next-steps" style="margin-top:0;">
+      <h4>Что нужно сделать перед любыми решениями</h4>
+      <ul>
+        <li>Получить точные координаты границ от держателя</li>
+        <li>Установить номер лицензии и название оператора</li>
+        <li>Базовая полевая поездка (1 день) перед любыми дальнейшими вложениями в анализ</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 14 — VALUATION ===== -->
+<section id="s14">
+<div class="container">
+  <div class="slide-label">14 · Оценка стоимости активов</div>
+  <h2 class="slide-title">Оценка стоимости активов</h2>
+  <p class="slide-subtitle">Три сценария для 6 участков с задокументированными данными. Допущения: золото $2 050/унц., извлечение 82%, ставка дисконтирования 15%, вложения до запуска $30 млн (россыпь) / $80 млн (коренное).</p>
+
+  <div class="callout callout-warn" style="margin-bottom:28px;">
+    <strong>Важное ограничение:</strong> ни один актив не имеет запасов, признанных банком по международному стандарту. Все цифры — исторические оценки из ТЭО, не проверенные независимым геологом. Оценка носит иллюстративный характер. Для инвестиционного решения требуется независимый технический аудит.
+  </div>
+
+  <div class="val-grid">
+
+    <div class="val-card">
+      <div class="val-card-header">
+        <div class="val-card-title">#1 Amenam</div>
+        <div class="val-card-meta">Уровень А · Россыпное · 84 968 унций @ 0.92 г/м³ · 91 шурф · ТЭО 109 стр.</div>
+      </div>
+      <div class="val-scenarios">
+        <div class="val-scenario optimistic">
+          <div class="val-sc-label">Оптимистичный</div>
+          <div class="val-sc-amount">$130–175M</div>
+          <div class="val-sc-note">Все данные подтверждаются, доразведка успешна</div>
+        </div>
+        <div class="val-scenario realistic">
+          <div class="val-sc-label">Реалистичный</div>
+          <div class="val-sc-amount">$42–62M</div>
+          <div class="val-sc-note">С учётом 70% вероятности успеха, 15% ставки, минус $30 млн вложений</div>
+        </div>
+        <div class="val-scenario pessimistic">
+          <div class="val-sc-label">Пессимистичный</div>
+          <div class="val-sc-amount">$12–22M</div>
+          <div class="val-sc-note">Содержание при бурении вдвое ниже отчётного</div>
+        </div>
+      </div>
+      <div class="val-ask-row">
+        <strong>Запрашиваемая цена от продавца Ignite: $391 млн</strong> ($4 600/унц. × 84 968 унц.) — в 6–9 раз выше нашей реалистичной оценки
+      </div>
+    </div>
+
+    <div class="val-card">
+      <div class="val-card-header">
+        <div class="val-card-title">#2 Oworam</div>
+        <div class="val-card-meta">Уровень А · Россыпное · 127 965 унций @ 0.80 г/м³ · 94 шурфа · ТЭО 107 стр.</div>
+      </div>
+      <div class="val-scenarios">
+        <div class="val-scenario optimistic">
+          <div class="val-sc-label">Оптимистичный</div>
+          <div class="val-sc-amount">$195–265M</div>
+          <div class="val-sc-note">Крупнейшие запасы в портфеле</div>
+        </div>
+        <div class="val-scenario realistic">
+          <div class="val-sc-label">Реалистичный</div>
+          <div class="val-sc-amount">$62–92M</div>
+          <div class="val-sc-note">С учётом 70% вероятности, 15% ставки, минус $30 млн вложений</div>
+        </div>
+        <div class="val-scenario pessimistic">
+          <div class="val-sc-label">Пессимистичный</div>
+          <div class="val-sc-amount">$18–35M</div>
+          <div class="val-sc-note">Несоответствие площадей может снизить запасы</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="val-card">
+      <div class="val-card-header">
+        <div class="val-card-title">#3 Akim Apapam</div>
+        <div class="val-card-meta">Уровень А · Смешанное · 6 лабораторных проб 8.09 г/т + 42 000 унц. россыпи · ТЭО 126 стр.</div>
+      </div>
+      <div class="val-scenarios">
+        <div class="val-scenario optimistic">
+          <div class="val-sc-label">Оптимистичный</div>
+          <div class="val-sc-amount">$115–175M</div>
+          <div class="val-sc-note">Коренное золото оценено при 8 г/т</div>
+        </div>
+        <div class="val-scenario realistic">
+          <div class="val-sc-label">Реалистичный</div>
+          <div class="val-sc-amount">$22–38M</div>
+          <div class="val-sc-note">Только россыпь подтверждена, 70%×94% уверенности</div>
+        </div>
+        <div class="val-scenario pessimistic">
+          <div class="val-sc-label">Пессимистичный</div>
+          <div class="val-sc-amount">$5–15M</div>
+          <div class="val-sc-note">Коренное золото не подтверждается бурением</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="val-card">
+      <div class="val-card-header">
+        <div class="val-card-title">#4 Bodukwan</div>
+        <div class="val-card-meta">Уровень Б · Коренное · 1 лаб. проба 18.26 г/т (верифицирована геологом)</div>
+      </div>
+      <div class="val-scenarios">
+        <div class="val-scenario optimistic">
+          <div class="val-sc-label">Оптимистичный</div>
+          <div class="val-sc-amount">$45–90M</div>
+          <div class="val-sc-note">Если 18 г/т подтверждается расширенным опробованием</div>
+        </div>
+        <div class="val-scenario realistic">
+          <div class="val-sc-label">Реалистичный</div>
+          <div class="val-sc-amount">$8–18M</div>
+          <div class="val-sc-note">40% вероятность, 15% ставка, минус $80 млн вложений</div>
+        </div>
+        <div class="val-scenario pessimistic">
+          <div class="val-sc-label">Пессимистичный</div>
+          <div class="val-sc-amount">$2–7M</div>
+          <div class="val-sc-note">Одна проба — аномалия, содержание снижается</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="val-card">
+      <div class="val-card-header">
+        <div class="val-card-title">Pemeso (Aspire)</div>
+        <div class="val-card-meta">Уровень Б (предварительно) · 500+ проб почвы Newmont · 65 км² · Wassa West</div>
+      </div>
+      <div class="val-scenarios">
+        <div class="val-scenario optimistic">
+          <div class="val-sc-label">Оптимистичный</div>
+          <div class="val-sc-amount">$35–75M</div>
+          <div class="val-sc-note">Если аномалия почвы даёт цели для бурения при 1–3 г/т</div>
+        </div>
+        <div class="val-scenario realistic">
+          <div class="val-sc-label">Реалистичный</div>
+          <div class="val-sc-amount">$6–14M</div>
+          <div class="val-sc-note">40% вероятность, юридический статус не подтверждён</div>
+        </div>
+        <div class="val-scenario pessimistic">
+          <div class="val-sc-label">Пессимистичный</div>
+          <div class="val-sc-amount">$1–5M</div>
+          <div class="val-sc-note">Лицензия не возобновляется или содержание не подтверждается</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="val-card">
+      <div class="val-card-header">
+        <div class="val-card-title">FGM Birim North</div>
+        <div class="val-card-meta">Только лицензия · Лицензия на добычу до 2031 · Нет ни одного геологического документа</div>
+      </div>
+      <div class="val-scenarios">
+        <div class="val-scenario optimistic">
+          <div class="val-sc-label">Оптимистичный</div>
+          <div class="val-sc-amount">$8–20M</div>
+          <div class="val-sc-note">Если документы подтвердят спутниковый сигнал</div>
+        </div>
+        <div class="val-scenario realistic">
+          <div class="val-sc-label">Реалистичный</div>
+          <div class="val-sc-amount">$0–5M</div>
+          <div class="val-sc-note">10% вероятность — нет данных = нет основы для оценки</div>
+        </div>
+        <div class="val-scenario pessimistic">
+          <div class="val-sc-label">Пессимистичный</div>
+          <div class="val-sc-amount">$0–2M</div>
+          <div class="val-sc-note">Ценность только в самой лицензии (до 2031)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 15 — ROADMAP ===== -->
+<section id="s15">
+<div class="container">
+  <div class="slide-label">15 · Следующие шаги</div>
+  <h2 class="slide-title">Что нужно сделать чтобы банк признал ваши запасы и дал кредит</h2>
+  <p class="slide-subtitle">Простыми словами: сейчас у вас цифры от продавцов. Чтобы привлечь финансирование или продать дороже — нужно подтвердить эти цифры независимыми пробами по международному стандарту.</p>
+
+  <div class="roadmap-tiers">
+
+    <div class="roadmap-tier">
+      <div class="roadmap-tier-header" style="background:var(--tier-a-bg);color:var(--tier-a);">
+        Уровень А — Amenam, Oworam, Akim Apapam
+      </div>
+      <div class="roadmap-tier-body">
+        <p style="margin-bottom:10px;">Документальная база есть — нужна независимая верификация и программа бурения.</p>
+        <ul>
+          <li>Аэросъёмка с дрона для точной цифровой модели территории</li>
+          <li>Программа бурения: минимум 10–15 скважин на участок</li>
+          <li>Лабораторный анализ независимой лабораторией (дубль из тех же кернов)</li>
+          <li>Полевая верификация 3–5 шурфов из ТЭО на месте</li>
+          <li>Независимый геолог для расчёта запасов по международному стандарту</li>
+          <li>Юридическая сверка координат (Amenam, Akim Apapam не в реестре)</li>
+        </ul>
+        <div class="budget-line">
+          <span>Ориентир бюджета:</span>
+          <span>Дрон $20–50К/уч. · Бурение $300–500К/уч. · Геолог $30–50К</span>
+        </div>
+        <div class="budget-line" style="border-top:none;padding-top:0;margin-top:6px;">
+          <span>Срок:</span>
+          <span>3–6 месяцев до запасов, признанных банком</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-tier">
+      <div class="roadmap-tier-header" style="background:var(--tier-b-bg);color:var(--tier-b);">
+        Уровень Б — Bodukwan, Pemeso
+      </div>
+      <div class="roadmap-tier-body">
+        <p style="margin-bottom:10px;">Ключевые данные есть, но объём выборки недостаточен для расчёта запасов.</p>
+        <ul>
+          <li><strong>Bodukwan:</strong> расширить отбор проб из канав до 15+ по простиранию жилы</li>
+          <li><strong>Bodukwan:</strong> структурный анализ для понимания расположения жил</li>
+          <li><strong>Bodukwan:</strong> <span style="color:var(--warn);font-weight:700;">продление лицензии до октября 2026 — срочно</span></li>
+          <li><strong>Pemeso:</strong> сначала юридический статус в Minerals Commission</li>
+          <li><strong>Pemeso:</strong> интерпретация 500 проб почвы от Newmont → цели для бурения</li>
+          <li>Геофизический профиль для выявления сульфидных тел</li>
+        </ul>
+        <div class="budget-line">
+          <span>Бюджет:</span>
+          <span>Опробование $20–40К · Геофизика $40–80К · Юр. $10К</span>
+        </div>
+        <div class="budget-line" style="border-top:none;padding-top:0;margin-top:6px;">
+          <span>Срок:</span>
+          <span>6–12 месяцев до готовности к бурению</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-tier">
+      <div class="roadmap-tier-header" style="background:var(--tier-c-bg);color:var(--tier-c);">
+        Уровень В / Только лицензия — MG Emmanuel, FGM, Grey Dew
+      </div>
+      <div class="roadmap-tier-body">
+        <p style="margin-bottom:10px;">Спутниковый сигнал есть — геологических данных практически нет.</p>
+        <ul>
+          <li>Запросить разведочные данные у оператора до любых финансовых переговоров</li>
+          <li>FGM: производственные отчёты за 8 лет (2018–2026) должны быть в Minerals Commission</li>
+          <li>MG Emmanuel: проверить выполнение плана разведки за год 1–2</li>
+          <li>Grey Dew: юридический статус, точные координаты, проверка пересечений</li>
+          <li>Полевой осмотр (1–2 дня) перед любыми инвестиционными решениями</li>
+        </ul>
+        <div class="budget-line">
+          <span>Бюджет:</span>
+          <span>Юр. due diligence $10–20К · Полевой выезд $5–15К/уч.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-tier">
+      <div class="roadmap-tier-header" style="background:var(--tier-e-bg);color:var(--tier-e);">
+        Пусто — Obomeng
+      </div>
+      <div class="roadmap-tier-body">
+        <p style="margin-bottom:10px;">Базовая информация отсутствует полностью.</p>
+        <ul>
+          <li>Получить точные координаты и номер лицензии</li>
+          <li>Базовая полевая поездка (1 день) для понимания ситуации на месте</li>
+          <li>Любой технический анализ — только после получения координат</li>
+        </ul>
+        <div class="budget-line">
+          <span>Бюджет:</span>
+          <span>Полевой выезд $3–8К · Юр. проверка $5К</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ===== SLIDE 16 — NEIGHBORS ===== -->
+<section id="s16">
+<div class="container">
+  <div class="slide-label">16 · Дополнительные участки рядом</div>
+  <h2 class="slide-title">Дополнительные участки рядом, которые можно купить позже</h2>
+  <p class="slide-subtitle">Четыре актива в непосредственном окружении — каждый интересен по своей причине.</p>
+
+  <div class="neighbors-grid">
+
+    <div class="neighbor-card">
+      <div class="neighbor-name">Pure Caratage Ltd</div>
+      <div class="neighbor-lic">PL5/272 · 140.77 км² · Birim North</div>
+      <div class="neighbor-why">
+        <strong>Интересен потому что:</strong> крупнейший свободный блок в районе — в 3 раза больше всего нашего кластера FGM. Срок лицензии в реестре указан как истёкший: ноябрь 2023. При этом статус в реестре — «Active» — возможно баг данных или продление в процессе. Если блок реально освободился — это главная возможность в районе.
+      </div>
+      <div class="neighbor-action">
+        Следующий шаг: юридическая справка из Minerals Commission о текущем статусе PL5/272
+      </div>
+    </div>
+
+    <div class="neighbor-card">
+      <div class="neighbor-name">SIKADWASO Global Ltd</div>
+      <div class="neighbor-lic">MLF 25/3 · 8.23 км² · 3.1 км от FGM</div>
+      <div class="neighbor-why">
+        <strong>Интересен потому что:</strong> прямой сосед FGM на западе, лицензия на добычу иностранной компании до 2037. Выдана в январе 2025 — недавний гранд. Серьёзный игрок с долгосрочной лицензией. Вместе с нашим блоком дадут 50+ км² связного пояса.
+      </div>
+      <div class="neighbor-action">
+        Следующий шаг: установить контакт с держателем; предложить совместную разведку
+      </div>
+    </div>
+
+    <div class="neighbor-card">
+      <div class="neighbor-name">Newmont — 5 лицензий</div>
+      <div class="neighbor-lic">~190 км² кольцом вокруг восточного кластера</div>
+      <div class="neighbor-why">
+        <strong>Интересны потому что:</strong> Newmont (крупнейший золотодобытчик мира) построил кольцо из 5 лицензий вокруг нашего FGM-кластера — включая свежую лицензию на добычу Akyem West (январь 2025). Это означает активный геологический интерес к этому блоку. Когда наши участки достигнут стадии ТЭО — Newmont становится логичным стратегическим покупателем.
+      </div>
+      <div class="neighbor-action">
+        Следующий шаг: мониторинг активности Newmont в районе; фиксировать для стратегии выхода
+      </div>
+    </div>
+
+    <div class="neighbor-card">
+      <div class="neighbor-name">Long Shine Mining Ghana Ltd</div>
+      <div class="neighbor-lic">PL5/787 · 25.11 км² · 6.6 км от FGM</div>
+      <div class="neighbor-why">
+        <strong>Интересен потому что:</strong> лицензия на разведку истекает 17 мая 2026 — то есть через несколько недель. Если Long Shine не продлит — этот 25 км² блок в геологически привлекательном районе (рядом с нашим FGM-кластером) может стать доступным. Окно очень короткое.
+      </div>
+      <div class="neighbor-action">
+        Следующий шаг: проверить статус PL5/787 в Minerals Commission до 17.05.2026
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout" style="margin-top:28px;">
+    <strong>Общая рекомендация по всем соседям:</strong> перед любыми переговорами о приобретении или совместной разведке — провести аэросъёмку с дрона по границам участка. Это даст точную цифровую модель рельефа и реальные границы.
+  </div>
+
+  <div style="margin-top:40px;padding:28px 32px;background:var(--ink);color:#fff;border-radius:12px;">
+    <div style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;margin-bottom:12px;">Итоговое резюме</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;">
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Лучшие активы (Уровень А)</div>
+        <div style="font-size:14px;color:#C8E6C9;line-height:1.6;">Amenam (84 968 унц.), Oworam (127 965 унц.), Akim Apapam (8.09 г/т) — документы есть, нужна верификация</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Высокий потенциал (Уровень Б)</div>
+        <div style="font-size:14px;color:#FFF9C4;line-height:1.6;">Bodukwan (18.26 г/т — одна проба), Pemeso (съёмка Newmont + хороший район) — нужно расширение выборки</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Требуют проверки</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.6;">FGM (лучший спутниковый сигнал, нет документов), MG Emmanuel (сильная проспективность, нет проб)</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<footer style="padding:32px 0;background:var(--ink);margin-top:0;">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div style="color:rgba(255,255,255,0.5);font-size:13px;">Ghana Au Portfolio · Технический анализ · Май 2026 · КОНФИДЕНЦИАЛЬНО</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.35);">Спутниковые данные не заменяют независимый геологический аудит</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Close glossary on outside click
+document.addEventListener('click', function(e) {
+  var panel = document.querySelector('.glossary-panel');
+  var btn = document.querySelector('.glossary-toggle');
+  if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) {
+    panel.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Оценка активов — Ghana Au Portfolio</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .page-header {
+    max-width: 1200px;
+    margin: 0 auto 32px;
+    background: #1a1a2e;
+    border-radius: 16px;
+    padding: 32px 40px;
+    color: white;
+  }
+  .page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .page-subtitle {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  .assumptions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .assumption {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .assumption-label { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+  .assumption-value { font-size: 1.2rem; font-weight: 700; color: #f1f5f9; margin-top: 4px; }
+
+  .methodology-box {
+    max-width: 1200px;
+    margin: 0 auto 28px;
+    background: white;
+    border-radius: 14px;
+    padding: 24px 32px;
+    border-left: 4px solid #3b82f6;
+  }
+  .methodology-box h3 { font-size: 1rem; font-weight: 600; color: #1e40af; margin-bottom: 12px; }
+  .methodology-box p { font-size: 0.88rem; color: #475569; line-height: 1.6; margin-bottom: 8px; }
+  .methodology-box ul { padding-left: 20px; }
+  .methodology-box li { font-size: 0.85rem; color: #475569; margin-bottom: 4px; }
+
+  .cards-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+  }
+  .card-header {
+    background: #1e293b;
+    color: white;
+    padding: 20px 24px 16px;
+  }
+  .card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .tier-badge {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .card-area { font-size: 0.82rem; color: #94a3b8; }
+  .card-type { font-size: 0.82rem; color: #64748b; background: rgba(255,255,255,0.12); padding: 2px 8px; border-radius: 4px; }
+  .card-operator { font-size: 0.8rem; color: #64748b; margin-top: 4px; }
+
+  .reserves-section {
+    padding: 16px 24px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    background: #f8fafc;
+  }
+  .reserves-row, .confidence-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .res-label, .conf-label {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    font-weight: 500;
+    min-width: 140px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .res-value, .conf-value {
+    font-size: 0.9rem;
+    color: #1e293b;
+    font-weight: 600;
+  }
+
+  .valuations {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0;
+  }
+  .val-box {
+    padding: 18px 16px;
+    border-right: 1px solid #f1f5f9;
+    text-align: center;
+  }
+  .val-box:last-child { border-right: none; }
+  .val-scenario {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .val-amount {
+    font-size: 1.55rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+  .val-note {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+  .optimistic .val-scenario { color: #15803d; }
+  .optimistic .val-amount { color: #16a34a; }
+  .optimistic { background: #f0fdf4; }
+  .realistic .val-scenario { color: #92400e; }
+  .realistic .val-amount { color: #b45309; }
+  .realistic { background: #fffbeb; }
+  .pessimistic .val-scenario { color: #991b1b; }
+  .pessimistic .val-amount { color: #dc2626; }
+  .pessimistic { background: #fef2f2; }
+
+  .ask-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 12px 24px;
+    background: #fff7ed;
+    border-top: 1px solid #fed7aa;
+    flex-wrap: wrap;
+  }
+  .ask-label { font-size: 0.78rem; color: #9a3412; font-weight: 600; }
+  .ask-value { font-size: 1.1rem; font-weight: 800; color: #c2410c; }
+  .ask-note { font-size: 0.78rem; color: #9a3412; }
+
+  .flag-box {
+    margin: 0;
+    padding: 10px 24px;
+    background: #fef2f2;
+    border-top: 1px solid #fecaca;
+    font-size: 0.82rem;
+    color: #991b1b;
+    line-height: 1.5;
+  }
+
+  .next-steps {
+    padding: 14px 24px;
+    border-top: 1px solid #f1f5f9;
+    background: #f8fafc;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .ns-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .ns-text {
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .footer {
+    max-width: 1200px;
+    margin: 32px auto 0;
+    padding: 20px 24px;
+    background: #1e293b;
+    border-radius: 12px;
+    color: #64748b;
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+  .footer strong { color: #94a3b8; }
+
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .valuations { grid-template-columns: 1fr; }
+    .val-box { border-right: none; border-bottom: 1px solid #f1f5f9; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-title">Ghana Au — Оценка активов</div>
+  <div class="page-subtitle">Инвестиционный анализ для DD-презентации · Май 2026</div>
+  <div class="assumptions-grid">
+    <div class="assumption">
+      <div class="assumption-label">Цена золота</div>
+      <div class="assumption-value">$2,050/oz</div>
+    </div>
+    <div class="assumption">
+      <div class="assumption-label">Ставка дисконтирования</div>
+      <div class="assumption-value">15%</div>
+    </div>
+    <div class="assumption">
+      <div class="assumption-label">Срок разработки</div>
+      <div class="assumption-value">5–7 лет</div>
+    </div>
+    <div class="assumption">
+      <div class="assumption-label">CAPEX аллювий</div>
+      <div class="assumption-value">$30M</div>
+    </div>
+    <div class="assumption">
+      <div class="assumption-label">CAPEX коренное</div>
+      <div class="assumption-value">$80M</div>
+    </div>
+    <div class="assumption">
+      <div class="assumption-label">Извлечение (alluvial)</div>
+      <div class="assumption-value">82%</div>
+    </div>
+  </div>
+</div>
+
+<div class="methodology-box">
+  <h3>Методология оценки</h3>
+  <p><strong>Оптимистичный сценарий:</strong> запасы × цена золота × извлечение × маржа (45%) — «если всё сходится»</p>
+  <p><strong>Реалистичный сценарий (NPV):</strong> оптимистичный × вероятность успеха (Tier A=70%, B=40%, C=20%, title-only=10%) × NPV-фактор за 5-7 лет при 15% ставке − CAPEX</p>
+  <p><strong>Пессимистичный сценарий:</strong> 10–25% от оптимистичного — «если бурение покажет grade вдвое ниже отчётного»</p>
+  <ul>
+    <li>Запасы НЕ являются NI 43-101 compliant — это исторические оценки ТЭО (ни один актив не проверен независимым QP)</li>
+    <li>Ни один актив не имеет статуса Mining Lease (Amenam, Оворам, Аким Апапам — только заявки)</li>
+    <li>Оценка носит иллюстративный характер; для инвестрешения требуется независимый технический аудит</li>
+  </ul>
+</div>
+
+<div class="cards-grid">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">#1 Amenam</div>
+      <div class="card-meta">
+        <span class="tier-badge" style="background:#16a34a20;color:#16a34a;border:1px solid #16a34a40">🟢 Tier A</span>
+        <span class="card-area">9.77 км²</span>
+        <span class="card-type">alluvial</span>
+      </div>
+      <div class="card-operator">Ignite Machinery Rentals & Mining Ltd</div>
+    </div>
+
+    <div class="reserves-section">
+      
+        <div class="reserves-row">
+          <span class="res-label">Запасы (alluvial P&amp;P)</span>
+          <span class="res-value">84,968 oz @ 0.92 г/м³</span>
+        </div>
+      <div class="confidence-row">
+        <span class="conf-label">Уверенность</span>
+        <span class="conf-value">Tier A — 91 шурфов, ТЭО 109 стр.</span>
+      </div>
+    </div>
+
+    <div class="valuations">
+      <div class="val-box optimistic">
+        <div class="val-scenario">Оптимистичный</div>
+        <div class="val-amount">$130–175M</div>
+        <div class="val-note">Если все данные подтвердятся, доразведка успешна</div>
+      </div>
+      <div class="val-box realistic">
+        <div class="val-scenario">Реалистичный</div>
+        <div class="val-amount">$42–62M</div>
+        <div class="val-note">NPV с поправкой на риск: p=70%, ставка 15%, минус CAPEX $30M</div>
+      </div>
+      <div class="val-box pessimistic">
+        <div class="val-scenario">Пессимистичный</div>
+        <div class="val-amount">$12–22M</div>
+        <div class="val-note">Если бурение покажет grade ниже отчётного</div>
+      </div>
+    </div>
+
+    
+        <div class="ask-row">
+          <span class="ask-label">Asking price (Ignite)</span>
+          <span class="ask-value">$391M</span>
+          <span class="ask-note">= 4,600 $/oz × 84,968 oz &larr; в 5–10× выше нашей реалистичной оценки</span>
+        </div>
+    <div class="flag-box">⚠ Boilerplate risk: тот же QP (Зайд Теттех-Йемох) что и Оворам — перекрёстная проверка данных</div>
+
+    <div class="next-steps">
+      <span class="ns-label">Что нужно для повышения уверенности:</span>
+      <span class="ns-text">Верификация 5-7 дополнительных шурфов, независимый QP-геолог, юридический статус (ML не выдана)</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">#2 Оворам</div>
+      <div class="card-meta">
+        <span class="tier-badge" style="background:#16a34a20;color:#16a34a;border:1px solid #16a34a40">🟢 Tier A</span>
+        <span class="card-area">32.57 км²</span>
+        <span class="card-type">alluvial</span>
+      </div>
+      <div class="card-operator">Ignite Machinery Rentals & Mining Ltd</div>
+    </div>
+
+    <div class="reserves-section">
+      
+        <div class="reserves-row">
+          <span class="res-label">Запасы (alluvial P&amp;P)</span>
+          <span class="res-value">127,965 oz @ 0.8 г/м³</span>
+        </div>
+      <div class="confidence-row">
+        <span class="conf-label">Уверенность</span>
+        <span class="conf-value">Tier A — 94 шурфа, ТЭО 107 стр.</span>
+      </div>
+    </div>
+
+    <div class="valuations">
+      <div class="val-box optimistic">
+        <div class="val-scenario">Оптимистичный</div>
+        <div class="val-amount">$195–265M</div>
+        <div class="val-note">Если все данные подтвердятся, доразведка успешна</div>
+      </div>
+      <div class="val-box realistic">
+        <div class="val-scenario">Реалистичный</div>
+        <div class="val-amount">$62–92M</div>
+        <div class="val-note">NPV с поправкой на риск: p=70%, ставка 15%, минус CAPEX $30M</div>
+      </div>
+      <div class="val-box pessimistic">
+        <div class="val-scenario">Пессимистичный</div>
+        <div class="val-amount">$18–35M</div>
+        <div class="val-note">Если бурение покажет grade ниже отчётного</div>
+      </div>
+    </div>
+
+    
+    <div class="flag-box">⚠ ESG-риск: смежный лесной заповедник Atewa Range Forest Reserve; статус — только PL, не ML</div>
+
+    <div class="next-steps">
+      <span class="ns-label">Что нужно для повышения уверенности:</span>
+      <span class="ns-text">Независимый QP, уточнение границ (126 км² по кадастру vs 32 км² в ТЭО), согласование с лесным заповедником Атева</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">#3 Аким Апапам</div>
+      <div class="card-meta">
+        <span class="tier-badge" style="background:#16a34a20;color:#16a34a;border:1px solid #16a34a40">🟢 Tier A</span>
+        <span class="card-area">8.4 км²</span>
+        <span class="card-type">alluvial + hard-rock potential</span>
+      </div>
+      <div class="card-operator">Hujak Mining Limited Company</div>
+    </div>
+
+    <div class="reserves-section">
+      
+        <div class="reserves-row">
+          <span class="res-label">Запасы (alluvial P&amp;P)</span>
+          <span class="res-value">42,000 oz @ 0.45 г/м³</span>
+        </div>
+      <div class="confidence-row">
+        <span class="conf-label">Уверенность</span>
+        <span class="conf-value">Tier A — 135 шурфов + 6 ALS проб (8.1 г/т)</span>
+      </div>
+    </div>
+
+    <div class="valuations">
+      <div class="val-box optimistic">
+        <div class="val-scenario">Оптимистичный</div>
+        <div class="val-amount">$115–175M</div>
+        <div class="val-note">Если все данные подтвердятся, доразведка успешна</div>
+      </div>
+      <div class="val-box realistic">
+        <div class="val-scenario">Реалистичный</div>
+        <div class="val-amount">$22–38M</div>
+        <div class="val-note">NPV с поправкой на риск: p=45%, ставка 15%, минус CAPEX $30M</div>
+      </div>
+      <div class="val-box pessimistic">
+        <div class="val-scenario">Пессимистичный</div>
+        <div class="val-amount">$5–15M</div>
+        <div class="val-note">Если бурение покажет grade ниже отчётного</div>
+      </div>
+    </div>
+
+    
+    <div class="flag-box">⚠ КРАСНЫЙ ФЛАГ: не найден в кадастре Горной комиссии Ганы; ML-заявка с июля 2025 не подтверждена</div>
+
+    <div class="next-steps">
+      <span class="ns-label">Что нужно для повышения уверенности:</span>
+      <span class="ns-text">Бурение для подтверждения коренного тела, независимый QP, регистрация ML (НЕ в кадастре!)</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">#4 Бодуквон</div>
+      <div class="card-meta">
+        <span class="tier-badge" style="background:#ca8a0420;color:#ca8a04;border:1px solid #ca8a0440">🟡 Tier B</span>
+        <span class="card-area">33.81 км²</span>
+        <span class="card-type">hard-rock (reconnaissance)</span>
+      </div>
+      <div class="card-operator">Bodukwan Holding Company Limited</div>
+    </div>
+
+    <div class="reserves-section">
+      
+        <div class="reserves-row">
+          <span class="res-label">Геохимия</span>
+          <span class="res-value">1 канавная проба: 18.26 г/т Au (единственная)</span>
+        </div>
+      <div class="confidence-row">
+        <span class="conf-label">Уверенность</span>
+        <span class="conf-value">Tier B — 1 канавная проба (18.26 г/т), одобрено Горной комиссией</span>
+      </div>
+    </div>
+
+    <div class="valuations">
+      <div class="val-box optimistic">
+        <div class="val-scenario">Оптимистичный</div>
+        <div class="val-amount">$45–90M</div>
+        <div class="val-note">Если все данные подтвердятся, доразведка успешна</div>
+      </div>
+      <div class="val-box realistic">
+        <div class="val-scenario">Реалистичный</div>
+        <div class="val-amount">$8–18M</div>
+        <div class="val-note">NPV с поправкой на риск: p=40%, ставка 15%, минус CAPEX $80M</div>
+      </div>
+      <div class="val-box pessimistic">
+        <div class="val-scenario">Пессимистичный</div>
+        <div class="val-amount">$2–7M</div>
+        <div class="val-note">Если бурение покажет grade ниже отчётного</div>
+      </div>
+    </div>
+
+    
+    <div class="flag-box">⚠ Только разведочный уровень — один образец, нет ТЭО. Срок PL2/803 истекает 19.10.2026</div>
+
+    <div class="next-steps">
+      <span class="ns-label">Что нужно для повышения уверенности:</span>
+      <span class="ns-text">5-10 дополнительных канавных проб, IP-геофизика, бурение 500 м</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">#5 Пемесо</div>
+      <div class="card-meta">
+        <span class="tier-badge" style="background:#ca8a0420;color:#ca8a04;border:1px solid #ca8a0440">🟡 Tier B</span>
+        <span class="card-area">64.9 км²</span>
+        <span class="card-type">hard-rock (grass-roots)</span>
+      </div>
+      <div class="card-operator">Aspire Resources Limited</div>
+    </div>
+
+    <div class="reserves-section">
+      
+        <div class="reserves-row">
+          <span class="res-label">Геохимия</span>
+          <span class="res-value">500 почвенных проб, пик 1200 ppb Au</span>
+        </div>
+      <div class="confidence-row">
+        <span class="conf-label">Уверенность</span>
+        <span class="conf-value">Tier B — 500 почвенных проб (пик 1200 ppb Au), аэромаг + гравика</span>
+      </div>
+    </div>
+
+    <div class="valuations">
+      <div class="val-box optimistic">
+        <div class="val-scenario">Оптимистичный</div>
+        <div class="val-amount">$35–75M</div>
+        <div class="val-note">Если все данные подтвердятся, доразведка успешна</div>
+      </div>
+      <div class="val-box realistic">
+        <div class="val-scenario">Реалистичный</div>
+        <div class="val-amount">$6–14M</div>
+        <div class="val-note">NPV с поправкой на риск: p=35%, ставка 15%, минус CAPEX $80M</div>
+      </div>
+      <div class="val-box pessimistic">
+        <div class="val-scenario">Пессимистичный</div>
+        <div class="val-amount">$1–5M</div>
+        <div class="val-note">Если бурение покажет grade ниже отчётного</div>
+      </div>
+    </div>
+
+    
+    <div class="flag-box">⚠ НЕ в кадастре Горной комиссии! Перекрытие с активной лицензией PL-I-2/20 (SDIM, до 2027)</div>
+
+    <div class="next-steps">
+      <span class="ns-label">Что нужно для повышения уверенности:</span>
+      <span class="ns-text">Траншейные пробы для проверки аномалии, юридический статус (не в кадастре 2026-05-04)</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">#6 FGM Birim North</div>
+      <div class="card-meta">
+        <span class="tier-badge" style="background:#dc262620;color:#dc2626;border:1px solid #dc262640">🔴 Title-only</span>
+        <span class="card-area">13.23 км²</span>
+        <span class="card-type">hard-rock (title-only)</span>
+      </div>
+      <div class="card-operator">FGM Resources Ghana Limited</div>
+    </div>
+
+    <div class="reserves-section">
+      
+        <div class="reserves-row">
+          <span class="res-label">Запасы</span>
+          <span class="res-value">Не определены — нужна разведка</span>
+        </div>
+      <div class="confidence-row">
+        <span class="conf-label">Уверенность</span>
+        <span class="conf-value">Title-only — ML PL5/152L (2018-2031), нет ТЭО, нет проб</span>
+      </div>
+    </div>
+
+    <div class="valuations">
+      <div class="val-box optimistic">
+        <div class="val-scenario">Оптимистичный</div>
+        <div class="val-amount">$8–20M</div>
+        <div class="val-note">Если все данные подтвердятся, доразведка успешна</div>
+      </div>
+      <div class="val-box realistic">
+        <div class="val-scenario">Реалистичный</div>
+        <div class="val-amount">$0–5M</div>
+        <div class="val-note">NPV с поправкой на риск: p=10%, ставка 15%, минус CAPEX $80M</div>
+      </div>
+      <div class="val-box pessimistic">
+        <div class="val-scenario">Пессимистичный</div>
+        <div class="val-amount">$0–2M</div>
+        <div class="val-note">Если бурение покажет grade ниже отчётного</div>
+      </div>
+    </div>
+
+    
+    <div class="flag-box">⚠ Сильнейший юридический титул в портфеле, но геологически пустой актив. Ратификационный документ отсутствует</div>
+
+    <div class="next-steps">
+      <span class="ns-label">Что нужно для повышения уверенности:</span>
+      <span class="ns-text">Полная разведочная программа (2-3 года), проверка ратификации Парламентом (Ст.268)</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Источники данных:</strong> ТЭО (Explorgeo Ltd / Hujak Mining, 2025-2026); кадастр Горной комиссии Ганы (снимок 04.05.2026); спутниковый анализ (Sentinel-2, Sentinel-1, ASTER); гравика и аэромагнитная съёмка.<br>
+  <strong>Дата анализа:</strong> 04 мая 2026 г. · <strong>Аналитик:</strong> автоматизированная система qaznedr-mineral-ai v1.0<br>
+  <strong>Disclaimer:</strong> Данная оценка является предварительной и основана на доступных документах. Для принятия инвестиционного решения необходим независимый аудит квалифицированного геолога (QP) и юридическая проверка прав собственности.
+</div>
+
+</body>
+</html>

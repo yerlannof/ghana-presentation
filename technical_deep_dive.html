@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гана · 7 концессий · Технический Deep Dive · 2026-05-05</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:        #F7F5F0;
+    --bg-card:   #FFFFFF;
+    --line:      #E0DCD2;
+    --line-soft: #EBE7DD;
+
+    --ink:       #14110D;
+    --ink-2:     #3A352E;
+    --ink-mute:  #6B645A;
+
+    --accent:    #1F4D3D;
+    --accent-2:  #2C6B55;
+    --accent-light: #E8EFEB;
+
+    --warn:      #B33C2D;
+    --warn-bg:   #F9EDEB;
+    --good:      #4A7A4A;
+    --gold:      #A07B2A;
+    --gold-light: #F5EDD8;
+
+    --cell-strong: #C8E6C9;
+    --cell-moderate: #FFF9C4;
+    --cell-weak: #FFCDD2;
+    --cell-na: #ECEFF1;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.65;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: 'Source Serif 4', Georgia, serif; font-weight: 500; letter-spacing: -.01em; }
+  .mono  { font-family: 'JetBrains Mono', monospace; font-feature-settings: 'tnum'; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 80px 0; }
+  section + section { border-top: 1px solid var(--line); }
+
+  /* Top bar */
+  .topbar {
+    background: var(--ink);
+    color: #fff;
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+  .topbar .brand { display: flex; align-items: center; gap: 14px; }
+  .topbar .brand .seal {
+    width: 28px; height: 28px;
+    border: 1.5px solid #fff; border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: 'Source Serif 4', serif; font-weight: 600; font-size: 14px;
+  }
+  .topbar .meta { color: rgba(255,255,255,.7); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* Hero */
+  .hero { padding: 96px 0 64px; }
+  .hero .label {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--accent); background: var(--accent-light);
+    padding: 6px 14px; border-radius: 3px; margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: clamp(36px, 5vw, 58px); font-weight: 500;
+    line-height: 1.1; color: var(--ink); max-width: 24ch;
+    margin-bottom: 24px; letter-spacing: -.015em;
+  }
+  .hero .lead {
+    font-size: 19px; line-height: 1.6; color: var(--ink-2);
+    max-width: 62ch; margin-bottom: 48px;
+  }
+  .hero .figures {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 24px; border-top: 2px solid var(--ink); padding-top: 28px;
+  }
+  .figure-label { font-size: 12px; color: var(--ink-mute); margin-bottom: 6px; font-weight: 500; }
+  .figure-value {
+    font-family: 'Source Serif 4', serif; font-size: 34px;
+    font-weight: 500; line-height: 1.1; color: var(--ink);
+    margin-bottom: 4px; letter-spacing: -.02em;
+  }
+  .figure-value sub { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink-mute); font-weight: 500; margin-left: 4px; vertical-align: baseline; }
+  .figure-note { font-size: 12px; color: var(--ink-mute); line-height: 1.45; }
+
+  /* Section headers */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--accent); margin-bottom: 14px;
+    text-transform: uppercase; letter-spacing: .08em; font-weight: 500;
+  }
+  .section-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(28px, 3.5vw, 42px); font-weight: 500;
+    line-height: 1.15; color: var(--ink); margin-bottom: 20px;
+    max-width: 26ch; letter-spacing: -.02em;
+  }
+  .section-lead {
+    font-size: 17px; line-height: 1.6; color: var(--ink-2);
+    max-width: 68ch; margin-bottom: 48px;
+  }
+
+  /* Ranking tables */
+  .ranking-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    margin-bottom: 40px;
+  }
+  .rank-col { background: var(--bg-card); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .rank-col-header {
+    background: var(--accent); color: #fff;
+    padding: 16px 20px; font-weight: 600; font-size: 14px;
+  }
+  .rank-col-header span { display: block; font-size: 11px; font-family: 'JetBrains Mono', monospace; opacity: .8; margin-top: 4px; font-weight: 400; }
+  .rank-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 20px; border-bottom: 1px solid var(--line-soft);
+    font-size: 14px;
+  }
+  .rank-row:last-child { border-bottom: none; }
+  .rank-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--accent-light); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .rank-num.top { background: var(--gold); color: #fff; }
+  .rank-num.warn { background: var(--warn-bg); color: var(--warn); }
+  .rank-name { font-weight: 500; flex: 1; }
+  .rank-score { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-mute); }
+  .rank-tier { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px 7px; border-radius: 3px; }
+  .tier-A { background: #E8F5E9; color: #2E7D32; }
+  .tier-B { background: #FFF3E0; color: #E65100; }
+  .tier-C { background: #FFF9C4; color: #827717; }
+  .tier-title { background: #E3F2FD; color: #1565C0; }
+  .tier-empty { background: #F5F5F5; color: #757575; }
+
+  .story-box {
+    background: var(--gold-light); border: 1px solid #D4B96C; border-radius: 6px;
+    padding: 24px 28px; margin-top: 24px;
+  }
+  .story-box h4 { font-weight: 600; color: var(--gold); margin-bottom: 12px; font-size: 15px; }
+  .story-box p { font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+
+  /* Heatmap table */
+  .heatmap-wrap { overflow-x: auto; margin-bottom: 24px; }
+  .heatmap {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .heatmap th {
+    background: var(--ink); color: #fff; padding: 10px 12px;
+    text-align: center; font-size: 11px; font-weight: 500; letter-spacing: .03em;
+    border: 1px solid #333;
+  }
+  .heatmap th.col-name { text-align: left; width: 150px; }
+  .heatmap td {
+    padding: 9px 12px; border: 1px solid var(--line);
+    text-align: center; font-size: 12px;
+  }
+  .heatmap td.name-cell { text-align: left; font-weight: 500; color: var(--ink); font-family: 'Inter', sans-serif; font-size: 13px; }
+  .heatmap tr:nth-child(even) td.name-cell { background: #FAFAF8; }
+  .cell-strong  { background: var(--cell-strong); color: #1B5E20; font-weight: 600; }
+  .cell-moderate{ background: var(--cell-moderate); color: #5D4037; }
+  .cell-weak    { background: var(--cell-weak); color: #B71C1C; }
+  .cell-na      { background: var(--cell-na); color: #78909C; font-size: 11px; }
+
+  /* Deep dive cards */
+  .cards-grid { display: flex; flex-direction: column; gap: 48px; }
+  .card {
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px;
+    overflow: hidden;
+  }
+  .card-header {
+    background: var(--accent); color: #fff;
+    padding: 24px 32px; display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .card-header h3 {
+    font-family: 'Source Serif 4', serif; font-size: 24px; font-weight: 500; margin-bottom: 6px;
+  }
+  .card-header .meta-line { font-size: 13px; opacity: .85; font-family: 'JetBrains Mono', monospace; }
+  .card-score-badge {
+    background: rgba(255,255,255,.15); border-radius: 8px; padding: 12px 20px;
+    text-align: center; min-width: 110px;
+  }
+  .card-score-badge .score-num {
+    font-family: 'Source Serif 4', serif; font-size: 40px; font-weight: 500; line-height: 1;
+  }
+  .card-score-badge .score-label { font-size: 11px; opacity: .8; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+  .card-body { padding: 32px; }
+  .signals-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px;
+  }
+  .signal-item { }
+  .signal-label { font-size: 11px; color: var(--ink-mute); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
+  .signal-value { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: var(--ink); }
+
+  .evidence-box {
+    background: var(--accent-light); border: 1px solid #B5CFB7; border-radius: 6px;
+    padding: 20px 24px; margin-bottom: 24px;
+  }
+  .evidence-box h4 { color: var(--accent); font-size: 13px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: .06em; font-family: 'JetBrains Mono', monospace; }
+  .evidence-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 14px; }
+  .ev-item { display: flex; gap: 8px; }
+  .ev-label { color: var(--ink-mute); min-width: 110px; font-size: 13px; }
+  .ev-val { font-weight: 600; color: var(--ink); font-family: 'JetBrains Mono', monospace; }
+
+  .rec-box {
+    background: var(--warn-bg); border: 1px solid #D0A090; border-radius: 6px;
+    padding: 20px 24px;
+  }
+  .rec-box h4 { color: var(--warn); font-size: 13px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: .06em; font-family: 'JetBrains Mono', monospace; }
+  .rec-box ul { padding-left: 20px; }
+  .rec-box li { font-size: 14px; color: var(--ink-2); margin-bottom: 6px; line-height: 1.55; }
+
+  /* Methodology */
+  .caveat-list { list-style: none; }
+  .caveat-list li {
+    padding: 16px 20px; background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 6px; margin-bottom: 12px; font-size: 14px; color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .caveat-list li strong { color: var(--ink); }
+  .caveat-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    padding: 2px 7px; border-radius: 3px; margin-right: 8px; font-weight: 600;
+  }
+  .tag-warn { background: var(--warn-bg); color: var(--warn); }
+  .tag-info { background: var(--accent-light); color: var(--accent); }
+  .tag-caution { background: var(--gold-light); color: var(--gold); }
+
+  /* Roadmap */
+  .roadmap-tier {
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 6px;
+    margin-bottom: 20px; overflow: hidden;
+  }
+  .roadmap-tier-header {
+    padding: 14px 20px; font-weight: 600; font-size: 14px;
+    border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px;
+  }
+  .roadmap-tier-body { padding: 20px; }
+  .roadmap-tier-body ul { padding-left: 20px; }
+  .roadmap-tier-body li { font-size: 14px; color: var(--ink-2); margin-bottom: 8px; line-height: 1.55; }
+
+  footer {
+    background: var(--ink); color: rgba(255,255,255,.6); text-align: center;
+    padding: 40px; font-size: 13px; font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Nav */
+  .sticky-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,245,240,.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line); padding: 0 40px;
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  .sticky-nav a {
+    display: block; padding: 14px 16px; font-size: 12px; font-weight: 500;
+    color: var(--ink-mute); text-decoration: none; white-space: nowrap;
+    border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
+  }
+  .sticky-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="seal">G</div>
+    <span>Ghana Gold DD · Technical Deep Dive</span>
+  </div>
+  <div class="meta">v3.0 · 2026-05-05 · 8 сенсоров + RAG-документы · КОНФИДЕНЦИАЛЬНО</div>
+</div>
+
+<nav class="sticky-nav">
+  <a href="#s1">Сравнение рейтингов</a>
+  <a href="#s2">8-сенсорная тепловая карта</a>
+  <a href="#s3">Детальные карточки</a>
+  <a href="#s4">Методология и оговорки</a>
+  <a href="#s5">Технический roadmap</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div class="label">GHANA GOLD DD · TECHNICAL DEEP DIVE · 2026-05-05</div>
+    <h1 class="serif">Интеграция 8 сенсоров и документальных данных: итоговый рейтинг</h1>
+    <p class="lead">Этот документ дополняет презентационный отчёт детальным техническим анализом: сравнением спутникового, документального и интегрированного рейтинга, 8-сенсорной тепловой картой, детальными карточками по каждой концессии и техническим roadmap для повышения уверенности.</p>
+    <div class="figures">
+      <div>
+        <div class="figure-label">Концессий</div>
+        <div class="figure-value">7</div>
+        <div class="figure-note">Eastern + Western North + Ashanti</div>
+      </div>
+      <div>
+        <div class="figure-label">Сенсорных слоёв</div>
+        <div class="figure-value">8</div>
+        <div class="figure-note">S2, S1, ASTER, Landsat, Galamsey, Crosta-PCA, DEM, Геофизика</div>
+      </div>
+      <div>
+        <div class="figure-label">RAG-документов</div>
+        <div class="figure-value">15+</div>
+        <div class="figure-note">FS, WP, ассаи, кадастр — 25 assay rows, 25 pit rows</div>
+      </div>
+      <div>
+        <div class="figure-label">Резервы (A-tier)</div>
+        <div class="figure-value">254<sub>koz</sub></div>
+        <div class="figure-note">Akim Apapam 42k + Oworam 128k + Amenam 85k (alluvial)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: Ranking comparison -->
+<section id="s1">
+  <div class="container">
+    <div class="eyebrow">Раздел 1</div>
+    <h2 class="section-title serif">Три рейтинга: спутниковый, документальный и интегрированный</h2>
+    <p class="section-lead">Ключевой вывод: спутниковый и документальный рейтинги сильно расходятся. FGM — #1 по спутниковым данным, но имеет только лицензию (title_only). Akim Apapam — #6 по спутнику, но tier-A с 6 ассаями и 135 тест-ямами. Интегрированный рейтинг взвешивает оба источника через confidence_score.</p>
+
+    <div class="ranking-grid">
+      <!-- Satellite-only -->
+      <div class="rank-col">
+        <div class="rank-col-header">
+          (A) Только спутник
+          <span>sorted by composite_score</span>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num top">1</div>
+          <div class="rank-name">fgm_birim_north</div>
+          <div class="rank-score">47.9</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">2</div>
+          <div class="rank-name">bodukwan_moseaso</div>
+          <div class="rank-score">46.3</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">3</div>
+          <div class="rank-name">amenam</div>
+          <div class="rank-score">45.3</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">4</div>
+          <div class="rank-name">oworam</div>
+          <div class="rank-score">42.0</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">5</div>
+          <div class="rank-name">mg_emmanuel_afosu</div>
+          <div class="rank-score">41.3</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num warn">6</div>
+          <div class="rank-name">akim_apapam</div>
+          <div class="rank-score">39.8</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num warn">7</div>
+          <div class="rank-name">obomeng</div>
+          <div class="rank-score">34.7</div>
+        </div>
+      </div>
+
+      <!-- Documentary-only -->
+      <div class="rank-col">
+        <div class="rank-col-header">
+          (B) Только документы
+          <span>sorted by tier → reserve_oz → grade</span>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num top">1</div>
+          <div class="rank-name">akim_apapam</div>
+          <div class="rank-score"><span class="rank-tier tier-A">A</span></div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">2</div>
+          <div class="rank-name">oworam</div>
+          <div class="rank-score"><span class="rank-tier tier-A">A</span></div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">3</div>
+          <div class="rank-name">amenam</div>
+          <div class="rank-score"><span class="rank-tier tier-A">A</span></div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">4</div>
+          <div class="rank-name">bodukwan_moseaso</div>
+          <div class="rank-score"><span class="rank-tier tier-B">B</span></div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">5</div>
+          <div class="rank-name">mg_emmanuel_afosu</div>
+          <div class="rank-score"><span class="rank-tier tier-C">C</span></div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num warn">6</div>
+          <div class="rank-name">fgm_birim_north</div>
+          <div class="rank-score"><span class="rank-tier tier-title">title_only</span></div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num warn">7</div>
+          <div class="rank-name">obomeng</div>
+          <div class="rank-score"><span class="rank-tier tier-empty">empty</span></div>
+        </div>
+      </div>
+
+      <!-- Integrated -->
+      <div class="rank-col">
+        <div class="rank-col-header">
+          (C) Интегрированный
+          <span>composite_score × confidence_score</span>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num top">1</div>
+          <div class="rank-name">amenam</div>
+          <div class="rank-score">45.32</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num top">2</div>
+          <div class="rank-name">oworam</div>
+          <div class="rank-score">41.96</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num top">3</div>
+          <div class="rank-name">akim_apapam</div>
+          <div class="rank-score">37.29</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">4</div>
+          <div class="rank-name">bodukwan_moseaso</div>
+          <div class="rank-score">37.03</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num">5</div>
+          <div class="rank-name">mg_emmanuel_afosu</div>
+          <div class="rank-score">26.87</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num warn">6</div>
+          <div class="rank-name">fgm_birim_north</div>
+          <div class="rank-score">26.37</div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-num warn">7</div>
+          <div class="rank-name">obomeng</div>
+          <div class="rank-score">17.36</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-box">
+      <h4>Ключевая история рейтинга</h4>
+      <p><strong>FGM Birim North</strong>: #1 по спутнику (composite 47.9) — сильная алтерация, Crosta PC2 железо, SAR линеаменты. Но в архиве нет ни FS, ни ассаев, ни резервной оценки — только лицензия (title_only, n_assays=0). Confidence_score = 0.55. В интегрированном рейтинге падает на #6 (26.4). Без бумаг сильный спутниковый сигнал неверифицируем.<br><br>
+      <strong>Akim Apapam</strong>: #6 по спутнику (39.8) — Landsat SWIR отсутствует (tile boundary), поэтому спутниковый балл занижен. Но tier-A: 6 ассаев со средним 8.1 г/т (ALS Ghana Lab), 135 тест-ям, FS 126 стр., 42 koz alluvial P&P. Confidence_score = 0.94. В интегрированном рейтинге поднимается на #3 (37.3).</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: 8-sensor heatmap -->
+<section id="s2">
+  <div class="container">
+    <div class="eyebrow">Раздел 2</div>
+    <h2 class="section-title serif">8-сенсорная тепловая карта</h2>
+    <p class="section-lead">7 концессий × 8 сенсорных сигналов. Зелёный = сильный сигнал, жёлтый = умеренный, красный = слабый или нет данных. Значения в ячейках — фактические числа из scored outputs.</p>
+
+    <div class="heatmap-wrap">
+      <table class="heatmap">
+        <thead>
+          <tr>
+            <th class="col-name">Концессия</th>
+            <th>S2 Prospectivity</th>
+            <th>S1 Lineaments</th>
+            <th>Crosta PC2<br>Iron</th>
+            <th>ASTER QI<br>Кварц</th>
+            <th>ASTER CI<br>Карбонат</th>
+            <th>Landsat SWIR<br>Clay</th>
+            <th>DEM HAND<br>p25 (m)</th>
+            <th>Galamsey<br>%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name-cell">fgm_birim_north</td>
+            <td class="cell-weak">0.061</td>
+            <td class="cell-moderate">0.144</td>
+            <td class="cell-weak">192.0</td>
+            <td class="cell-weak">1.021</td>
+            <td class="cell-moderate">0.956</td>
+            <td class="cell-na">N/A</td>
+            <td class="cell-moderate">4.69</td>
+            <td class="cell-moderate">1.13%</td>
+          </tr>
+          <tr>
+            <td class="name-cell">bodukwan_moseaso</td>
+            <td class="cell-moderate">0.082</td>
+            <td class="cell-strong">0.199</td>
+            <td class="cell-strong">368.2</td>
+            <td class="cell-strong">1.042</td>
+            <td class="cell-strong">0.978</td>
+            <td class="cell-moderate">1.04</td>
+            <td class="cell-strong">3.01</td>
+            <td class="cell-moderate">0.92%</td>
+          </tr>
+          <tr>
+            <td class="name-cell">amenam</td>
+            <td class="cell-strong">0.251</td>
+            <td class="cell-moderate">0.157</td>
+            <td class="cell-weak">173.6</td>
+            <td class="cell-moderate">1.013</td>
+            <td class="cell-moderate">0.947</td>
+            <td class="cell-moderate">0.98</td>
+            <td class="cell-strong">3.72</td>
+            <td class="cell-weak">0.11%</td>
+          </tr>
+          <tr>
+            <td class="name-cell">oworam</td>
+            <td class="cell-moderate">0.094</td>
+            <td class="cell-strong">0.172</td>
+            <td class="cell-moderate">264.8</td>
+            <td class="cell-weak">1.009</td>
+            <td class="cell-moderate">0.961</td>
+            <td class="cell-moderate">1.01</td>
+            <td class="cell-strong">3.66</td>
+            <td class="cell-weak">0.06%</td>
+          </tr>
+          <tr>
+            <td class="name-cell">mg_emmanuel_afosu</td>
+            <td class="cell-strong">0.328</td>
+            <td class="cell-moderate">0.142</td>
+            <td class="cell-moderate">204.6</td>
+            <td class="cell-moderate">1.012</td>
+            <td class="cell-moderate">0.952</td>
+            <td class="cell-moderate">0.97</td>
+            <td class="cell-strong">3.38</td>
+            <td class="cell-weak">0.02%</td>
+          </tr>
+          <tr>
+            <td class="name-cell">akim_apapam</td>
+            <td class="cell-moderate">0.091</td>
+            <td class="cell-strong">0.185</td>
+            <td class="cell-moderate">295.9</td>
+            <td class="cell-moderate">1.018</td>
+            <td class="cell-moderate">0.953</td>
+            <td class="cell-na">MISSING<br>(tile bug)</td>
+            <td class="cell-moderate">6.91</td>
+            <td class="cell-weak">0.04%</td>
+          </tr>
+          <tr>
+            <td class="name-cell">obomeng</td>
+            <td class="cell-weak">0.048</td>
+            <td class="cell-moderate">0.134</td>
+            <td class="cell-weak">187.3</td>
+            <td class="cell-weak">1.004</td>
+            <td class="cell-weak">0.941</td>
+            <td class="cell-moderate">0.99</td>
+            <td class="cell-moderate">5.41</td>
+            <td class="cell-weak">0.14%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px; color: var(--ink-mute); font-family:'JetBrains Mono',monospace;">
+      Зелёный (strong): prospectivity &gt;0.15, lineaments &gt;0.17, PC2 &gt;300, QI/CI deviation &gt;3%, HAND &lt;4.5m. Жёлтый (moderate): средние значения. Красный: слабые или ниже пороговых. N/A = данные отсутствуют.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 3: Deep dive cards -->
+<section id="s3">
+  <div class="container">
+    <div class="eyebrow">Раздел 3</div>
+    <h2 class="section-title serif">Детальные карточки — 7 концессий</h2>
+    <p class="section-lead">Каждая карточка содержит все 12+ сигналов, документальные данные и конкретные технические рекомендации по повышению уверенности. Confidence score 0-100 = 50% data_completeness + 50% documentary_completeness.</p>
+
+    <div class="cards-grid">
+
+      <!-- CARD 1: AMENAM -->
+      <div class="card" id="card-amenam">
+        <div class="card-header">
+          <div>
+            <h3>Amenam</h3>
+            <div class="meta-line">APL-pending · Birim North, Eastern · 9.77 km² · Ignite Machinery Rentals &amp; Mining Ltd</div>
+            <div class="meta-line" style="margin-top:6px;">Integrated Rank: #1 · Satellite Rank: #3 · Documentary Rank: #3 (Tier-A)</div>
+          </div>
+          <div class="card-score-badge">
+            <div class="score-num">100</div>
+            <div class="score-label">Confidence</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="signals-grid">
+            <div class="signal-item">
+              <div class="signal-label">Composite Score</div>
+              <div class="signal-value">45.3 / 100</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Integrated Score</div>
+              <div class="signal-value">45.32</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">S2 Prospectivity</div>
+              <div class="signal-value">0.251</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">SAR Lineaments /km²</div>
+              <div class="signal-value">0.157</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Crosta PC2 Iron</div>
+              <div class="signal-value">173.6</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">ASTER QI / CI</div>
+              <div class="signal-value">1.013 / 0.947</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Landsat SWIR Clay</div>
+              <div class="signal-value">0.98</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM Slope p50 (°)</div>
+              <div class="signal-value">3.83</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM HAND p25 (m)</div>
+              <div class="signal-value">3.72 ← низкий</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">TMI mean (nT)</div>
+              <div class="signal-value">−9.26</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Tilt Angle</div>
+              <div class="signal-value">+0.049</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Galamsey %</div>
+              <div class="signal-value">0.11%</div>
+            </div>
+          </div>
+          <div class="evidence-box">
+            <h4>Документальные данные (Tier A)</h4>
+            <div class="evidence-grid">
+              <div class="ev-item"><span class="ev-label">N assays:</span><span class="ev-val">0</span></div>
+              <div class="ev-item"><span class="ev-label">N test pits:</span><span class="ev-val">91</span></div>
+              <div class="ev-item"><span class="ev-label">FS pages:</span><span class="ev-val">109</span></div>
+              <div class="ev-item"><span class="ev-label">Reserve P&P:</span><span class="ev-val">84,968 oz alluvial</span></div>
+              <div class="ev-item"><span class="ev-label">Grade (g/m³):</span><span class="ev-val">0.92 (highest в архиве)</span></div>
+              <div class="ev-item"><span class="ev-label">QP:</span><span class="ev-val">Zaid Tetteh-Yemoh MGhIG</span></div>
+              <div class="ev-item"><span class="ev-label">NI 43-101:</span><span class="ev-val">Non-compliant (Historical)</span></div>
+              <div class="ev-item"><span class="ev-label">Cadastre:</span><span class="ev-val">NOT in cadastre (feasibility pillars)</span></div>
+            </div>
+          </div>
+          <div class="rec-box">
+            <h4>Что нужно для повышения уверенности</h4>
+            <ul>
+              <li>Hard-rock follow-up: 62.3 koz @ 1.10 g/t по региональной аналогии — цифры broken (bookmark errors в FS); нужна независимая геологическая съёмка для подтверждения hard-rock target.</li>
+              <li>Координатная верификация: концессия НЕ находится в кадастре под этим именем; использованы pillar-координаты из FS — требуется сверка с Ghana Minerals Commission.</li>
+              <li>Compiler risk: тот же QP (Zaid Tetteh-Yemoh) что и в Oworam FS — риск boilerplate; рекомендуется независимая проверка методологии пит-опробования.</li>
+              <li>InSAR SBAS time-series: проверить отсутствие subsidence в зоне alluvial dredging (ATEWA Forest Reserve рядом — ESG мониторинг обязателен).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: OWORAM -->
+      <div class="card" id="card-oworam">
+        <div class="card-header">
+          <div>
+            <h3>Oworam</h3>
+            <div class="meta-line">PL (G)-5/819 · West Akim, Eastern · 126.73 km² · Ignite Machinery Rentals And Mining Ltd</div>
+            <div class="meta-line" style="margin-top:6px;">Integrated Rank: #2 · Satellite Rank: #4 · Documentary Rank: #2 (Tier-A, 127,965 oz)</div>
+          </div>
+          <div class="card-score-badge">
+            <div class="score-num">100</div>
+            <div class="score-label">Confidence</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="signals-grid">
+            <div class="signal-item">
+              <div class="signal-label">Composite Score</div>
+              <div class="signal-value">42.0 / 100</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Integrated Score</div>
+              <div class="signal-value">41.96</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">S2 Prospectivity</div>
+              <div class="signal-value">0.094</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">SAR Lineaments /km²</div>
+              <div class="signal-value">0.172</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Crosta PC2 Iron</div>
+              <div class="signal-value">264.8</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">ASTER QI / CI</div>
+              <div class="signal-value">1.009 / 0.961</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Landsat SWIR Clay</div>
+              <div class="signal-value">1.01</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM Slope p50 (°)</div>
+              <div class="signal-value">6.65</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM HAND p25 (m)</div>
+              <div class="signal-value">3.66 ← низкий</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Stream Order max</div>
+              <div class="signal-value">5 ← highest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">TMI / Tilt</div>
+              <div class="signal-value">−24.3 / +0.118</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Galamsey %</div>
+              <div class="signal-value">0.06%</div>
+            </div>
+          </div>
+          <div class="evidence-box">
+            <h4>Документальные данные (Tier A)</h4>
+            <div class="evidence-grid">
+              <div class="ev-item"><span class="ev-label">N assays:</span><span class="ev-val">0 (alluvial only)</span></div>
+              <div class="ev-item"><span class="ev-label">N test pits:</span><span class="ev-val">94 (AYENSU grid)</span></div>
+              <div class="ev-item"><span class="ev-label">FS pages:</span><span class="ev-val">107</span></div>
+              <div class="ev-item"><span class="ev-label">Reserve P&P:</span><span class="ev-val">127,965 oz alluvial</span></div>
+              <div class="ev-item"><span class="ev-label">Grade (g/m³):</span><span class="ev-val">0.80 @ cutoff 0.5</span></div>
+              <div class="ev-item"><span class="ev-label">Volume:</span><span class="ev-val">4,975,128 m³ (8 km²)</span></div>
+              <div class="ev-item"><span class="ev-label">QP:</span><span class="ev-val">Zaid Tetteh-Yemoh MGhIG</span></div>
+              <div class="ev-item"><span class="ev-label">Cadastre:</span><span class="ev-val">EXACT (PL granted 2024-2027)</span></div>
+            </div>
+          </div>
+          <div class="rec-box">
+            <h4>Что нужно для повышения уверенности</h4>
+            <ul>
+              <li>Hard-rock follow-up: alluvial reserve 127,965 oz подтверждён, но hard-rock bedrock target UNKNOWN — требуется RC drilling и геологическая съёмка.</li>
+              <li>Кадастровая аномалия: реестр показывает 126.73 km² PL (только PL, не ML), но FS заявляет 32.57 km² — несоответствие в 4× требует юридического clarification у оператора.</li>
+              <li>Compiler risk: тот же QP что и в Amenam — независимая аудит-проверка.</li>
+              <li>ESG: ATEWA Range Forest Reserve вблизи — обязательна Environmental Impact Assessment перед любым dredging.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3: AKIM APAPAM -->
+      <div class="card" id="card-akim">
+        <div class="card-header">
+          <div>
+            <h3>Akim Apapam</h3>
+            <div class="meta-line">APL-? (NOT in cadastre) · Abuakwa South, Eastern · 8.40 km² · Hujak Mining Company Ltd</div>
+            <div class="meta-line" style="margin-top:6px;">Integrated Rank: #3 · Satellite Rank: #6 · Documentary Rank: #1 (Tier-A, 6 ALS assays avg 8.1 g/t)</div>
+          </div>
+          <div class="card-score-badge">
+            <div class="score-num">94</div>
+            <div class="score-label">Confidence</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="signals-grid">
+            <div class="signal-item">
+              <div class="signal-label">Composite Score</div>
+              <div class="signal-value">39.8 / 100</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Integrated Score</div>
+              <div class="signal-value">37.29</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">S2 Prospectivity</div>
+              <div class="signal-value">0.091</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">SAR Lineaments /km²</div>
+              <div class="signal-value">0.185</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Crosta PC2 Iron</div>
+              <div class="signal-value">295.9</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">ASTER QI / CI</div>
+              <div class="signal-value">1.018 / 0.953</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Landsat SWIR Clay</div>
+              <div class="signal-value">MISSING (tile bug)</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM Slope p50 (°)</div>
+              <div class="signal-value">14.35 ← steepest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM HAND p25 (m)</div>
+              <div class="signal-value">6.91</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">TMI mean / THD_p95</div>
+              <div class="signal-value">−15.1 / 0.243</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Tilt Angle</div>
+              <div class="signal-value">+0.014 ≈ 0 ← contact</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Galamsey %</div>
+              <div class="signal-value">0.04%</div>
+            </div>
+          </div>
+          <div class="evidence-box">
+            <h4>Документальные данные (Tier A — ЛУЧШИЕ АССАИ В АРХИВЕ)</h4>
+            <div class="evidence-grid">
+              <div class="ev-item"><span class="ev-label">N assays:</span><span class="ev-val">6 (ALS Ghana Lab, Au-AA26)</span></div>
+              <div class="ev-item"><span class="ev-label">Диапазон:</span><span class="ev-val">6.90 – 9.03 г/т</span></div>
+              <div class="ev-item"><span class="ev-label">Среднее:</span><span class="ev-val">8.09 г/т (rock chip/channel)</span></div>
+              <div class="ev-item"><span class="ev-label">N test pits:</span><span class="ev-val">135</span></div>
+              <div class="ev-item"><span class="ev-label">FS pages:</span><span class="ev-val">126</span></div>
+              <div class="ev-item"><span class="ev-label">Reserve P&P:</span><span class="ev-val">42,000 oz alluvial @ 0.45 g/m³</span></div>
+              <div class="ev-item"><span class="ev-label">Hard-rock:</span><span class="ev-val">НЕ ОЦЕНЁН (только rock chips)</span></div>
+              <div class="ev-item"><span class="ev-label">Cadastre:</span><span class="ev-val">NOT IN CADASTRE (красный флаг)</span></div>
+            </div>
+          </div>
+          <div class="rec-box">
+            <h4>Что нужно для повышения уверенности</h4>
+            <ul>
+              <li>Drillhole campaign (RC): 6 ALS rock chips avg 8.1 г/т — tier-1 lode grade, но объёмная оценка hard-rock тела отсутствует. RC drilling по основным структурам для quantity estimate.</li>
+              <li>Координатная верификация (ПРИОРИТЕТ): концессия НЕ найдена в Ghana cadastre ни под каким вариантом написания. ML application allegedly Jul 2025. Требуется прямой запрос в Ghana Minerals Commission.</li>
+              <li>Повторить Landsat SWIR tile: tile boundary bug для akim_apapam — перезапрос через GEE с expanded bbox для устранения пробела в сенсорном покрытии.</li>
+              <li>Квалифицированный QP: без Qualified Person любые reserve estimates — Historical only (non-bankable).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 4: BODUKWAN MOSEASO -->
+      <div class="card" id="card-bodukwan">
+        <div class="card-header">
+          <div>
+            <h3>Bodukwan Moseaso</h3>
+            <div class="meta-line">PL2/803 · Amansie West, Western North · 65.07 km² · Bodukwan Holding Company Limited</div>
+            <div class="meta-line" style="margin-top:6px;">Integrated Rank: #4 · Satellite Rank: #2 · Documentary Rank: #4 (Tier-B)</div>
+          </div>
+          <div class="card-score-badge">
+            <div class="score-num">80</div>
+            <div class="score-label">Confidence</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="signals-grid">
+            <div class="signal-item">
+              <div class="signal-label">Composite Score</div>
+              <div class="signal-value">46.3 / 100</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Integrated Score</div>
+              <div class="signal-value">37.03</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">S2 Prospectivity</div>
+              <div class="signal-value">0.082</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">SAR Lineaments /km²</div>
+              <div class="signal-value">0.199 ← 2nd highest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Crosta PC2 Iron</div>
+              <div class="signal-value">368.2 ← HIGHEST</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">ASTER QI / CI</div>
+              <div class="signal-value">1.042 / 0.978</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Landsat SWIR Clay</div>
+              <div class="signal-value">1.04</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM HAND p25 (m)</div>
+              <div class="signal-value">3.01 ← LOWEST</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">TMI mean (nT)</div>
+              <div class="signal-value">+43.07 ← OUTLIER</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">THD p95</div>
+              <div class="signal-value">0.477 ← highest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Bouguer (mGal)</div>
+              <div class="signal-value">6.79 ← lowest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Galamsey %</div>
+              <div class="signal-value">0.92%</div>
+            </div>
+          </div>
+          <div class="evidence-box">
+            <h4>Документальные данные (Tier B)</h4>
+            <div class="evidence-grid">
+              <div class="ev-item"><span class="ev-label">N assays:</span><span class="ev-val">1 channel sample</span></div>
+              <div class="ev-item"><span class="ev-label">Топ-грейд:</span><span class="ev-val">18.26 г/т (25MOCH002)</span></div>
+              <div class="ev-item"><span class="ev-label">N test pits:</span><span class="ev-val">0</span></div>
+              <div class="ev-item"><span class="ev-label">Reserve:</span><span class="ev-val">Нет (single-point)</span></div>
+              <div class="ev-item"><span class="ev-label">Регулятор:</span><span class="ev-val">MC reviewer Kotoka endorsement</span></div>
+              <div class="ev-item"><span class="ev-label">QP:</span><span class="ev-val">Charles Kusi-Manu MAusIMM(CP)</span></div>
+              <div class="ev-item"><span class="ev-label">PL status:</span><span class="ev-val">Active PL2/803 до 19/10/2026</span></div>
+              <div class="ev-item"><span class="ev-label">Western Region:</span><span class="ev-val">Sefwi Belt — galamsey pressure</span></div>
+            </div>
+          </div>
+          <div class="rec-box">
+            <h4>Что нужно для повышения уверенности</h4>
+            <ul>
+              <li>Channel sampling reproducibility: один канальный образец 18.26 г/т — статистически незначимо; нужно minimum 10-15 образцов по strike для подтверждения аномалии.</li>
+              <li>Trenching по геологическому показанию: phyllite с кварцевыми жилами — структурная геология плохо изучена.</li>
+              <li>ESG due diligence: Western Region (Amansie West) — один из наиболее затронутых galámsey районов Ганы. Требуется ESG screening перед любыми инвестиционными commitments.</li>
+              <li>Area discrepancy: реестр 65.07 km² vs FS 33.81 km² — юридическое clarification площади.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 5: MG EMMANUEL -->
+      <div class="card" id="card-mge">
+        <div class="card-header">
+          <div>
+            <h3>MG Emmanuel Afosu</h3>
+            <div class="meta-line">PL (G)-5/836 · Birim North, Eastern · 2.74 km² · MG Emmanuel Mining Limited Company</div>
+            <div class="meta-line" style="margin-top:6px;">Integrated Rank: #5 · Satellite Rank: #5 · Documentary Rank: #5 (Tier-C)</div>
+          </div>
+          <div class="card-score-badge">
+            <div class="score-num">65</div>
+            <div class="score-label">Confidence</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="signals-grid">
+            <div class="signal-item">
+              <div class="signal-label">Composite Score</div>
+              <div class="signal-value">41.3 / 100</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Integrated Score</div>
+              <div class="signal-value">26.87</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">S2 Prospectivity</div>
+              <div class="signal-value">0.328 ← 2nd highest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">SAR Lineaments /km²</div>
+              <div class="signal-value">0.142</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Crosta PC2 Iron</div>
+              <div class="signal-value">204.6</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">ASTER QI / CI</div>
+              <div class="signal-value">1.012 / 0.952</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM HAND p25 (m)</div>
+              <div class="signal-value">3.38</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Drainage /km²</div>
+              <div class="signal-value">0.407</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">TMI / Tilt</div>
+              <div class="signal-value">−9.01 / +0.117</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Galamsey %</div>
+              <div class="signal-value">0.02%</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Area (km²)</div>
+              <div class="signal-value">2.74 ← smallest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">PL period</div>
+              <div class="signal-value">2025-2028 (active)</div>
+            </div>
+          </div>
+          <div class="evidence-box">
+            <h4>Документальные данные (Tier C — Work Programme only)</h4>
+            <div class="evidence-grid">
+              <div class="ev-item"><span class="ev-label">N assays:</span><span class="ev-val">0 (запланировано)</span></div>
+              <div class="ev-item"><span class="ev-label">N test pits:</span><span class="ev-val">0</span></div>
+              <div class="ev-item"><span class="ev-label">FS pages:</span><span class="ev-val">0 (нет FS)</span></div>
+              <div class="ev-item"><span class="ev-label">Work Programme:</span><span class="ev-val">220 soil + 200 trench (Y1-Y2); 1000m RC (Y3)</span></div>
+              <div class="ev-item"><span class="ev-label">Аналог:</span><span class="ev-val">Banka deposit 22 г/т (ADB bank doc)</span></div>
+              <div class="ev-item"><span class="ev-label">Cadastre:</span><span class="ev-val">EXACT (PL confirmed 2025-2028)</span></div>
+            </div>
+          </div>
+          <div class="rec-box">
+            <h4>Что нужно для повышения уверенности</h4>
+            <ul>
+              <li>Execute Work Programme: soil sampling (220) + trenching (200 м) запланированы по PL, но не выполнены — без этого любая аналитика остаётся спекулятивной.</li>
+              <li>Если оператор не готов предоставить progress reports — это красный флаг для инвестиционного решения на данном этапе.</li>
+              <li>S2 prospectivity 0.328 — один из лучших сигналов в корпусе; стоит посмотреть, подтверждает ли геохимия.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 6: FGM BIRIM NORTH -->
+      <div class="card" id="card-fgm">
+        <div class="card-header" style="background: #5D3A1A;">
+          <div>
+            <h3>FGM Birim North</h3>
+            <div class="meta-line">PL5/152L (Granted ML 2018-2031) · Birim North, Eastern · 44.32 km² · FGM Resources Ghana Limited</div>
+            <div class="meta-line" style="margin-top:6px;">Integrated Rank: #6 · Satellite Rank: #1 · Documentary Rank: #6 (title_only)</div>
+          </div>
+          <div class="card-score-badge">
+            <div class="score-num">55</div>
+            <div class="score-label">Confidence</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="signals-grid">
+            <div class="signal-item">
+              <div class="signal-label">Composite Score</div>
+              <div class="signal-value">47.9 / 100 ← #1</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Integrated Score</div>
+              <div class="signal-value">26.37 ← #6</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">S2 Prospectivity</div>
+              <div class="signal-value">0.061</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Clay Alt. Strength</div>
+              <div class="signal-value">53.14 ← highest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Iron Oxide Strength</div>
+              <div class="signal-value">1.059</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">SAR Lineaments /km²</div>
+              <div class="signal-value">0.144</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Crosta PC2 Iron</div>
+              <div class="signal-value">192.0</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">ASTER QI / CI</div>
+              <div class="signal-value">1.021 / 0.956</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM HAND p25 (m)</div>
+              <div class="signal-value">4.69</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">TMI / Tilt</div>
+              <div class="signal-value">−9.41 / −0.030</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Galamsey %</div>
+              <div class="signal-value">1.13% (51.6 ha)</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Galamsey Area</div>
+              <div class="signal-value">51.57 ha ← highest</div>
+            </div>
+          </div>
+          <div class="evidence-box" style="background: #FFF3E0; border-color: #FFCC02;">
+            <h4 style="color: #E65100;">Документальные данные (title_only — КРИТИЧНЫЙ РАЗРЫВ)</h4>
+            <div class="evidence-grid">
+              <div class="ev-item"><span class="ev-label">N assays:</span><span class="ev-val">0</span></div>
+              <div class="ev-item"><span class="ev-label">N test pits:</span><span class="ev-val">0</span></div>
+              <div class="ev-item"><span class="ev-label">FS:</span><span class="ev-val">НЕТ в архиве</span></div>
+              <div class="ev-item"><span class="ev-label">Reserve:</span><span class="ev-val">НЕТ (только ML area 13.23 km²)</span></div>
+              <div class="ev-item"><span class="ev-label">ML status:</span><span class="ev-val">GRANTED (2018-2031) — это плюс</span></div>
+              <div class="ev-item"><span class="ev-label">Area discrepancy:</span><span class="ev-val">44.32 km² (registry) vs 13.23 km² (FS)</span></div>
+            </div>
+          </div>
+          <div class="rec-box">
+            <h4>Что нужно для повышения уверенности</h4>
+            <ul>
+              <li><strong>Получить FS / технический отчёт от FGM Resources Ghana Ltd.</strong> Без геологической документации сильный спутниковый сигнал (clay alteration 53.1 — highest в корпусе) не верифицируем. Это единственный путь к upgrade из title_only.</li>
+              <li>Запросить историческую добычу: ML выдан в 2018 — за 8 лет должны быть production reports в Minerals Commission; их отсутствие в архиве — жёлтый флаг.</li>
+              <li>Galamsey audit: 51.57 ha нарушенных земель (highest в корпусе) — ESG due diligence по статусу remediation обязателен до инвестиций.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 7: OBOMENG -->
+      <div class="card" id="card-obomeng">
+        <div class="card-header" style="background: #424242;">
+          <div>
+            <h3>Obomeng</h3>
+            <div class="meta-line">Неизвестная лицензия · Konongo area, Ashanti · ~25 km² · Неизвестный оператор</div>
+            <div class="meta-line" style="margin-top:6px;">Integrated Rank: #7 · Satellite Rank: #7 · Documentary Rank: #7 (empty)</div>
+          </div>
+          <div class="card-score-badge">
+            <div class="score-num">50</div>
+            <div class="score-label">Confidence</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="signals-grid">
+            <div class="signal-item">
+              <div class="signal-label">Composite Score</div>
+              <div class="signal-value">34.7 / 100 ← lowest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Integrated Score</div>
+              <div class="signal-value">17.36 ← lowest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">S2 Prospectivity</div>
+              <div class="signal-value">0.048</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">SAR Lineaments /km²</div>
+              <div class="signal-value">0.134 ← lowest</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Crosta PC2 Iron</div>
+              <div class="signal-value">187.3</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">DEM HAND p25 (m)</div>
+              <div class="signal-value">5.41</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Coord. status</div>
+              <div class="signal-value">approximate centroid !</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Cadastre</div>
+              <div class="signal-value">NOT IN CADASTRE</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">TMI / Tilt</div>
+              <div class="signal-value">−2.77 / +0.065</div>
+            </div>
+            <div class="signal-item">
+              <div class="signal-label">Galamsey %</div>
+              <div class="signal-value">0.14%</div>
+            </div>
+          </div>
+          <div class="evidence-box" style="background: #F5F5F5; border-color: #BDBDBD;">
+            <h4 style="color: #757575;">Документальные данные (empty)</h4>
+            <div class="evidence-grid">
+              <div class="ev-item"><span class="ev-label">N assays:</span><span class="ev-val">0</span></div>
+              <div class="ev-item"><span class="ev-label">N test pits:</span><span class="ev-val">0</span></div>
+              <div class="ev-item"><span class="ev-label">Документация:</span><span class="ev-val">Только WhatsApp screenshot карты</span></div>
+              <div class="ev-item"><span class="ev-label">Оператор:</span><span class="ev-val">Неизвестен (не в реестре)</span></div>
+            </div>
+          </div>
+          <div class="rec-box">
+            <h4>Что нужно для повышения уверенности</h4>
+            <ul>
+              <li>Получить точные KML/GPS координаты от holder: без них вся спутниковая аналитика опирается на approximate centroid около Konongo — потенциально смещён на несколько километров.</li>
+              <li>Базовая полевая поездка: минимальный следующий шаг перед любыми further commitments — visual verification + запрос лицензионного статуса в Minerals Commission.</li>
+              <li>При невозможности верификации — lowest приоритет для инвестиций.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+  </div>
+</section>
+
+<!-- SECTION 4: Methodology -->
+<section id="s4">
+  <div class="container">
+    <div class="eyebrow">Раздел 4</div>
+    <h2 class="section-title serif">Методология и ограничения</h2>
+    <p class="section-lead">Ключевые оговорки, которые необходимо учитывать при интерпретации результатов. Спутниковые данные — инструмент приоритизации полевых кампаний, не замена QP/CP review.</p>
+
+    <ul class="caveat-list">
+      <li>
+        <span class="caveat-tag tag-warn">ДАТИРОВКА</span>
+        <strong>ASTER TIR архив 2000-2003 устарел на 22-25 лет.</strong> Surface mineralogy могла существенно измениться, особенно в зонах galamsey (снос верхнего слоя, изменение drainage). QI/CI индексы отражают состояние на начало 2000-х, не текущее. Использовать только как региональный структурный контекст.
+      </li>
+      <li>
+        <span class="caveat-tag tag-caution">МЕТОДОЛОГИЯ</span>
+        <strong>Galamsey маска: Hansen-AND-S1 (strict) vs raw S1.</strong> Использована strict маска (пересечение Hansen GFC и S1 изменений) — более консервативная и юридически защитимая оценка. Raw S1 маска даёт верхнюю границу (~2-3× выше). Bodukwan и FGM — highest galamsey в обоих методологиях.
+      </li>
+      <li>
+        <span class="caveat-tag tag-warn">ДАННЫЕ</span>
+        <strong>Akim Apapam Landsat SWIR отсутствует (tile boundary bug).</strong> При загрузке SWIR-данных akim_apapam попал на стык двух Landsat tile'ов; fallback на ASTER SWIR обеспечивает частичное покрытие. Это занижает satellite score akim_apapam. Требуется повторный download с expanded bbox.
+      </li>
+      <li>
+        <span class="caveat-tag tag-warn">КООРДИНАТЫ</span>
+        <strong>Akim Apapam и Obomeng — NOT_IN_CADASTRE.</strong> akim_apapam: координаты взяты из pillars FS (feasibility_pillars_NOT_IN_CADASTRE). obomeng: approximate centroid около Konongo. Вся спутниковая аналитика по этим концессиям опирается на предположение о корректности координат — требуется верификация через Ghana Minerals Commission.
+      </li>
+      <li>
+        <span class="caveat-tag tag-info">EMIT</span>
+        <strong>EMIT hyperspectral: NASA CMR подтвердил coverage 7/7 концессий, данные не скачаны.</strong> Загрузка требует Earthdata netrc (бесплатный аккаунт, ~5 мин регистрация). После загрузки EMIT mineral maps добавят 8-й независимый сенсор к scoring.
+      </li>
+      <li>
+        <span class="caveat-tag tag-caution">ГЕОФИЗИКА</span>
+        <strong>WGM2012 заменён на EGM2008 (BGI registration required) — gravity grid 27 km/pixel.</strong> Разрешение EMAG2v3 ~0.84 km/pixel (TMI) и ~27 km/pixel (gravity) — оба являются региональным контекстом, не концессионными данными. Residual Bouguer для малых концессий (&#60;3 gravity pixels) = 0 или null. Использовать только как background context.
+      </li>
+      <li>
+        <span class="caveat-tag tag-info">ФОРМУЛА</span>
+        <strong>Confidence_score = 50% data_completeness + 50% documentary_completeness.</strong> Текущее взвешивание 50/50 — настраиваемо под investor preference. Для conservative финансового DD: 30/70 (больше веса документам). Для exploration stage: 70/30 (больше веса сенсорам).
+      </li>
+      <li>
+        <span class="caveat-tag tag-caution">RESERVE TYPES</span>
+        <strong>Hard-rock vs alluvial: принципиально разные ресурсы.</strong> Oworam/Amenam/Akim Apapam reserves — alluvial only (dredge/sluice). Hard-rock потенциал extrapolated по региональной аналогии (Amenam: broken figures). Akim Apapam rock chips 8.1 г/т — hard-rock signal, но объёмная оценка отсутствует. Инвестиционные решения по hard-rock и alluvial — принципиально разные risk/return profiles.
+      </li>
+      <li>
+        <span class="caveat-tag tag-info">TIER RULES</span>
+        <strong>Правила определения evidence_tier.</strong> A = ≥10 assays OR (≥1 FS ≥50pp AND reserve_oz known); B = ≥1 assay/channel sample; C = work programme only (soil + RC planned не выполнено); title_only = только лицензия, нет геологических данных; empty = нет документации в архиве.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SECTION 5: Roadmap -->
+<section id="s5">
+  <div class="container">
+    <div class="eyebrow">Раздел 5</div>
+    <h2 class="section-title serif">Технический roadmap для повышения уверенности</h2>
+    <p class="section-lead">Конкретные следующие шаги по каждой tier-группе для повышения confidence_score и перехода к bankable estimates. Ранжированы по ROI/effort.</p>
+
+    <div class="roadmap-tier">
+      <div class="roadmap-tier-header">
+        <span class="rank-tier tier-A" style="font-size:14px;">Tier-A</span>
+        Akim Apapam, Oworam, Amenam — приоритет #1
+      </div>
+      <div class="roadmap-tier-body">
+        <ul>
+          <li><strong>Akim Apapam (первоочередной):</strong> RC drilling campaign по hard-rock target — 6 ALS rock chips avg 8.1 г/т указывают на лode body, но объёмная оценка отсутствует. 10-15 holes × 50-100m = ~$200k-400k. Потенциал конверсии в NI 43-101 compliant resource.</li>
+          <li><strong>Akim Apapam:</strong> Координатная верификация через Ghana Minerals Commission НЕМЕДЛЕННО — без подтверждения ML status любые инвестиции несут правовой risk. Запрос стоит дней, не недель.</li>
+          <li><strong>Oworam / Amenam:</strong> Sonic drilling для alluvial reserve verification — NI 43-101 compliant QP review для upgrade из Historical категории. Привлечь Qualified Person (не тот же Tetteh-Yemoh — compiler risk).</li>
+          <li><strong>Все Tier-A:</strong> InSAR SBAS time-series (Sentinel-1, бесплатно) для мониторинга subsidence в зонах alluvial. Обязательна для ATEWA Forest Reserve proximity.</li>
+          <li><strong>Все Tier-A:</strong> Независимый QP review методологии опробования — все три FS содержат non-NI43-101 compliant reserves; upgrade требует QP sign-off.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roadmap-tier">
+      <div class="roadmap-tier-header">
+        <span class="rank-tier tier-B" style="font-size:14px;">Tier-B</span>
+        Bodukwan Moseaso — приоритет #2
+      </div>
+      <div class="roadmap-tier-body">
+        <ul>
+          <li>Channel sampling reproducibility: minimum 10-15 образцов по strike от 25MOCH002 для подтверждения аномалии 18.26 г/т. Один образец — not statistically representative.</li>
+          <li>Trenching по phyllite/quartz vein zone: 200-500м траншей для geological mapping структуры-хозяина.</li>
+          <li>ESG screening (Western Region): Amansie West — высокая galámsey активность; due diligence на community relations и environmental liabilities перед любыми commitments.</li>
+          <li>PL renewal: текущий PL2/803 expires 19/10/2026 — renewal required в ближайшие месяцы.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roadmap-tier">
+      <div class="roadmap-tier-header">
+        <span class="rank-tier tier-C" style="font-size:14px;">Tier-C / title_only</span>
+        MG Emmanuel, FGM Birim North — приоритет #3
+      </div>
+      <div class="roadmap-tier-body">
+        <ul>
+          <li><strong>MG Emmanuel:</strong> Execute Work Programme — 220 soil samples + 200м траншей (Y1-Y2) уже обозначены в PL; отсутствие прогресса через год после получения PL — настораживает. Запросить progress report у оператора.</li>
+          <li><strong>FGM Birim North:</strong> Запросить FS / технический отчёт напрямую у FGM Resources Ghana Ltd. Granted ML с 2018 — за 8 лет должны существовать внутренние геологические данные; их отсутствие в публичном архиве требует объяснения от оператора.</li>
+          <li><strong>FGM:</strong> Galamsey audit: 51.57 ha — highest в корпусе; ESG remediation status обязательна к изучению.</li>
+          <li>Если оператор не предоставляет данные при первом запросе — это red flag, означающий переход к lowest investment priority.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roadmap-tier">
+      <div class="roadmap-tier-header">
+        <span class="rank-tier tier-empty" style="font-size:14px;">Empty</span>
+        Obomeng — минимальный приоритет
+      </div>
+      <div class="roadmap-tier-body">
+        <ul>
+          <li>Базовая полевая поездка (1-2 дня): visual verification of concession location + запрос лицензионного статуса у Ghana Minerals Commission — необходимый минимум перед любыми дальнейшими commitments.</li>
+          <li>Получить точные KML/GPS координаты от holder: approximate centroid около Konongo смещает всю спутниковую аналитику.</li>
+          <li>До получения юридического подтверждения существования и корректных координат — выводов не делать.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Ghana Gold DD · Technical Deep Dive v3.0 · 2026-05-05 · 8 sensors + RAG docs<br>
+  Данные: Sentinel-2, Sentinel-1, ASTER TIR, Landsat 8/9, Galamsey mask, Crosta PCA, Copernicus DEM 30m, EMAG2v3, EGM2008<br>
+  Документы: FS (Hujak, Ignite), Bodukwan Ashkenazi Report, ADB Bank summary, FGM lease, Ghana Minerals Commission cadastre<br>
+  <br>
+  КОНФИДЕНЦИАЛЬНО · Только для внутреннего использования · Не заменяет QP/CP review · Not bankable
+</footer>
+
+</body>
+</html>
