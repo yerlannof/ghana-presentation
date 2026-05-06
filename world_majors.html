@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карта мейджоров — Глобальные золотодобывающие активы · 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WPaE=" crossorigin=""></script>
+<style>
+:root {
+  --bg:#F7F5F0; --bg-card:#FFFFFF; --line:#E0DCD2; --line-soft:#EBE7DD;
+  --ink:#14110D; --ink-2:#3A352E; --ink-mute:#6B645A;
+  --accent:#1F4D3D; --accent-2:#2C6B55; --accent-light:#E8EFEB;
+  --gold:#A07B2A; --gold-light:#F5EDD5;
+  --warn:#B33C2D; --warn-bg:#F9EDEB;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;}
+
+/* Topbar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--ink);color:#fff;padding:8px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.topbar-brand{display:flex;align-items:center;gap:10px;}
+.topbar-seal{width:28px;height:28px;border:1.5px solid rgba(255,255,255,0.7);border-radius:50%;display:grid;place-items:center;font-family:'Source Serif 4',serif;font-size:13px;font-weight:600;flex-shrink:0;}
+.topbar-title{font-size:13px;font-weight:600;letter-spacing:0.02em;}
+.topbar-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);}
+.topbar-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.topbar-link{font-size:11px;color:rgba(255,255,255,0.75);text-decoration:none;border:1px solid rgba(255,255,255,0.3);border-radius:12px;padding:3px 10px;transition:all 0.2s;}
+.topbar-link:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.7);color:#fff;}
+
+/* Layout */
+.page-layout{display:flex;flex-direction:column;height:100%;padding-top:46px;}
+
+/* Filters panel */
+.filters-panel{background:var(--bg-card);border-bottom:1px solid var(--line);padding:10px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;z-index:500;flex-shrink:0;}
+.filters-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;}
+.filter-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.filter-btn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1.5px solid transparent;font-size:11px;font-weight:600;cursor:pointer;transition:all 0.15s;user-select:none;white-space:nowrap;}
+.filter-btn .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.filter-btn.active{border-color:currentColor;}
+.filter-btn:not(.active){opacity:0.45;border-color:var(--line);}
+.filter-divider{width:1px;height:24px;background:var(--line);flex-shrink:0;}
+.filter-status-group{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.filter-status-btn{padding:3px 9px;border-radius:20px;border:1.5px solid var(--line);font-size:10px;font-weight:600;cursor:pointer;transition:all 0.15s;background:var(--bg);color:var(--ink-mute);white-space:nowrap;}
+.filter-status-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-reset{margin-left:auto;padding:4px 12px;border-radius:20px;border:1.5px solid var(--line);font-size:11px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--ink-mute);transition:all 0.15s;}
+.filter-reset:hover{border-color:var(--warn);color:var(--warn);}
+.filter-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-mute);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:2px 7px;white-space:nowrap;}
+
+/* Map */
+#map{flex:1;min-height:0;}
+
+/* Popup styles */
+.mine-popup{min-width:220px;max-width:280px;font-family:'Inter',sans-serif;}
+.mine-popup .popup-company{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.mine-popup .popup-asset{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px;line-height:1.2;}
+.mine-popup .popup-country{font-size:12px;color:var(--ink-mute);margin-bottom:8px;}
+.mine-popup .popup-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f0ede8;font-size:12px;}
+.mine-popup .popup-row:last-child{border-bottom:none;}
+.mine-popup .popup-row .lbl{color:var(--ink-mute);}
+.mine-popup .popup-row .val{font-weight:600;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;text-align:right;max-width:160px;}
+.mine-popup .popup-note{margin-top:8px;padding:6px 8px;background:#f7f5f0;border-radius:6px;font-size:11px;color:var(--ink-2);line-height:1.5;border-left:3px solid;}
+.mine-popup .popup-divested{background:#fef2f2;border-left-color:#dc2626;color:#7f1d1d;}
+.mine-popup .popup-expansion{background:#f0fdf4;border-left-color:#16a34a;color:#14532d;}
+.mine-popup .popup-highlight{background:#fffbeb;border-left-color:#d97706;color:#78350f;}
+
+/* Legend */
+.map-legend{position:absolute;top:10px;right:10px;z-index:700;background:rgba(255,255,255,0.96);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:180px;box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+.legend-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:10px;}
+.legend-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px;font-weight:500;color:var(--ink-2);cursor:pointer;}
+.legend-item:last-child{margin-bottom:0;}
+.legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:2px solid rgba(0,0,0,0.15);}
+.legend-sep{width:100%;height:1px;background:var(--line);margin:8px 0;}
+.legend-status-item{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:11px;color:var(--ink-mute);}
+.legend-status-icon{width:12px;height:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;}
+
+/* Stats bar */
+.stats-bar{background:var(--ink);color:rgba(255,255,255,0.7);padding:5px 20px;display:flex;gap:16px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;flex-shrink:0;flex-wrap:wrap;}
+.stats-item{display:flex;gap:5px;align-items:center;}
+.stats-item strong{color:#fff;}
+.stats-footer{margin-left:auto;opacity:0.5;}
+
+@media(max-width:768px){
+  .topbar{padding:6px 12px;}
+  .topbar-meta{display:none;}
+  .filters-panel{padding:8px 12px;gap:8px;}
+  .map-legend{top:auto;bottom:60px;right:8px;max-height:40vh;overflow-y:auto;}
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<nav class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-seal">Au</div>
+    <div>
+      <div class="topbar-title">Карта глобальных золотодобывающих мейджоров</div>
+      <div class="topbar-meta">Ghana DD · Май 2026 · Расположение активов и текущий статус владения</div>
+    </div>
+  </div>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-link">Ghana анализ</a>
+    <a href="asset_valuation.html" class="topbar-link">Оценка активов</a>
+  </div>
+</nav>
+
+<!-- Filters panel -->
+<div class="page-layout">
+<div class="filters-panel" id="filtersPanel">
+  <span class="filters-label">Фильтр по компании:</span>
+  <div class="filter-group" id="companyFilters"></div>
+  <div class="filter-divider"></div>
+  <span class="filters-label">Статус:</span>
+  <div class="filter-status-group" id="statusFilters"></div>
+  <div class="filter-divider"></div>
+  <span class="filter-count" id="markerCount">Маркеров: 0</span>
+  <button class="filter-reset" onclick="resetFilters()">Сброс</button>
+</div>
+
+<!-- Map -->
+<div id="map"></div>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="stats-item"><strong id="stat-total">0</strong> активов</div>
+  <div class="stats-item"><strong id="stat-producing">0</strong> добывающих</div>
+  <div class="stats-item"><strong id="stat-development">0</strong> в разработке</div>
+  <div class="stats-item"><strong id="stat-divested">0</strong> смена владельца 2024-25</div>
+  <div class="stats-item"><strong id="stat-zijin">0</strong> активов Zijin</div>
+  <div class="stats-footer">Обновлено: 2026-05-06 · Данные: отчёты компаний, 10-K 2024, investor pages</div>
+</div>
+</div>
+
+<!-- Map Legend (absolute positioned over map) -->
+<div class="map-legend" id="mapLegend">
+  <div class="legend-title">Компании</div>
+  <div id="legendItems"></div>
+  <div class="legend-sep"></div>
+  <div class="legend-title">Статус актива</div>
+  <div class="legend-status-item"><span class="legend-status-icon">&#9679;</span> Добывающий рудник</div>
+  <div class="legend-status-item"><span class="legend-status-icon" style="opacity:0.6">&#9679;</span> Разработка / стр-во</div>
+  <div class="legend-status-item"><span class="legend-status-icon" style="opacity:0.4">&#9675;</span> Геологоразведка</div>
+  <div class="legend-status-item"><span class="legend-status-icon" style="color:#dc2626">&#9673;</span> Продано 2024-25</div>
+</div>
+
+<script>
+// ===== DATA =====
+// Sources: Newmont 10-K 2024, Barrick AR 2024, AngloGold AR 2024, Zijin AR 2024,
+//          Kinross AR 2024, Gold Fields AR 2024, Agnico Eagle AR 2024, Polyus AR 2024,
+//          Endeavour Mining AR 2024, Resolute Mining AR 2024, E&P Ghana press releases
+const MINES = [
+  // ===== NEWMONT =====
+  {company:"Newmont",asset:"Boddington",country:"Австралия",lat:-32.80,lon:116.48,status:"добыча",reserves_moz:5.7,year_acquired:2009,notes:"Крупнейший открытый карьер Au в Австралии. 700 koz/год."},
+  {company:"Newmont",asset:"Tanami",country:"Австралия",lat:-19.97,lon:132.03,status:"добыча",reserves_moz:3.3,year_acquired:2002,notes:"Подземный рудник, Northern Territory. Расширение Tanami Exp 2 завершено 2024."},
+  {company:"Newmont",asset:"Cripple Creek & Victor",country:"США",lat:38.74,lon:-105.18,status:"добыча",reserves_moz:2.1,year_acquired:2015,notes:"CC&V, Колорадо. Кучное выщелачивание + кучное."},
+  {company:"Newmont",asset:"Cortez",country:"США",lat:40.33,lon:-116.79,status:"добыча",reserves_moz:9.2,year_acquired:2019,notes:"Невада Gold Mines (38.5% Newmont, 61.5% Barrick). Операционный контроль — Barrick."},
+  {company:"Newmont",asset:"Carlin",country:"США",lat:40.70,lon:-116.10,status:"добыча",reserves_moz:11.4,year_acquired:2019,notes:"Nevada Gold Mines. Один из богатейших золотых поясов мира."},
+  {company:"Newmont",asset:"Pueblo Viejo",country:"Доминиканская Республика",lat:19.00,lon:-70.48,status:"добыча",reserves_moz:20.7,year_acquired:2012,notes:"Newmont 40%, Barrick 60%. >600 koz/год на Newmont. Расширение фабрики 2024."},
+  {company:"Newmont",asset:"Yanacocha",country:"Перу",lat:-6.93,lon:-78.63,status:"добыча + переход",reserves_moz:3.9,year_acquired:1994,notes:"Первый крупный рудник Newmont в Лат.Америке. Переход на Yanacocha Sulfides. Buenaventura 43.65%."},
+  {company:"Newmont",asset:"Merian",country:"Суринам",lat:4.07,lon:-54.90,status:"добыча",reserves_moz:3.3,year_acquired:2016,notes:"75% Newmont. Открытый карьер. ~330 koz/год."},
+  {company:"Newmont",asset:"Penasquito",country:"Мексика",lat:24.90,lon:-103.47,status:"добыча",reserves_moz:14.2,year_acquired:2019,notes:"Золото-серебро-свинец-цинк. >900 koz Ag экв. Newmont оставил в портфеле несмотря на дивестиции."},
+  {company:"Newmont",asset:"Ahafo",country:"Гана",lat:7.07,lon:-2.33,status:"добыча",reserves_moz:4.2,year_acquired:2006,notes:"Открытый карьер + подземный Ahafo Underground. ~400 koz/год."},
+  {company:"Newmont",asset:"Brucejack",country:"Канада",lat:56.57,lon:-130.00,status:"добыча",reserves_moz:2.1,year_acquired:2023,notes:"Приобретён от Pretium Resources 2023. Высокосортный подземный. BC, Канада."},
+  // Newmont divestitures
+  {company:"Newmont",asset:"Akyem",country:"Гана",lat:6.34,lon:-1.08,status:"продано Zijin (апр 2025)",reserves_moz:1.11,year_acquired:2013,year_sold:2025,notes:"Продано Zijin Mining за $1 млрд (апр 2025). Первый крупный актив Zijin в Гане. UG план Zijin к 2028."},
+  {company:"Newmont",asset:"Telfer",country:"Австралия",lat:-21.73,lon:122.23,status:"продано Greatland Gold (2024)",reserves_moz:1.8,year_acquired:2019,year_sold:2024,notes:"Продано Greatland Gold в 2024 за $475M. West Australia, Paterson Province."},
+  {company:"Newmont",asset:"Eleonore",country:"Канада",lat:52.39,lon:-76.10,status:"продано Aztec Minerals (2024)",reserves_moz:0.9,year_acquired:2015,year_sold:2024,notes:"James Bay, Квебек. Продано в рамках пакетной дивестиции 2024."},
+  {company:"Newmont",asset:"Musselwhite",country:"Канада",lat:52.60,lon:-90.20,status:"продано Orla Mining (2024)",reserves_moz:1.1,year_acquired:2019,year_sold:2024,notes:"Онтарио. Продано Orla Mining $810M, 2024."},
+  {company:"Newmont",asset:"Porcupine",country:"Канада",lat:48.47,lon:-81.33,status:"продано Dynasty Gold (2024)",reserves_moz:2.0,year_acquired:2019,year_sold:2024,notes:"Тимминс, Онтарио. Долгосрочный рудник, продан в пакете 2024."},
+
+  // ===== BARRICK =====
+  {company:"Barrick",asset:"Carlin / NGM",country:"США",lat:40.70,lon:-116.10,status:"добыча",reserves_moz:11.4,year_acquired:2019,notes:"Nevada Gold Mines (61.5% Barrick, 38.5% Newmont). Оператор — Barrick. Крупнейший золотой комплекс США."},
+  {company:"Barrick",asset:"Cortez / NGM",country:"США",lat:40.33,lon:-116.79,status:"добыча",reserves_moz:9.2,year_acquired:2019,notes:"Nevada Gold Mines. Pipeline, Crossroads, Goldrush подземный."},
+  {company:"Barrick",asset:"Hemlo",country:"Канада",lat:48.78,lon:-85.92,status:"добыча",reserves_moz:1.0,year_acquired:1983,notes:"Онтарио. Один из старейших активов Barrick."},
+  {company:"Barrick",asset:"Pueblo Viejo",country:"Доминиканская Республика",lat:19.02,lon:-70.52,status:"добыча",reserves_moz:20.7,year_acquired:2012,notes:"Barrick 60%, Newmont 40%. Расширение Pueblo Viejo завершено 2025. >900 koz Barrick доли/год."},
+  {company:"Barrick",asset:"Kibali",country:"ДРК",lat:3.04,lon:29.24,status:"добыча",reserves_moz:12.8,year_acquired:2013,notes:"Barrick 45%, AngloGold 45%, DRC 10%. Один из крупнейших рудников Африки. ~750 koz/год."},
+  {company:"Barrick",asset:"Loulo-Gounkoto",country:"Мали",lat:14.45,lon:-10.22,status:"добыча",reserves_moz:8.2,year_acquired:2006,notes:"80% Barrick. Крупнейший актив Barrick в Западной Африке. ~650 koz/год. Обострение с пр-вом Мали 2024."},
+  {company:"Barrick",asset:"Bulyanhulu",country:"Танзания",lat:-3.29,lon:31.69,status:"добыча",reserves_moz:4.5,year_acquired:1999,notes:"Подземный высокосортный рудник, Шинянга. ~250 koz/год."},
+  {company:"Barrick",asset:"North Mara",country:"Танзания",lat:-1.52,lon:34.37,status:"добыча",reserves_moz:3.1,year_acquired:2019,notes:"84% Barrick. Мара, Танзания. Открытый + подземный."},
+  {company:"Barrick",asset:"Reko Diq",country:"Пакистан",lat:28.82,lon:62.48,status:"разработка",reserves_moz:41.5,year_acquired:2022,notes:"50% Barrick. Гигантский Cu-Au проект, Белуджистан. Первая очередь ~2028. Запасы Au+Cu ~$60 млрд."},
+  {company:"Barrick",asset:"Lumwana",country:"Замбия",lat:-12.20,lon:25.68,status:"добыча + расширение",reserves_moz:10.3,year_acquired:2011,notes:"100% Barrick. Медно-золотой. Super Pit Expansion 2024+ (2.5x производительность)."},
+  {company:"Barrick",asset:"Jabal Sayid",country:"Саудовская Аравия",lat:24.90,lon:41.37,status:"добыча",reserves_moz:null,year_acquired:2001,notes:"50% Barrick. Cu-Au рудник, западная Аравия. ~15 kt Cu/год."},
+
+  // ===== ANGLOGOLD ASHANTI =====
+  {company:"AngloGold",asset:"Geita",country:"Танзания",lat:-2.87,lon:32.16,status:"добыча",reserves_moz:7.1,year_acquired:2000,notes:"100% AngloGold. Крупнейший рудник AngloGold. ~500 koz/год. Открытый + подземный."},
+  {company:"AngloGold",asset:"Iduapriem",country:"Гана",lat:5.40,lon:-2.01,status:"добыча",reserves_moz:2.9,year_acquired:1997,notes:"100% AngloGold. Western Region, Гана. ~220 koz/год. Смежный с Tarkwa Gold Fields."},
+  {company:"AngloGold",asset:"Obuasi",country:"Гана",lat:6.20,lon:-1.67,status:"добыча (перезапуск)",reserves_moz:30.0,year_acquired:1996,notes:"100% AngloGold. Один из богатейших рудников в истории. Перезапуск 2019. Высокосортный подземный, Grade ~7g/t."},
+  {company:"AngloGold",asset:"Sunrise Dam",country:"Австралия",lat:-29.00,lon:122.38,status:"добыча",reserves_moz:3.5,year_acquired:2004,notes:"100% AngloGold. Western Australia. Подземный рудник, ~300 koz/год."},
+  {company:"AngloGold",asset:"Tropicana",country:"Австралия",lat:-28.02,lon:125.70,status:"добыча",reserves_moz:4.9,year_acquired:2013,notes:"70% AngloGold (Regis Resources 30%). Great Victoria Desert, WA."},
+  {company:"AngloGold",asset:"Cuiabá",country:"Бразилия",lat:-19.89,lon:-43.94,status:"добыча",reserves_moz:5.5,year_acquired:1987,notes:"100% AngloGold. Belo Horizonte, Бразилия. Подземный, FeO руды. ~400 koz/год."},
+  {company:"AngloGold",asset:"Cerro Vanguardia",country:"Аргентина",lat:-47.60,lon:-67.92,status:"добыча",reserves_moz:1.2,year_acquired:1998,notes:"92.5% AngloGold. Санта-Крус, Патагония. Au-Ag эпитермальный."},
+  {company:"AngloGold",asset:"Siguiri",country:"Гвинея",lat:11.40,lon:-9.17,status:"добыча",reserves_moz:4.2,year_acquired:1996,notes:"85% AngloGold. Северная Гвинея. Крупный открытый карьер. ~250 koz/год."},
+  {company:"AngloGold",asset:"Silicon / Expanded Silicon",country:"США",lat:37.60,lon:-117.15,status:"разведка/разработка",reserves_moz:14.0,year_acquired:2021,notes:"100% AngloGold. Nevada, США. Стратегический рост. EIS подан 2024. Потенциал +500 koz/год."},
+
+  // ===== ZIJIN MINING =====
+  {company:"Zijin",asset:"Akyem",country:"Гана",lat:6.34,lon:-1.08,status:"добыча (куплено апр 2025)",reserves_moz:1.11,year_acquired:2025,notes:"Куплено у Newmont за $1 млрд (апр 2025). ПЕРВЫЙ крупный актив Zijin в Гане. Текущий OC + план UG к 2028. ~200 koz/год."},
+  {company:"Zijin",asset:"Rosebel",country:"Суринам",lat:4.68,lon:-55.70,status:"добыча",reserves_moz:3.2,year_acquired:2023,notes:"95% Zijin (куплено у IAMGOLD). Суринам. Открытый карьер. ~250 koz/год. Ещё и Saramacca рядом."},
+  {company:"Zijin",asset:"Buritica",country:"Колумбия",lat:6.71,lon:-75.89,status:"добыча",reserves_moz:4.1,year_acquired:2020,notes:"100% Zijin (куплено у Continental Gold). Антиокия, Колумбия. Высокосортный подземный, 9g/t. ~280 koz/год."},
+  {company:"Zijin",asset:"Бор / RTB Bor",country:"Сербия",lat:44.08,lon:22.10,status:"добыча (Cu-Au)",reserves_moz:null,year_acquired:2018,notes:"63% Zijin. Крупный медно-золотой, Сербия. Символ экспансии Zijin в Европу."},
+  {company:"Zijin",asset:"Камоа-Какула",country:"ДРК",lat:-10.87,lon:26.17,status:"добыча (Cu, попутный Au)",reserves_moz:null,year_acquired:2015,notes:"39.6% Zijin. Крупнейшее Cu месторождение мира. Попутное Au. ДРК."},
+  {company:"Zijin",asset:"Пэртилик / Jiaoluotage",country:"Китай",lat:42.60,lon:89.20,status:"добыча",reserves_moz:2.5,year_acquired:1993,notes:"Домашний рудник Zijin, Синьцзян. Родовое месторождение компании."},
+  {company:"Zijin",asset:"Norton Gold Fields",country:"Австралия",lat:-30.88,lon:121.63,status:"добыча",reserves_moz:1.8,year_acquired:2012,notes:"100% Zijin. Kalgoorlie, Западная Австралия. ~110 koz/год."},
+  {company:"Zijin",asset:"Bisha",country:"Эритрея",lat:16.54,lon:37.45,status:"добыча (Zn-Cu-Au)",reserves_moz:null,year_acquired:2017,notes:"60% Zijin (40% гос.). VMS рудник. Золото и цветные металлы."},
+
+  // ===== KINROSS GOLD =====
+  {company:"Kinross",asset:"Tasiast",country:"Мавритания",lat:22.00,lon:-13.58,status:"добыча",reserves_moz:7.6,year_acquired:2010,notes:"100% Kinross. Tasiast Phase 2 — 24ktpd. Крупнейший актив Kinross. ~600 koz/год."},
+  {company:"Kinross",asset:"Paracatu",country:"Бразилия",lat:-17.24,lon:-46.87,status:"добыча",reserves_moz:16.4,year_acquired:2007,notes:"100% Kinross. Минас-Жерайс. Крупнейший рудник Бразилии по Au. ~570 koz/год."},
+  {company:"Kinross",asset:"Round Mountain",country:"США",lat:38.72,lon:-117.07,status:"добыча",reserves_moz:2.2,year_acquired:2016,notes:"100% Kinross. Невада. Открытый + кучное выщелачивание."},
+  {company:"Kinross",asset:"La Coipa",country:"Чили",lat:-26.48,lon:-70.05,status:"добыча",reserves_moz:1.6,year_acquired:1991,notes:"100% Kinross. Atacama. Перезапуск 2022 (Phase 7)."},
+  {company:"Kinross",asset:"Manh Choh",country:"США",lat:63.60,lon:-143.58,status:"добыча",reserves_moz:1.3,year_acquired:2023,notes:"70% Kinross (Contango 30%). Аляска. Рудное тело Manh Choh, первый Au с Аляски у Kinross."},
+  {company:"Kinross",asset:"Great Bear (Dixie)",country:"Канада",lat:51.44,lon:-93.89,status:"разведка/разработка",reserves_moz:null,year_acquired:2022,notes:"100% Kinross ($1.8B сделка). Ред Лейк, Онтарио. Высокосортный, Dixie LP zone. Стратегический ресурс."},
+
+  // ===== GOLD FIELDS =====
+  {company:"Gold Fields",asset:"Tarkwa",country:"Гана",lat:5.30,lon:-1.99,status:"добыча",reserves_moz:5.3,year_acquired:1997,notes:"100% Gold Fields. Western Region, Гана. Крупнейший открытый карьер Au в Гане. ~500 koz/год."},
+  {company:"Gold Fields",asset:"Damang",country:"Гана",lat:5.52,lon:-2.05,status:"под угрозой — отказ продления лицензии",reserves_moz:0.7,year_acquired:2002,notes:"Пр-во Ганы отказало в продлении горного лицензии 2024. Передаётся E&P Ghana. Статус под судом."},
+  {company:"Gold Fields",asset:"St Ives",country:"Австралия",lat:-30.92,lon:121.38,status:"добыча",reserves_moz:4.5,year_acquired:2001,notes:"100% Gold Fields. Kalgoorlie, WA. Подземный + открытый."},
+  {company:"Gold Fields",asset:"Agnew",country:"Австралия",lat:-28.07,lon:120.71,status:"добыча",reserves_moz:2.8,year_acquired:2001,notes:"100% Gold Fields. Leonora, WA. Подземный высокосортный."},
+  {company:"Gold Fields",asset:"Salares Norte",country:"Чили",lat:-26.63,lon:-69.70,status:"добыча (запуск 2024)",reserves_moz:4.1,year_acquired:2009,notes:"100% Gold Fields. Atacama. Первое золото 2024. Open pit + High altitude. ~450 koz/год проектный."},
+  {company:"Gold Fields",asset:"Cerro Corona",country:"Перу",lat:-6.76,lon:-78.58,status:"добыча",reserves_moz:3.2,year_acquired:2006,notes:"100% Gold Fields. Cajamarca. Cu-Au скарн. ~200 koz/год."},
+  {company:"Gold Fields",asset:"South Deep",country:"ЮАР",lat:-26.64,lon:27.64,status:"добыча (наращивание)",reserves_moz:34.5,year_acquired:2006,notes:"100% Gold Fields. Крупнейший подземный рудник Au. Расширение до 500 koz/год к 2028."},
+
+  // ===== AGNICO EAGLE =====
+  {company:"Agnico",asset:"Detour Lake",country:"Канада",lat:49.85,lon:-79.55,status:"добыча",reserves_moz:21.4,year_acquired:2022,notes:"100% Agnico (из Kirkland Lake Gold). Онтарио. 600+ koz/год. Один из крупнейших рудников Канады."},
+  {company:"Agnico",asset:"Canadian Malartic",country:"Канада",lat:48.14,lon:-78.13,status:"добыча",reserves_moz:13.3,year_acquired:2022,notes:"50% Agnico (Yamana купил Agnico 2022). Квебек. ~650 koz (100%). Odysey UG развитие."},
+  {company:"Agnico",asset:"LaRonde",country:"Канада",lat:48.11,lon:-79.13,status:"добыча",reserves_moz:4.6,year_acquired:1988,notes:"100% Agnico. Rouyn-Noranda, Квебек. Первый рудник Agnico, глубокий подземный."},
+  {company:"Agnico",asset:"Meadowbank / Amaruq",country:"Канада",lat:63.82,lon:-98.07,status:"добыча",reserves_moz:3.0,year_acquired:2010,notes:"100% Agnico. Нунавут. Арктический рудник. Amaruq сателлит."},
+  {company:"Agnico",asset:"Fosterville",country:"Австралия",lat:-36.84,lon:144.52,status:"добыча",reserves_moz:2.9,year_acquired:2016,notes:"100% Agnico (из Newmarket Gold). Виктория. Сверхвысокосортный подземный, 14g/t+ Swan Zone."},
+  {company:"Agnico",asset:"Nunavut (Meliadine)",country:"Канада",lat:62.87,lon:-92.70,status:"добыча",reserves_moz:3.5,year_acquired:2010,notes:"100% Agnico. Нунавут. Высокосортный подземный. ~400 koz/год."},
+  {company:"Agnico",asset:"Kittila",country:"Финляндия",lat:67.90,lon:25.38,status:"добыча",reserves_moz:4.0,year_acquired:2005,notes:"100% Agnico. Лапландия. Крупнейший рудник Au в ЕС. ~250 koz/год."},
+
+  // ===== POLYUS =====
+  {company:"Polyus",asset:"Олимпиада",country:"Россия",lat:59.02,lon:93.60,status:"добыча",reserves_moz:26.0,year_acquired:1995,notes:"100% Polyus. Красноярский край. Крупнейший Au рудник РФ. ~1500 koz/год. Флотация + CIL."},
+  {company:"Polyus",asset:"Благодатное",country:"Россия",lat:58.52,lon:93.72,status:"добыча",reserves_moz:8.8,year_acquired:2008,notes:"100% Polyus. Рядом с Олимпиадой, Красноярск. Открытый карьер. ~500 koz/год."},
+  {company:"Polyus",asset:"Вернинское",country:"Россия",lat:57.80,lon:103.68,status:"добыча",reserves_moz:5.6,year_acquired:2004,notes:"100% Polyus. Иркутск. ~350 koz/год."},
+  {company:"Polyus",asset:"Наталка",country:"Россия",lat:61.55,lon:149.65,status:"добыча",reserves_moz:14.7,year_acquired:2009,notes:"100% Polyus. Магадан. Дальний Восток. Крупный карьер, низкосортный. ~530 koz/год."},
+  {company:"Polyus",asset:"Сухой Лог",country:"Россия",lat:58.67,lon:106.98,status:"разработка (строительство)",reserves_moz:67.0,year_acquired:2017,notes:"100% Polyus. Иркутск. Крупнейшее неразработанное месторождение Au в мире. Строительство до 2028. ~2.3Moz/год."},
+  {company:"Polyus",asset:"Куранах",country:"Россия",lat:57.32,lon:125.95,status:"добыча",reserves_moz:3.1,year_acquired:1998,notes:"100% Polyus. Якутия. Россыпные + коренные. ~200 koz/год."},
+
+  // ===== ENDEAVOUR MINING =====
+  {company:"Endeavour",asset:"Sabodala-Massawa",country:"Сенегал",lat:12.83,lon:-12.01,status:"добыча",reserves_moz:5.1,year_acquired:2021,notes:"90% Endeavour. Крупнейший Au рудник Сенегала. ~400 koz/год. MSSS расширение."},
+  {company:"Endeavour",asset:"Ity",country:"Кот-д'Ивуар",lat:7.12,lon:-7.91,status:"добыча",reserves_moz:4.7,year_acquired:2015,notes:"85% Endeavour. Запад КДИ. ~300 koz/год. CIL фабрика."},
+  {company:"Endeavour",asset:"Boungou",country:"Буркина-Фасо",lat:11.50,lon:0.92,status:"добыча (нарушения безопасности)",reserves_moz:1.1,year_acquired:2021,notes:"Северо-восток. Jihadist activity. Прерванная добыча 2024."},
+  {company:"Endeavour",asset:"Houndé",country:"Буркина-Фасо",lat:11.40,lon:-3.01,status:"добыча",reserves_moz:3.0,year_acquired:2017,notes:"90% Endeavour. ~280 koz/год."},
+  {company:"Endeavour",asset:"Mana",country:"Буркина-Фасо",lat:12.07,lon:-3.83,status:"добыча (снижение)",reserves_moz:0.9,year_acquired:2015,notes:"85% Endeavour. Западный БФ. Истощение открытых карьеров."},
+
+  // ===== RESOLUTE MINING =====
+  {company:"Resolute",asset:"Syama",country:"Мали",lat:10.60,lon:-8.46,status:"добыча",reserves_moz:7.2,year_acquired:1995,notes:"80% Resolute. Юг Мали. Подземный automine + открытый. ~250 koz/год."},
+  {company:"Resolute",asset:"Mako",country:"Сенегал",lat:12.89,lon:-11.51,status:"добыча",reserves_moz:1.1,year_acquired:2019,notes:"90% Resolute. Восточный Сенегал. Открытый карьер. ~150 koz/год."},
+
+  // ===== E&P GHANA (local champion) =====
+  {company:"E&P Ghana",asset:"Black Volta / Bole-Nangodi",country:"Гана",lat:8.85,lon:-1.95,status:"разработка (куплено 2025)",reserves_moz:4.5,year_acquired:2025,notes:"Куплено у Azumah Resources за $100M (2025). Северная Гана. Первый крупный актив E&P. Engineers & Planners Co."},
+  {company:"E&P Ghana",asset:"Sankofa",country:"Гана",lat:8.10,lon:-2.60,status:"разведка (куплено 2025)",reserves_moz:null,year_acquired:2025,notes:"Куплено у Azumah Resources в пакете с Black Volta, 2025. E&P — гол. компания, расширяет портфель."},
+  {company:"E&P Ghana",asset:"Damang",country:"Гана",lat:5.52,lon:-2.08,status:"передача от Gold Fields (2024-25)",reserves_moz:0.7,year_acquired:2024,notes:"Gold Fields отказали в продлении лицензии. Правительство Ганы передало E&P. Статус под арбитражем."},
+];
+
+// ===== COMPANY CONFIG =====
+const COMPANIES = {
+  "Newmont":   {color:"#2B6CB0", label:"Newmont (США)", order:1},
+  "Barrick":   {color:"#C53030", label:"Barrick (Канада)", order:2},
+  "AngloGold": {color:"#B7791F", label:"AngloGold Ashanti (UK/ЮАР)", order:3},
+  "Zijin":     {color:"#9B2335", label:"Zijin Mining (Китай)", order:4},
+  "Kinross":   {color:"#276749", label:"Kinross Gold (Канада)", order:5},
+  "Gold Fields":{color:"#6B21A8", label:"Gold Fields (ЮАР)", order:6},
+  "Agnico":    {color:"#0E7490", label:"Agnico Eagle (Канада)", order:7},
+  "Polyus":    {color:"#1A56DB", label:"Polyus (Россия)", order:8},
+  "Endeavour": {color:"#B45309", label:"Endeavour Mining (Канада/КДИ)", order:9},
+  "Resolute":  {color:"#065F46", label:"Resolute Mining (ASX)", order:10},
+  "E&P Ghana": {color:"#1F4D3D", label:"E&P Ghana (местный)", order:11},
+};
+
+const STATUS_CONFIG = {
+  "добыча":           {label:"Добывающий", opacity:1.0, stroke:"#fff"},
+  "добыча + переход": {label:"Добыча + переход", opacity:0.95, stroke:"#fff"},
+  "добыча (перезапуск)":{label:"Добыча (перезапуск)", opacity:1.0, stroke:"#fff"},
+  "добыча (куплено апр 2025)":{label:"Добыча — новый Zijin", opacity:1.0, stroke:"#ff0"},
+  "добыча + расширение":{label:"Добыча + расширение", opacity:1.0, stroke:"#fff"},
+  "добыча (запуск 2024)":{label:"Добыча (запуск 2024)", opacity:1.0, stroke:"#fff"},
+  "добыча (наращивание)":{label:"Добыча (рост)", opacity:1.0, stroke:"#fff"},
+  "добыча (нарушения безопасности)":{label:"Добыча (риски безоп.)", opacity:0.85, stroke:"#f00"},
+  "добыча (снижение)":{label:"Добыча (снижение)", opacity:0.75, stroke:"#fff"},
+  "добыча (Cu-Au)":   {label:"Добыча Cu-Au", opacity:0.9, stroke:"#fff"},
+  "добыча (Zn-Cu-Au)":{label:"Добыча Zn-Cu-Au", opacity:0.9, stroke:"#fff"},
+  "разработка":       {label:"Разработка / строительство", opacity:0.7, stroke:"#fff"},
+  "разработка (строительство)":{label:"Строительство", opacity:0.7, stroke:"#fff"},
+  "разработка (куплено 2025)":{label:"Разработка (2025)", opacity:0.75, stroke:"#fff"},
+  "разведка/разработка":{label:"Разведка / пре-разработка", opacity:0.55, stroke:"#fff"},
+  "передача от Gold Fields (2024-25)":{label:"Передача (спор)", opacity:0.65, stroke:"#f90"},
+  "разведка (куплено 2025)":{label:"Разведка", opacity:0.5, stroke:"#fff"},
+  "под угрозой — отказ продления лицензии":{label:"Лицензионный спор", opacity:0.65, stroke:"#f00"},
+  "продано Zijin (апр 2025)": {label:"Продано — Zijin 2025", opacity:0.5, stroke:"#f00", divested:true},
+  "продано Greatland Gold (2024)":{label:"Продано 2024", opacity:0.4, stroke:"#f00", divested:true},
+  "продано Aztec Minerals (2024)":{label:"Продано 2024", opacity:0.4, stroke:"#f00", divested:true},
+  "продано Orla Mining (2024)":{label:"Продано 2024", opacity:0.4, stroke:"#f00", divested:true},
+  "продано Dynasty Gold (2024)":{label:"Продано 2024", opacity:0.4, stroke:"#f00", divested:true},
+};
+
+// ===== MAP INIT =====
+const map = L.map('map', {
+  center: [20, 10],
+  zoom: 3,
+  zoomControl: true,
+  attributionControl: true,
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+// ===== STATE =====
+let activeCompanies = new Set(Object.keys(COMPANIES));
+let activeStatuses = new Set(['producing', 'development', 'exploration', 'divested']);
+let markers = [];
+let markerLayers = [];
+
+function getStatusCategory(status) {
+  if (!status) return 'exploration';
+  const s = status.toLowerCase();
+  if (s.includes('продано') || s.includes('продан')) return 'divested';
+  if (s.includes('добыча')) return 'producing';
+  if (s.includes('разработка') || s.includes('строительство') || s.includes('передача')) return 'development';
+  return 'exploration';
+}
+
+function isDivested(status) {
+  if (!status) return false;
+  return status.toLowerCase().includes('продано') || status.toLowerCase().includes('продан');
+}
+
+function getRadius(moz) {
+  if (!moz) return 7;
+  if (moz >= 20) return 16;
+  if (moz >= 10) return 13;
+  if (moz >= 5)  return 11;
+  if (moz >= 2)  return 9;
+  if (moz >= 1)  return 8;
+  return 7;
+}
+
+function getNoteClass(mine) {
+  const s = mine.status || '';
+  if (isDivested(s)) return 'popup-divested';
+  if (mine.company === 'Zijin' && s.includes('куплено')) return 'popup-expansion';
+  if (mine.company === 'E&P Ghana') return 'popup-expansion';
+  if (s.includes('расширение') || s.includes('рост')) return 'popup-expansion';
+  return 'popup-highlight';
+}
+
+function createPopupContent(mine) {
+  const cfg = COMPANIES[mine.company] || {color:'#999'};
+  const noteClass = getNoteClass(mine);
+  let rows = '';
+
+  if (mine.country) rows += `<div class="popup-row"><span class="lbl">Страна</span><span class="val">${mine.country}</span></div>`;
+  if (mine.reserves_moz) rows += `<div class="popup-row"><span class="lbl">Запасы P&P</span><span class="val">${mine.reserves_moz} Moz Au</span></div>`;
+  if (mine.year_acquired) rows += `<div class="popup-row"><span class="lbl">Год приобр.</span><span class="val">${mine.year_acquired}</span></div>`;
+  if (mine.year_sold) rows += `<div class="popup-row"><span class="lbl">Год продажи</span><span class="val">${mine.year_sold}</span></div>`;
+
+  const noteHtml = mine.notes ? `<div class="popup-note ${noteClass}">${mine.notes}</div>` : '';
+
+  return `<div class="mine-popup">
+    <div class="popup-company" style="color:${cfg.color}">${mine.company}</div>
+    <div class="popup-asset">${mine.asset}</div>
+    <div class="popup-country">${mine.country || ''}</div>
+    <div class="popup-status" style="font-size:11px;font-weight:600;margin-bottom:8px;color:${isDivested(mine.status)?'#dc2626':'#1F4D3D'}">${mine.status || ''}</div>
+    ${rows}
+    ${noteHtml}
+  </div>`;
+}
+
+function createMarker(mine) {
+  const cfg = COMPANIES[mine.company] || {color:'#888'};
+  const sc = STATUS_CONFIG[mine.status] || {opacity:0.8, stroke:'#fff'};
+  const divested = isDivested(mine.status);
+  const radius = getRadius(mine.reserves_moz);
+
+  const circle = L.circleMarker([mine.lat, mine.lon], {
+    radius: radius,
+    fillColor: cfg.color,
+    color: divested ? '#dc2626' : (sc.stroke || '#fff'),
+    weight: divested ? 2.5 : 1.5,
+    opacity: 1,
+    fillOpacity: sc.opacity || 0.8,
+    dashArray: divested ? '4,3' : null,
+  });
+
+  circle.bindPopup(createPopupContent(mine), {maxWidth: 300, className:'mine-popup-wrap'});
+  circle.mine = mine;
+  return circle;
+}
+
+// ===== BUILD MARKERS =====
+function buildMarkers() {
+  markerLayers.forEach(l => map.removeLayer(l));
+  markerLayers = [];
+  let visible = 0;
+
+  MINES.forEach(mine => {
+    const companyActive = activeCompanies.has(mine.company);
+    const statusCat = getStatusCategory(mine.status);
+    const statusActive = activeStatuses.has(statusCat);
+
+    if (companyActive && statusActive) {
+      const marker = createMarker(mine);
+      marker.addTo(map);
+      markerLayers.push(marker);
+      visible++;
+    }
+  });
+
+  document.getElementById('markerCount').textContent = `Маркеров: ${visible}`;
+  updateStats();
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = MINES.length;
+  document.getElementById('stat-producing').textContent = MINES.filter(m => getStatusCategory(m.status) === 'producing').length;
+  document.getElementById('stat-development').textContent = MINES.filter(m => getStatusCategory(m.status) === 'development').length;
+  document.getElementById('stat-divested').textContent = MINES.filter(m => isDivested(m.status)).length;
+  document.getElementById('stat-zijin').textContent = MINES.filter(m => m.company === 'Zijin').length;
+}
+
+// ===== BUILD FILTERS =====
+function buildFilters() {
+  const container = document.getElementById('companyFilters');
+  const sorted = Object.entries(COMPANIES).sort((a,b) => a[1].order - b[1].order);
+
+  sorted.forEach(([key, cfg]) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn active';
+    btn.style.color = cfg.color;
+    btn.dataset.company = key;
+    btn.innerHTML = `<span class="dot" style="background:${cfg.color}"></span>${key}`;
+    btn.addEventListener('click', () => {
+      if (activeCompanies.has(key)) {
+        activeCompanies.delete(key);
+        btn.classList.remove('active');
+      } else {
+        activeCompanies.add(key);
+        btn.classList.add('active');
+      }
+      buildMarkers();
+    });
+    container.appendChild(btn);
+  });
+
+  // Status filters
+  const statusContainer = document.getElementById('statusFilters');
+  const statusMap = [
+    {id:'producing', label:'Добыча'},
+    {id:'development', label:'Разработка'},
+    {id:'exploration', label:'Разведка'},
+    {id:'divested', label:'Продано 2024-25'},
+  ];
+  statusMap.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-status-btn active';
+    btn.dataset.status = s.id;
+    btn.textContent = s.label;
+    btn.addEventListener('click', () => {
+      if (activeStatuses.has(s.id)) {
+        activeStatuses.delete(s.id);
+        btn.classList.remove('active');
+      } else {
+        activeStatuses.add(s.id);
+        btn.classList.add('active');
+      }
+      buildMarkers();
+    });
+    statusContainer.appendChild(btn);
+  });
+}
+
+function resetFilters() {
+  activeCompanies = new Set(Object.keys(COMPANIES));
+  activeStatuses = new Set(['producing','development','exploration','divested']);
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.add('active'));
+  document.querySelectorAll('.filter-status-btn').forEach(b => b.classList.add('active'));
+  buildMarkers();
+}
+
+// ===== BUILD LEGEND =====
+function buildLegend() {
+  const container = document.getElementById('legendItems');
+  const sorted = Object.entries(COMPANIES).sort((a,b) => a[1].order - b[1].order);
+  sorted.forEach(([key, cfg]) => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `<span class="legend-dot" style="background:${cfg.color}"></span>${cfg.label}`;
+    item.addEventListener('click', () => {
+      const btn = document.querySelector(`.filter-btn[data-company="${key}"]`);
+      if (btn) btn.click();
+    });
+    container.appendChild(item);
+  });
+}
+
+// ===== INIT =====
+buildFilters();
+buildLegend();
+buildMarkers();
+updateStats();
+</script>
+</body>
+</html>
