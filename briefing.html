@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шпаргалка к встрече по 9 участкам Ганы · Май 2026</title>
+<style>
+:root {
+  --bg:#F7F5F0;
+  --bg-card:#FFFFFF;
+  --line:#E0DCD2;
+  --line-soft:#EBE7DD;
+  --ink:#14110D;
+  --ink-2:#3A352E;
+  --ink-mute:#6B645A;
+  --accent:#1F4D3D;
+  --accent-2:#2C6B55;
+  --accent-light:#E8EFEB;
+  --gold:#A07B2A;
+  --gold-light:#F5EDD5;
+  --warn:#B33C2D;
+  --warn-bg:#F9EDEB;
+  --warn-border:#D97454;
+  --good:#2D6A2D;
+  --good-bg:#EAF4EA;
+  --caution:#A05A00;
+  --caution-bg:#FFF3E0;
+  --caution-border:#F0A54A;
+  --red:#B33C2D;
+  --red-bg:#F9EDEB;
+  --red-border:#D97454;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  line-height:1.65;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ======= TOPBAR ======= */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:var(--ink);color:#fff;
+  padding:10px 20px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  flex-wrap:wrap;
+}
+.topbar-title{font-size:13px;font-weight:700;letter-spacing:0.02em;}
+.topbar-meta{font-size:11px;color:rgba(255,255,255,0.5);font-variant-numeric:tabular-nums;}
+.toc-toggle{
+  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
+  color:#fff;border-radius:6px;padding:5px 10px;font-size:12px;
+  cursor:pointer;white-space:nowrap;
+}
+
+/* ======= TOC PANEL ======= */
+.toc-panel{
+  background:var(--bg-card);border-bottom:2px solid var(--accent);
+  padding:16px 20px;display:none;
+}
+.toc-panel.open{display:block;}
+.toc-panel h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-mute);margin-bottom:10px;}
+.toc-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 20px;}
+.toc-list li a{
+  display:block;font-size:14px;color:var(--accent-2);text-decoration:none;
+  padding:4px 0;border-bottom:1px dashed var(--line-soft);
+}
+.toc-list li a:hover{color:var(--accent);}
+
+/* ======= CONTAINER ======= */
+.container{max-width:780px;margin:0 auto;padding:0 20px;}
+section{padding:48px 0;border-bottom:1px solid var(--line);scroll-margin-top:52px;}
+section:last-child{border-bottom:none;}
+
+/* ======= LABELS & HEADINGS ======= */
+.section-label{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:700;color:var(--accent);
+  background:var(--accent-light);padding:4px 10px;border-radius:20px;
+  margin-bottom:14px;text-transform:uppercase;letter-spacing:0.08em;
+}
+h2{
+  font-size:clamp(22px,5vw,32px);font-weight:700;
+  line-height:1.2;color:var(--ink);margin-bottom:10px;
+  font-family:Georgia,'Times New Roman',serif;
+}
+.section-sub{font-size:15px;color:var(--ink-mute);line-height:1.6;margin-bottom:28px;}
+h3{font-size:18px;font-weight:700;color:var(--ink);margin:20px 0 8px;}
+h4{font-size:14px;font-weight:700;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em;margin:16px 0 6px;}
+
+/* ======= HERO ======= */
+.hero{background:var(--accent);color:#fff;padding:40px 20px 32px;text-align:center;}
+.hero h1{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(24px,6vw,38px);font-weight:700;
+  line-height:1.15;margin-bottom:8px;
+}
+.hero-meta{font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:0;}
+
+/* ======= ONE-MINUTE SUMMARY ======= */
+.summary-box{
+  background:var(--gold-light);border:2px solid var(--gold);
+  border-radius:12px;padding:24px;margin-bottom:0;
+}
+.summary-box h3{color:var(--gold);font-size:16px;margin:0 0 14px;}
+.summary-fact{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px solid rgba(160,123,42,0.2);
+}
+.summary-fact:last-child{border-bottom:none;padding-bottom:0;}
+.fact-num{
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;
+  background:var(--gold);color:#fff;
+  font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.fact-text{font-size:14px;line-height:1.5;color:var(--ink-2);}
+.fact-text strong{color:var(--ink);}
+
+/* ======= QUOTE BLOCK ======= */
+.quote{
+  background:var(--bg-card);border-left:4px solid var(--accent);
+  border-radius:0 10px 10px 0;padding:16px 20px;
+  font-size:15px;font-style:italic;color:var(--ink-2);
+  line-height:1.65;margin:12px 0;
+}
+.quote cite{display:block;font-size:12px;font-style:normal;color:var(--ink-mute);margin-top:8px;}
+
+/* ======= CALLOUT VARIANTS ======= */
+.callout{
+  border-radius:10px;padding:16px 18px;
+  font-size:14px;line-height:1.6;margin:12px 0;
+}
+.callout-green{background:var(--good-bg);border-left:4px solid var(--good);}
+.callout-green strong{color:var(--good);}
+.callout-yellow{background:var(--caution-bg);border-left:4px solid var(--caution-border);}
+.callout-yellow strong{color:var(--caution);}
+.callout-red{background:var(--red-bg);border-left:4px solid var(--red-border);}
+.callout-red strong{color:var(--red);}
+
+/* ======= CONCESSION CARDS ======= */
+.cards-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:540px){.cards-grid{grid-template-columns:1fr 1fr;}}
+
+.c-card{
+  background:var(--bg-card);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;
+}
+.c-card-header{padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.c-card-name{font-size:16px;font-weight:700;color:#fff;line-height:1.2;}
+.c-card-owner{font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px;}
+.c-card-rank{
+  flex-shrink:0;font-size:22px;font-weight:800;
+  color:rgba(255,255,255,0.25);font-variant-numeric:tabular-nums;
+  line-height:1;
+}
+.c-card-body{padding:14px 16px;font-size:13px;color:var(--ink-2);line-height:1.6;}
+.c-card-body p{margin-bottom:8px;}
+.c-card-body p:last-child{margin-bottom:0;}
+
+/* Header backgrounds by tier */
+.hdr-a{background:var(--accent);}
+.hdr-b{background:#2B4E8C;}
+.hdr-c{background:var(--caution);}
+.hdr-e{background:#555;}
+
+.c-tag{
+  display:inline-block;font-size:10px;font-weight:700;
+  padding:2px 7px;border-radius:10px;margin-right:4px;margin-bottom:4px;
+  text-transform:uppercase;letter-spacing:0.05em;
+}
+.tag-green{background:var(--good-bg);color:var(--good);}
+.tag-yellow{background:var(--caution-bg);color:var(--caution);}
+.tag-red{background:var(--red-bg);color:var(--red);}
+.tag-blue{background:#EEF3FA;color:#2B4E8C;}
+
+/* ======= NEGOTIATION MAP ======= */
+.neg-card{
+  background:var(--bg-card);border:1px solid var(--line);
+  border-radius:12px;padding:20px;margin-bottom:16px;
+}
+.neg-seller{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.neg-assets{font-size:12px;color:var(--ink-mute);margin-bottom:12px;font-variant-numeric:tabular-nums;}
+.neg-strategy{font-size:14px;color:var(--ink-2);line-height:1.6;}
+.neg-strategy strong{color:var(--accent);}
+
+/* ======= FAQ ======= */
+.faq-item{margin-bottom:20px;}
+.faq-q{
+  font-size:15px;font-weight:700;color:var(--ink);
+  padding:12px 14px;background:var(--bg-card);
+  border:1px solid var(--line);border-radius:8px 8px 0 0;
+  border-bottom:none;
+}
+.faq-a{
+  background:var(--accent-light);border:1px solid var(--accent-light);
+  border-radius:0 0 8px 8px;padding:14px 16px;
+  font-size:14px;line-height:1.65;color:var(--ink-2);
+}
+.faq-a strong{color:var(--accent);}
+
+/* ======= RED FLAGS ======= */
+.flag-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.flag-item{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--red-bg);border:1px solid var(--red-border);
+  border-radius:10px;padding:14px 16px;
+}
+.flag-icon{
+  flex-shrink:0;font-size:18px;line-height:1;margin-top:1px;
+}
+.flag-text{font-size:14px;color:var(--ink-2);line-height:1.5;}
+.flag-text strong{color:var(--red);}
+
+/* ======= PHASE TABLE ======= */
+.phase-block{
+  background:var(--bg-card);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;margin-bottom:20px;
+}
+.phase-header{
+  padding:14px 18px;display:flex;align-items:baseline;gap:10px;
+}
+.phase-hdr-a{background:var(--accent);color:#fff;}
+.phase-hdr-b{background:#2B4E8C;color:#fff;}
+.phase-hdr-c{background:var(--caution);color:#fff;}
+.phase-hdr-d{background:#6B4A8A;color:#fff;}
+.phase-num{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;opacity:0.75;}
+.phase-title{font-size:16px;font-weight:700;}
+.phase-budget{margin-left:auto;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;}
+.phase-body{padding:16px 18px;font-size:14px;color:var(--ink-2);line-height:1.65;}
+.phase-body p{margin-bottom:8px;}
+.phase-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px;}
+.phase-table th{
+  text-align:left;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-mute);
+  border-bottom:2px solid var(--line);padding:6px 8px;
+}
+.phase-table td{padding:8px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+.phase-table tr:last-child td{border-bottom:none;}
+
+/* ======= BUDGET SUMMARY ======= */
+.budget-sum{
+  background:var(--gold-light);border:1px solid var(--gold);
+  border-radius:10px;padding:16px 18px;margin-top:16px;
+}
+.budget-sum table{width:100%;border-collapse:collapse;font-size:14px;}
+.budget-sum td{padding:6px 4px;border-bottom:1px solid rgba(160,123,42,0.2);}
+.budget-sum tr:last-child td{border-bottom:none;font-weight:700;color:var(--ink);padding-top:10px;}
+.budget-sum td:last-child{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;}
+
+/* ======= FINAL RECOMMENDATION ======= */
+.final-box{
+  background:var(--accent);color:#fff;
+  border-radius:12px;padding:28px 24px;margin-bottom:16px;
+}
+.final-box h3{font-size:20px;font-weight:700;margin-bottom:16px;font-family:Georgia,'Times New Roman',serif;}
+.final-point{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.15);
+}
+.final-point:last-child{border-bottom:none;padding-bottom:0;}
+.final-num{
+  flex-shrink:0;width:26px;height:26px;border-radius:50%;
+  background:rgba(255,255,255,0.2);color:#fff;
+  font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.final-text{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.9);}
+.final-text strong{color:#fff;}
+
+/* ======= GLOSSARY ======= */
+.gloss-table{width:100%;border-collapse:collapse;font-size:13px;}
+.gloss-table th{
+  text-align:left;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.07em;
+  color:var(--ink-mute);border-bottom:2px solid var(--line);padding:6px 10px;
+}
+.gloss-table td{
+  padding:8px 10px;border-bottom:1px solid var(--line-soft);
+  vertical-align:top;
+}
+.gloss-table td:first-child{font-weight:700;color:var(--accent-2);white-space:nowrap;}
+.gloss-table tr:last-child td{border-bottom:none;}
+
+/* ======= BONUS ======= */
+.bonus-item{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:12px 0;border-bottom:1px solid var(--line-soft);
+}
+.bonus-item:last-child{border-bottom:none;}
+.bonus-dot{flex-shrink:0;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:6px;}
+.bonus-text{font-size:14px;color:var(--ink-2);line-height:1.6;}
+.bonus-text strong{color:var(--ink);}
+
+/* ======= RESPONSIVE TWEAKS ======= */
+@media(max-width:480px){
+  section{padding:36px 0;}
+  h2{font-size:22px;}
+  .phase-budget{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOPBAR ===== -->
+<div class="topbar">
+  <div class="topbar-title">Шпаргалка к встрече · Ghana Au · Май 2026</div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <div class="topbar-meta">9 участков · 22 документа · 444 стр.</div>
+    <button class="toc-toggle" onclick="document.getElementById('toc').classList.toggle('open')">Оглавление</button>
+  </div>
+</div>
+
+<!-- ===== TABLE OF CONTENTS ===== -->
+<div class="toc-panel" id="toc">
+  <div class="container">
+    <h3>Разделы</h3>
+    <ul class="toc-list">
+      <li><a href="#s0" onclick="document.getElementById('toc').classList.remove('open')">1-минутное резюме</a></li>
+      <li><a href="#s1" onclick="document.getElementById('toc').classList.remove('open')">С чего начать</a></li>
+      <li><a href="#s2" onclick="document.getElementById('toc').classList.remove('open')">3 главные мысли</a></li>
+      <li><a href="#s3" onclick="document.getElementById('toc').classList.remove('open')">Обзор 9 участков</a></li>
+      <li><a href="#s4" onclick="document.getElementById('toc').classList.remove('open')">Карта переговоров</a></li>
+      <li><a href="#s5" onclick="document.getElementById('toc').classList.remove('open')">FAQ — контр-вопросы</a></li>
+      <li><a href="#s6" onclick="document.getElementById('toc').classList.remove('open')">Красные флаги</a></li>
+      <li><a href="#s7" onclick="document.getElementById('toc').classList.remove('open')">Стратегия по фазам</a></li>
+      <li><a href="#s8" onclick="document.getElementById('toc').classList.remove('open')">Финальная рекомендация</a></li>
+      <li><a href="#s9" onclick="document.getElementById('toc').classList.remove('open')">Бонусные аргументы</a></li>
+      <li><a href="#s10" onclick="document.getElementById('toc').classList.remove('open')">Краткий словарь</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <h1>Шпаргалка к встрече<br>по 9 участкам Ганы</h1>
+  <p class="hero-meta">Прочитай перед встречей. Не презентация — разговорная шпаргалка.</p>
+</div>
+
+<!-- ===== SECTION 0 — 1-MINUTE SUMMARY ===== -->
+<section id="s0">
+<div class="container">
+  <div class="section-label">Если только 60 секунд</div>
+  <h2>1-минутное резюме</h2>
+  <p class="section-sub">Три факта, которые нужно помнить в любой момент встречи:</p>
+  <div class="summary-box">
+    <h3>3 ключевых факта</h3>
+    <div class="summary-fact">
+      <div class="fact-num">1</div>
+      <div class="fact-text"><strong>Akim Apapam: 8 г/т</strong> — это уровень исторического рудника Obuasi, в 4-5 раз выше любого действующего рудника Ганы (Tarkwa, Akyem, Ahafo работают на 1.5–1.7 г/т). Самые высокие пробы в нашем портфеле. Всего 6 проб — нужна верификация, но потенциал реальный.</div>
+    </div>
+    <div class="summary-fact">
+      <div class="fact-num">2</div>
+      <div class="fact-text"><strong>Ignite просит $391M за Amenam</strong> — это $4 600 за унцию. Реалистичная оценка: <strong>$42–62M</strong>. В 6–9 раз выше. Это аргумент для торга или для паузы до верификации.</div>
+    </div>
+    <div class="summary-fact">
+      <div class="fact-num">3</div>
+      <div class="fact-text"><strong>Pure Caratage 140 км²</strong> — в 3 раза больше всего нашего портфеля. Лицензия истекла в ноябре 2023. Юридическая справка стоит $1–3K — может оказаться главной возможностью района.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SECTION 1 — С чего начать ===== -->
+<section id="s1">
+<div class="container">
+  <div class="section-label">Часть 1</div>
+  <h2>С чего начать</h2>
+  <p class="section-sub">Открывающие слова — около 2 минут.</p>
+
+  <div class="quote">
+    "Я провёл глубокий анализ 9 участков в Гане. У меня было 22 документа от продавцов, я их все разобрал, проиндексировал, и параллельно поднял 8 типов спутниковых данных по каждому участку. Сегодня покажу что я нашёл — где реально есть золото, а где только бумаги."
+  </div>
+
+  <h4>Подкрепи цифрами (если спросят масштаб):</h4>
+  <div style="background:var(--bg-card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:8px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="font-size:14px;color:var(--ink-2);padding:6px 0;border-bottom:1px solid var(--line-soft);">22 документа · 444 страницы</div>
+      <div style="font-size:14px;color:var(--ink-2);padding:6px 0;border-bottom:1px solid var(--line-soft);">1 296 фрагментов в умном поиске</div>
+      <div style="font-size:14px;color:var(--ink-2);padding:6px 0;border-bottom:1px solid var(--line-soft);">56+ независимых замеров на участок</div>
+      <div style="font-size:14px;color:var(--ink-2);padding:6px 0;border-bottom:1px solid var(--line-soft);">1 079 лицензий из реестра Ганы</div>
+      <div style="font-size:14px;color:var(--ink-2);padding:6px 0;">6 лет наблюдений со спутника</div>
+      <div style="font-size:14px;color:var(--ink-2);padding:6px 0;">500+ проб почвы по Pemeso</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SECTION 2 — 3 главные мысли ===== -->
+<section id="s2">
+<div class="container">
+  <div class="section-label">Часть 2 · ~5 минут</div>
+  <h2>3 главные мысли</h2>
+  <p class="section-sub">Главные находки с цифрами — говорить уверенно.</p>
+
+  <h3>Мысль №1 — FGM: лицензия без геологии</h3>
+  <div class="quote">
+    "У FGM есть лицензия на добычу до 2031 года. Спутник её хвалит. Но в документах от продавца <strong>ноль</strong> — нет ТЭО, нет лабораторных проб, нет результатов разведки. Только сам факт лицензии. Если за неё хотят премиум — нет оснований платить. Сначала надо запросить геологию."
+  </div>
+  <div class="callout callout-yellow">
+    <strong>Ключевой аргумент:</strong> FGM работает с 2018. За 8 лет производственные отчёты должны быть в Minerals Commission — это можно проверить официально.
+  </div>
+
+  <h3>Мысль №2 — Akim Apapam: техническая жемчужина с риском</h3>
+  <div class="quote">
+    "Шесть проб от независимой лаборатории ALS Ghana показали в среднем <strong>8 граммов золота на тонну</strong>. Для сравнения: Tarkwa, Akyem, Ahafo — работают на 1.5–1.7 г/т. То есть в 4–5 раз выше наших проб. Уровень Akim Apapam — это уровень исторического рудника Obuasi."
+  </div>
+  <div class="quote">
+    "<strong>Риск один:</strong> проб всего 6, а не 600. Может пробы взяты в самых хороших точках. Чтобы это подтвердить — нужны буровые скважины. Но потенциал реальный."
+  </div>
+  <div class="callout callout-green">
+    <strong>Сила аргумента:</strong> 135 шурфов + 126 страниц ТЭО + ALS Ghana (независимая лаборатория). Это не просто слова продавца.
+  </div>
+
+  <h3>Мысль №3 — Цена в 6–9 раз выше реалистичной</h3>
+  <div class="quote">
+    "По Amenam продавец Ignite просит <strong>$391 миллион</strong> — это $4 600 за унцию. При 70% вероятности успеха, минусе вложений на запуск, ставке 15% — реалистичная стоимость <strong>$42–62 миллиона</strong>. В 6–9 раз ниже asking. Платить без независимой верификации — нельзя."
+  </div>
+  <div class="callout callout-red">
+    <strong>Позиция на торге:</strong> контр-офер $50–65M или пауза до полевой верификации.
+  </div>
+</div>
+</section>
+
+<!-- ===== SECTION 3 — 9 участков ===== -->
+<section id="s3">
+<div class="container">
+  <div class="section-label">Часть 3</div>
+  <h2>Краткий обзор 9 участков</h2>
+  <p class="section-sub">Один абзац на каждый — что говорить если спросят.</p>
+
+  <div class="cards-grid">
+
+    <!-- #1 Amenam -->
+    <div class="c-card">
+      <div class="c-card-header hdr-a" style="background:#1F4D3D;">
+        <div>
+          <div class="c-card-name">Amenam</div>
+          <div class="c-card-owner">Ignite Machinery · 9.77 км²</div>
+        </div>
+        <div class="c-card-rank">#1</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-green">Россыпь</span>
+        <span class="c-tag tag-yellow">Не в реестре</span>
+        <p>Россыпное золото. 91 шурф, 109 стр. ТЭО. <strong>84 968 унций</strong> при 0.92 г/м³. Площадь чистая по спутнику.</p>
+        <p style="color:var(--warn);font-weight:600;">Риск: в реестре Ганы не найден — проверить статус до оплаты.</p>
+      </div>
+    </div>
+
+    <!-- #2 Oworam -->
+    <div class="c-card">
+      <div class="c-card-header hdr-a">
+        <div>
+          <div class="c-card-name">Oworam</div>
+          <div class="c-card-owner">Ignite Machinery · 126.7 км²</div>
+        </div>
+        <div class="c-card-rank">#2</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-green">Россыпь</span>
+        <span class="c-tag tag-blue">До 2027</span>
+        <p><strong>127 965 унций</strong> — самые большие запасы в портфеле. 94 шурфа, 107 стр. ТЭО.</p>
+        <p>Большая площадь, долинный рельеф — идеален для россыпи. Лицензия на разведку до 2027.</p>
+      </div>
+    </div>
+
+    <!-- #3 Akim Apapam -->
+    <div class="c-card">
+      <div class="c-card-header" style="background:#A07B2A;">
+        <div>
+          <div class="c-card-name">Akim Apapam</div>
+          <div class="c-card-owner">Hujak · 8.4 км²</div>
+        </div>
+        <div class="c-card-rank">#3</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-yellow">Коренное</span>
+        <span class="c-tag tag-yellow">Не в реестре</span>
+        <p><strong>8 г/т в среднем</strong> по 6 пробам ALS (независимая лаборатория). 135 шурфов, 126 стр. ТЭО.</p>
+        <p>По спутнику — горные хребты, признак коренного золота. Нет в реестре — нужна юр. проверка.</p>
+      </div>
+    </div>
+
+    <!-- #4 Bodukwan -->
+    <div class="c-card">
+      <div class="c-card-header hdr-b">
+        <div>
+          <div class="c-card-name">Bodukwan / Moseaso</div>
+          <div class="c-card-owner">Bodukwan Holding · 65 км²</div>
+        </div>
+        <div class="c-card-rank">#4</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-green">Смешанный</span>
+        <span class="c-tag tag-yellow">Срочно</span>
+        <p>Канальная проба <strong>18.26 г/т</strong> — выше любого действующего рудника Ганы. Магнитное поле +43 нТл — классика для золоторудной геологии.</p>
+        <p style="color:var(--warn);font-weight:600;">Лицензия истекает октябрь 2026 — срочное продление!</p>
+      </div>
+    </div>
+
+    <!-- #5 MG Emmanuel -->
+    <div class="c-card">
+      <div class="c-card-header hdr-c">
+        <div>
+          <div class="c-card-name">MG Emmanuel Afosu</div>
+          <div class="c-card-owner">M G Emmanuel Mining · 2.74 км²</div>
+        </div>
+        <div class="c-card-rank">#5</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-green">В реестре</span>
+        <span class="c-tag tag-yellow">Нет данных</span>
+        <p>Маленький участок, лицензия на разведку до 2028 — в реестре есть. Но кроме плана работ — нет полевых данных.</p>
+        <p>Стратегия: если дёшево ($1–3M) — опцион. Иначе не приоритет.</p>
+      </div>
+    </div>
+
+    <!-- #6 FGM -->
+    <div class="c-card">
+      <div class="c-card-header hdr-c">
+        <div>
+          <div class="c-card-name">FGM Birim North</div>
+          <div class="c-card-owner">FGM Resources Ghana · 44.3 км²</div>
+        </div>
+        <div class="c-card-rank">#6</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-green">Добыча до 2031</span>
+        <span class="c-tag tag-red">Нет геологии</span>
+        <p>Лицензия на добычу до 2031 — <strong>самый ценный юридический актив</strong>. Но в документах продавца — ноль геологии.</p>
+        <p style="color:var(--warn);">Запросить полный комплект разведки до переговоров о цене.</p>
+      </div>
+    </div>
+
+    <!-- #7 Obomeng -->
+    <div class="c-card">
+      <div class="c-card-header hdr-e">
+        <div>
+          <div class="c-card-name">Obomeng</div>
+          <div class="c-card-owner">Konongo · ~25 км²</div>
+        </div>
+        <div class="c-card-rank">#7</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-red">Пусто</span>
+        <span class="c-tag tag-red">Не в реестре</span>
+        <p>Один JPEG карты в архиве. Координаты приблизительные. Не найден в реестре Ганы.</p>
+        <p>Без KML и ТЭО — обсуждать нет смысла. Требовать документы или пас.</p>
+      </div>
+    </div>
+
+    <!-- #8 Pemeso -->
+    <div class="c-card">
+      <div class="c-card-header hdr-b">
+        <div>
+          <div class="c-card-name">Pemeso</div>
+          <div class="c-card-owner">Aspire Resources · 65 км²</div>
+        </div>
+        <div class="c-card-rank">#8</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-blue">Новый</span>
+        <span class="c-tag tag-green">Newmont разведка</span>
+        <p><strong>Newmont раньше делал разведку</strong> — серьёзный знак. 500 проб почвы, peak 1.2 г/т. В 15 км от Bogoso (Goldfields).</p>
+        <p>Потенциальная альтернатива FGM с реальной геологией. Не в реестре — проверить.</p>
+      </div>
+    </div>
+
+    <!-- #9 Grey Dew -->
+    <div class="c-card">
+      <div class="c-card-header hdr-e">
+        <div>
+          <div class="c-card-name">Grey Dew</div>
+          <div class="c-card-owner">Grey Dew Limited · 14 км²</div>
+        </div>
+        <div class="c-card-rank">#9</div>
+      </div>
+      <div class="c-card-body">
+        <span class="c-tag tag-blue">Новый</span>
+        <span class="c-tag tag-red">Нет геологии</span>
+        <p>Только Plan of Land — границы без геологии. Аналог FGM, но меньше.</p>
+        <p>Стратегия: опционально за $1–3M или пас.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ===== SECTION 4 — NEGOTIATION MAP ===== -->
+<section id="s4">
+<div class="container">
+  <div class="section-label">НОВЫЙ РАЗДЕЛ</div>
+  <h2>Карта переговорных позиций</h2>
+  <p class="section-sub">Для каждого продавца — конкретная инструкция: что говорить, как торговаться.</p>
+
+  <div class="neg-card" style="border-left:4px solid var(--warn);">
+    <div class="neg-seller">Ignite Machinery</div>
+    <div class="neg-assets">Amenam (9.77 км²) · Oworam (126.7 км²)</div>
+    <div class="neg-strategy">
+      <strong>Торгуйся жёстко.</strong> Asking $391M за Amenam — в 6–9 раз выше реалистичной оценки $42–62M. Оworam реалистично $62–92M. Суммарный контр-офер: <strong>$50–90M за оба актива вместе</strong>. Если Ignite не уступит ниже $120M суммарно — пауза до полевой верификации. Твоя позиция: "Цифры ТЭО — от продавца. Чтобы платить рыночную цену, нужна независимая верификация за наш счёт."
+    </div>
+  </div>
+
+  <div class="neg-card" style="border-left:4px solid var(--gold);">
+    <div class="neg-seller">Hujak (Akim Apapam)</div>
+    <div class="neg-assets">Akim Apapam · 8.4 км² · 8 г/т (6 проб ALS)</div>
+    <div class="neg-strategy">
+      <strong>Заинтересованность + полевая верификация.</strong> На встрече: выразить серьёзный интерес к 8 г/т, предложить <strong>совместную полевую проверку</strong> — ещё 10–15 проб за наш счёт ($15–20K). Если продавец согласен — это инвестиция в верификацию. Если откажется давать точки — красный флаг. Цена не обсуждается до подтверждения проб.
+    </div>
+  </div>
+
+  <div class="neg-card" style="border-left:4px solid var(--accent);">
+    <div class="neg-seller">FGM Resources Ghana</div>
+    <div class="neg-assets">FGM Birim North · 44.3 км² · Лицензия на добычу до 2031</div>
+    <div class="neg-strategy">
+      <strong>Запросить полный геологический пакет ДО любых переговоров о цене.</strong> Формулировка: "Нас интересует актив, но мы платим за геологию, а не только за лицензию. Покажите производственные отчёты 2018–2026 и данные разведки." Если откажутся давать — это само по себе ответ. Если дадут — оценить снова. В крайнем случае — торговаться за $0–5M (только лицензия).
+    </div>
+  </div>
+
+  <div class="neg-card" style="border-left:4px solid #2B4E8C;">
+    <div class="neg-seller">Bodukwan Holding</div>
+    <div class="neg-assets">Bodukwan / Moseaso · 65 км² · 18.26 г/т канальная проба</div>
+    <div class="neg-strategy">
+      <strong>Заинтересованность + заверка канала.</strong> Предложить <strong>совместную заверку канальной пробы 18.26 г/т</strong> — 3–5 дополнительных проб из той же канавы за наш счёт. Это $5–8K и 2–3 дня. Также акцентировать: лицензия истекает октябрь 2026 — готовы ли они немедленно продлить как условие сделки?
+    </div>
+  </div>
+
+  <div class="neg-card" style="border-left:4px solid #6B4A8A;">
+    <div class="neg-seller">Aspire Resources (Pemeso)</div>
+    <div class="neg-assets">Pemeso · 65 км² · Newmont разведка · 500 проб почвы</div>
+    <div class="neg-strategy">
+      <strong>Проактивный интерес.</strong> Фреймировка: "Newmont делал здесь разведку — мы хотим продолжить эту работу. Расскажите детали о статусе лицензии." Не упоминать что не нашли в реестре — сначала послушать версию продавца. Если статус подтвердится — потенциальная техническая альтернатива FGM.
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ===== SECTION 5 — FAQ ===== -->
+<section id="s5">
+<div class="container">
+  <div class="section-label">Часть 4</div>
+  <h2>FAQ — если бизнесмен спросит</h2>
+  <p class="section-sub">Контр-вопросы и готовые ответы.</p>
+
+  <div class="faq-item">
+    <div class="faq-q">"А вы геологи? У вас есть лицензия?"</div>
+    <div class="faq-a">Я работал по спутникам и официальным документам — это <strong>скрининг первого уровня</strong> уровня junior exploration company. Для финального решения нужен сертифицированный геолог в полях — с этим помогу организовать. Партнёр-геолог Мухтар Фархадулы независимо подтвердил <strong>тот же ranking</strong> — это независимая валидация.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">"А что вы делали такого, что геолог не сделает?"</div>
+    <div class="faq-a">Геолог в полях видит 1 участок. Я за 3 сессии прошёл 9 участков с восьми разных ракурсов: оптика, тепло, радар, магнитное поле, рельеф, гиперспектр, история освоения с 2020. Плюс прошёлся по 1 079 лицензиям всей Ганы — нашёл что <strong>рядом с FGM Newmont купил 5 концессий 190 км²</strong> (потенциальный покупатель), и нашёл <strong>140 км² свободного блока Pure Caratage</strong> с истёкшей лицензией.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">"Какой следующий шаг?"</div>
+    <div class="faq-a">Три действия параллельно:<br><br>
+    <strong>1.</strong> Полевая поездка в Гану — осмотр Akim Apapam (8 г/т проверить), Bodukwan (18 г/т канал заверить), Amenam-Oworam (шурфы).<br>
+    <strong>2.</strong> Аэросъёмка с дрона на каждый участок-кандидат — точные координаты + рельеф под лесом.<br>
+    <strong>3.</strong> Юридическая справка из Minerals Commission по статусу Pure Caratage 140 км² + наши участки вне реестра.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">"Сколько это всё стоит?"</div>
+    <div class="faq-a">Первая полевая поездка + дрон-съёмка по 3 приоритетным участкам — около <strong>$50–80 тыс.</strong> Это закроет 70% технических вопросов. После этого можно решать про бурение — оно от $300K на участок.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">"А сколько мы можем заработать?"</div>
+    <div class="faq-a">Реалистичная оценка трёх главных активов в сумме — <strong>$130–200 миллионов</strong> при подтверждении. Ignite просит за одну Amenam $391M — это в 6–9 раз выше нашей оценки. Значит есть <strong>огромное пространство для торга</strong>. Или фокус на Akim Apapam (Hujak) — там ещё нет заявленных цен.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">"Это всё спутник, а вдруг ошибка?"</div>
+    <div class="faq-a">Спутник — это <strong>первичный фильтр</strong>, не финальный вердикт. Где спутник и документы согласуются (Amenam, Oworam) — высокая уверенность. Где расхождение (FGM — спутник хвалит, документов нет) — сигнал задавать вопросы. Полевая верификация нужна всегда — и спутник говорит <strong>куда конкретно ехать</strong>.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">"Какие 3 главные риска?"</div>
+    <div class="faq-a">
+    <strong>1.</strong> Не все участки в официальном реестре Ганы (Akim Apapam, Pemeso, Grey Dew) — проверить через юриста в Аккре за 2–3 дня.<br><br>
+    <strong>2.</strong> Цены продавцов в разы выше реалистичной оценки (Ignite asking $4 600/унц vs рынок ~$2 000/унц) — платить asking нельзя.<br><br>
+    <strong>3.</strong> Western Region — много нелегальной добычи в окрестностях. Нужен security planning до старта работ.</div>
+  </div>
+
+</div>
+</section>
+
+<!-- ===== SECTION 6 — RED FLAGS ===== -->
+<section id="s6">
+<div class="container">
+  <div class="section-label">НОВЫЙ РАЗДЕЛ</div>
+  <h2>Красные флаги — на что обращать внимание</h2>
+  <p class="section-sub">Если видишь это во время встречи — насторожись и замедлись.</p>
+
+  <ul class="flag-list">
+    <li class="flag-item">
+      <div class="flag-icon">&#9888;</div>
+      <div class="flag-text"><strong>Продавец отказывается давать координаты KML.</strong> Без точных GPS-координат невозможно ни сверить с реестром, ни наложить на спутник. Это означает: или участок меньше заявленного, или пересекается с чужой лицензией.</div>
+    </li>
+    <li class="flag-item">
+      <div class="flag-icon">&#9888;</div>
+      <div class="flag-text"><strong>Продавец давит "решай сегодня" или "другие покупатели смотрят".</strong> Это стандартный приём ускорения сделки. Реальный геологический актив не продаётся за один день. Отвечай: "Прежде чем платить — за $50K съездить и проверить. Это разумно."</div>
+    </li>
+    <li class="flag-item">
+      <div class="flag-icon">&#9888;</div>
+      <div class="flag-text"><strong>В документах написано "Inferred resources" — но продавец называет их "Proven &amp; Probable".</strong> Inferred = предположительные, требуют доразведки. Proven &amp; Probable = подтверждено бурением. Разница в стоимости — 3–5 раз.</div>
+    </li>
+    <li class="flag-item">
+      <div class="flag-icon">&#9888;</div>
+      <div class="flag-text"><strong>Продавец не может назвать имя независимого геолога (Qualified Person, QP).</strong> По стандарту NI 43-101 каждый расчёт запасов должен быть подписан сертифицированным QP. Если его нет — это не международные запасы, это оценка продавца.</div>
+    </li>
+    <li class="flag-item">
+      <div class="flag-icon">&#9888;</div>
+      <div class="flag-text"><strong>Asking-цена выше $1 500 за унцию для non-bankable resource.</strong> Для неподтверждённых запасов рыночный диапазон $100–500/унц (с дисконтом за риск). $4 600/унц как у Ignite — это цена для производственного актива с действующим карьером.</div>
+    </li>
+    <li class="flag-item">
+      <div class="flag-icon">&#9888;</div>
+      <div class="flag-text"><strong>Продавец не упоминает galamsey-активность, когда она очевидна со спутника.</strong> Нелегальная кустарная добыча снижает стоимость актива и создаёт правовые риски. Если продавец скрывает это — что ещё он скрывает?</div>
+    </li>
+  </ul>
+</div>
+</section>
+
+<!-- ===== SECTION 7 — PHASES ===== -->
+<section id="s7">
+<div class="container">
+  <div class="section-label">Часть 5</div>
+  <h2>Стратегия по фазам</h2>
+  <p class="section-sub">Принцип: сначала проверить дёшево, потом покупать дорого.</p>
+
+  <div class="callout callout-green" style="margin-bottom:24px;">
+    <strong>Правило:</strong> не плати премиум-цены за лицензию пока не подтвердил геологию на земле. Каждая фаза стоит в десятки раз меньше следующей.
+  </div>
+
+  <!-- Фаза 1 -->
+  <div class="phase-block">
+    <div class="phase-header phase-hdr-a">
+      <div>
+        <div class="phase-num">Фаза 1 · сейчас — 1 месяц</div>
+        <div class="phase-title">Проверочная фаза</div>
+      </div>
+      <div class="phase-budget">$80–120K</div>
+    </div>
+    <div class="phase-body">
+      <p><strong>Цель:</strong> убрать 70% технических неизвестных. Ничего не покупается — только проверяется.</p>
+      <table class="phase-table">
+        <tr>
+          <th>Действие</th>
+          <th>Стоимость</th>
+          <th>Что закрывает</th>
+        </tr>
+        <tr>
+          <td>Полевая поездка (3 чел. × 10 дней)</td>
+          <td>$25–35K</td>
+          <td>Осмотр Akim Apapam, Bodukwan, Amenam-Oworam</td>
+        </tr>
+        <tr>
+          <td>Аэросъёмка дрона + LiDAR (3 участка)</td>
+          <td>$30–45K</td>
+          <td>Точные координаты, рельеф под лесом</td>
+        </tr>
+        <tr>
+          <td>Юридическая справка (Minerals Commission)</td>
+          <td>$3–5K</td>
+          <td>Статус Pure Caratage, Akim Apapam, Pemeso, Grey Dew</td>
+        </tr>
+        <tr>
+          <td>Лаб. заверка ключевых проб (5–7 точек)</td>
+          <td>$8–15K</td>
+          <td>Верификация 8 г/т Akim Apapam и 18 г/т Bodukwan</td>
+        </tr>
+        <tr>
+          <td>Обзор данных Newmont по Pemeso (опц.)</td>
+          <td>$5–10K</td>
+          <td>Если получится связаться</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Фаза 2 -->
+  <div class="phase-block">
+    <div class="phase-header phase-hdr-b">
+      <div>
+        <div class="phase-num">Фаза 2 · 1–3 месяца</div>
+        <div class="phase-title">Покупки активов уровня А</div>
+      </div>
+      <div class="phase-budget">$80–180M</div>
+    </div>
+    <div class="phase-body">
+      <p><strong>После проверочной фазы</strong> — с конкретными данными на руках. Только тогда покупать.</p>
+      <p style="margin-top:10px;"><strong>Приоритет 1 — Oworam:</strong> 127 965 унций, 94 шурфа, реалистичная цена $62–92M. Торгуйся со спутниковыми данными долинного рельефа.</p>
+      <p><strong>Приоритет 2 — Amenam:</strong> только если Ignite сбавит. Контр-офер $50–65M. Если нет — пас, фокус на Akim Apapam.</p>
+      <p><strong>Приоритет 3 — MG Emmanuel:</strong> если $1–3M — взять как опцион. Иначе отложить.</p>
+    </div>
+  </div>
+
+  <!-- Фаза 3 -->
+  <div class="phase-block">
+    <div class="phase-header phase-hdr-c">
+      <div>
+        <div class="phase-num">Фаза 3 · 3–6 месяцев</div>
+        <div class="phase-title">Бурение для подтверждения</div>
+      </div>
+      <div class="phase-budget">$1–2M</div>
+    </div>
+    <div class="phase-body">
+      <p><strong>Akim Apapam:</strong> если 8 г/т подтвердилось — RC-бурение по сетке 50×50 м. $300–500K. Unlock: конвертация 6 проб → подтверждённые запасы.</p>
+      <p><strong>Bodukwan:</strong> только если канал-заверка показала &gt;5 г/т. $200–400K. Unlock: подтверждение жильной системы.</p>
+      <p><strong>Oworam-Amenam:</strong> для подтверждения мощности гравия. $200–400K.</p>
+    </div>
+  </div>
+
+  <!-- Фаза 4 -->
+  <div class="phase-block">
+    <div class="phase-header phase-hdr-d">
+      <div>
+        <div class="phase-num">Фаза 4 · 6–12 месяцев</div>
+        <div class="phase-title">Расширение и подготовка к выходу</div>
+      </div>
+      <div class="phase-budget">$0.1–1M</div>
+    </div>
+    <div class="phase-body">
+      <p><strong>Pure Caratage 140 км²:</strong> если юридическая справка покажет что лицензия освободилась — заявиться первыми. 140 км² = в 3 раза больше всего нашего FGM-кластера. Подача заявки $50–100K.</p>
+      <p><strong>SIKADWASO MLF 25/3 (8 км² рядом с FGM):</strong> bolt-on к кластеру. Переговоры о JV или продаже.</p>
+      <p><strong>Выход: Newmont</strong> — 5 концессий 190 км² кольцом вокруг наших активов. Когда достигнем уровня подтверждённых запасов — Newmont логичный покупатель. Возможный exit: $200–500M за весь портфель.</p>
+    </div>
+  </div>
+
+  <div class="budget-sum">
+    <table>
+      <tr><td>Фаза 1 — верификация</td><td>$80–120K</td></tr>
+      <tr><td>Фаза 2 — покупки</td><td>$80–180M</td></tr>
+      <tr><td>Фаза 3 — бурение</td><td>$1–2M</td></tr>
+      <tr><td>Фаза 4 — Pure Caratage + SIKADWASO</td><td>$0.1–1M</td></tr>
+      <tr><td>Всего на год</td><td>$80–185M</td></tr>
+    </table>
+  </div>
+
+  <div class="callout callout-green" style="margin-top:16px;">
+    <strong>При успешном выполнении:</strong> активы стоят $200–500M через 12–18 месяцев. Мультипликатор 2–3× на вложенный капитал.
+  </div>
+
+</div>
+</section>
+
+<!-- ===== SECTION 8 — FINAL RECOMMENDATION ===== -->
+<section id="s8">
+<div class="container">
+  <div class="section-label">Часть 6 · ~3 минуты</div>
+  <h2>Финальная рекомендация</h2>
+  <p class="section-sub">Закрытие встречи — два чётких предложения.</p>
+
+  <div class="final-box">
+    <h3>Моя рекомендация в двух предложениях</h3>
+    <div class="final-point">
+      <div class="final-num">1</div>
+      <div class="final-text"><strong>Не платите asking-цены за Amenam ($391M) и FGM</strong> — наша реалистичная оценка в 6–9 раз ниже. Торгуйтесь или возьмите паузу до полевой верификации.</div>
+    </div>
+    <div class="final-point">
+      <div class="final-num">2</div>
+      <div class="final-text">Параллельно начните с <strong>трёх дешёвых шагов</strong>: полевая поездка ($30–50K), аэросъёмка с дрона ($20–30K на участок), юридическая справка по Pure Caratage 140 км² (~$1–3K). Эти три шага закроют 70% неизвестных и дадут <strong>сильную переговорную позицию</strong>.</div>
+    </div>
+  </div>
+
+  <div class="quote" style="margin-top:16px;">
+    Если бизнесмен начнёт давить "покупаем или не покупаем сегодня" — отвечай: "Прежде чем платить $391M за Amenam — надо за $50K съездить и проверить. Это разумно."
+  </div>
+
+  <div class="callout callout-green" style="margin-top:16px;">
+    <strong>Не торопись.</strong> Сегодня ты показываешь первый этап — глубокий технический анализ. Ничего в этой работе не обязывает к решению. Это переговорная позиция, не контракт.
+  </div>
+
+</div>
+</section>
+
+<!-- ===== SECTION 9 — BONUS ===== -->
+<section id="s9">
+<div class="container">
+  <div class="section-label">Бонус</div>
+  <h2>Бонусные аргументы</h2>
+  <p class="section-sub">Что ещё можно упомянуть в разговоре если зайдёт.</p>
+
+  <div style="background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:20px;">
+    <div class="bonus-item">
+      <div class="bonus-dot"></div>
+      <div class="bonus-text"><strong>Партнёр-геолог Мухтар Фархадулы</strong> независимо подтвердил наш ranking — это независимая валидация всего анализа. Два разных метода, один результат.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-dot"></div>
+      <div class="bonus-text"><strong>Akim Apapam grade на уровне Obuasi</strong> — это исторический рудник-гигант, один из крупнейших в мире. 8 г/т — это не просто красивые цифры, это сильный геологический сигнал.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-dot"></div>
+      <div class="bonus-text"><strong>Newmont поставил 5 концессий 190 км²</strong> кольцом вокруг нашего FGM-кластера — крупнейший золотодобытчик мира верит в этот район. И они — потенциальный покупатель когда мы доведём проект до уровня подтверждённых запасов.</div>
+    </div>
+    <div class="bonus-item">
+      <div class="bonus-dot"></div>
+      <div class="bonus-text"><strong>Pure Caratage 140 км²</strong> — в 3 раза больше всего нашего портфеля, лицензия истекла в ноябре 2023. Юридическая справка $1–3K. Может оказаться главной свободной возможностью в районе.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SECTION 10 — GLOSSARY ===== -->
+<section id="s10">
+<div class="container">
+  <div class="section-label">Словарь</div>
+  <h2>Краткий словарь</h2>
+  <p class="section-sub">Если не помнишь термин — найди здесь.</p>
+
+  <div style="background:var(--bg-card);border:1px solid var(--line);border-radius:12px;overflow:hidden;padding:4px 0;">
+    <table class="gloss-table">
+      <tr>
+        <th>Термин</th>
+        <th>Что это значит</th>
+      </tr>
+      <tr><td>г/т</td><td>граммов золота на 1 тонну руды (для коренного, в скале)</td></tr>
+      <tr><td>г/м³</td><td>граммов золота на 1 кубометр гравия (для россыпи, в долинах рек)</td></tr>
+      <tr><td>Россыпное золото</td><td>золото в гравии в долинах рек — копать проще, как просеивать песок</td></tr>
+      <tr><td>Коренное золото</td><td>золото в твёрдой породе — нужно дробить, дороже но богаче</td></tr>
+      <tr><td>ТЭО</td><td>технико-экономическое обоснование — расчёт что добыча рентабельна</td></tr>
+      <tr><td>Шурф</td><td>вертикальная яма 1×1 м — ручная разведка россыпей</td></tr>
+      <tr><td>Бурение (RC)</td><td>колонковое бурение, чтобы узнать что под землёй</td></tr>
+      <tr><td>Лицензия на разведку (PL)</td><td>право искать, без права добывать</td></tr>
+      <tr><td>Лицензия на добычу (ML)</td><td>право реально копать золото</td></tr>
+      <tr><td>Запасы по стандарту NI 43-101</td><td>проверены независимым геологом (QP) — необходимы для привлечения финансирования</td></tr>
+      <tr><td>Inferred resources</td><td>предположительные запасы — нужна доразведка бурением</td></tr>
+      <tr><td>Proven &amp; Probable (P&amp;P)</td><td>доказанные запасы — высший уровень, подтверждено бурением</td></tr>
+      <tr><td>Qualified Person (QP)</td><td>сертифицированный независимый геолог, подписывающий расчёт запасов</td></tr>
+      <tr><td>Galamsey</td><td>нелегальная кустарная добыча золота — снижает стоимость актива</td></tr>
+      <tr><td>Унция (troy oz)</td><td>31.1 грамма. Цена золота сейчас ~$3 200 за унцию (май 2026)</td></tr>
+      <tr><td>NPV (оценочная стоимость)</td><td>расчётная ценность проекта с учётом рисков и затрат</td></tr>
+      <tr><td>CAPEX</td><td>капиталовложения до начала добычи</td></tr>
+      <tr><td>OPEX</td><td>операционные затраты уже работающего рудника</td></tr>
+    </table>
+  </div>
+
+  <div style="margin-top:32px;padding:16px;text-align:center;color:var(--ink-mute);font-size:13px;border-top:1px solid var(--line);">
+    Удачи. Все аргументы у тебя в руках.
+  </div>
+
+</div>
+</section>
+
+</body>
+</html>
