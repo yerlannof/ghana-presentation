@@ -233,23 +233,43 @@ section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60p
   .info-label { min-width: 130px; font-size: 11px; }
   .info-value { font-size: 12px; }
 
-  /* TABLES — make them horizontally scrollable instead of squeezing */
+  /* TABLES — horizontal scroll container, inner table sizes to content */
   .rank-table {
     display: block;
     overflow-x: auto;
-    white-space: normal;
     -webkit-overflow-scrolling: touch;
+    width: 100%;
     font-size: 11px !important;
+  }
+  .rank-table > thead,
+  .rank-table > tbody {
+    display: table;
+    width: max-content;
+    min-width: 100%;
     table-layout: auto !important;
   }
-  .rank-table thead, .rank-table tbody, .rank-table tr { display: table; width: 100%; min-width: 720px; table-layout: fixed; }
+  .rank-table tr { display: table-row; }
   .rank-table th, .rank-table td {
-    padding: 8px 6px !important;
+    display: table-cell;
+    padding: 8px 10px !important;
     font-size: 11px;
+    white-space: normal;
     word-break: normal;
     hyphens: none;
+    min-width: 90px;
   }
-  .rank-table th { font-size: 9px !important; }
+  .rank-table th { font-size: 10px !important; min-width: 80px; }
+  .rank-table th:first-child, .rank-table td:first-child { min-width: 40px; }
+  /* Hint that table is scrollable */
+  .rank-table::after {
+    content: "";
+    display: block;
+  }
+  /* Force any inline 2-col grid to single column on mobile */
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
 
   /* Image containers — full width, no overflow */
   img { max-width: 100%; height: auto; display: block; }
