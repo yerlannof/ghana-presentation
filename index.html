@@ -202,6 +202,98 @@ section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60p
   .val-grid{grid-template-columns:repeat(2,1fr);}
 }
 
+/* ============ MOBILE-SPECIFIC FIXES (≤640px) ============ */
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  .container { padding: 0 16px; }
+  .topbar { padding: 8px 14px; }
+  .topbar-title { font-size: 12px; }
+  .topbar-meta { display: none; }
+  .nav-dot { width: 22px; height: 22px; font-size: 9px; }
+
+  /* Slide titles — smaller on mobile */
+  .slide-title { font-size: 22px !important; line-height: 1.2; }
+  .slide-subtitle { font-size: 14px; }
+  .slide-label { font-size: 10px; padding: 4px 10px; }
+
+  /* Hero cards — single column on mobile */
+  .hero-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hero-card { padding: 14px 10px; }
+  .hero-number { font-size: 28px; }
+  .hero-unit { font-size: 11px; }
+  .hero-explain { font-size: 10px; }
+
+  /* Per-concession header — much smaller font */
+  .concession-header { padding: 18px 18px; }
+  .concession-title-main { font-size: 19px !important; line-height: 1.25; }
+  .concession-rank-line { font-size: 10px; }
+  .concession-meta-row { font-size: 11px; gap: 8px; }
+  .concession-text { padding: 16px; }
+  .concession-images { padding: 12px; }
+  .info-label { min-width: 130px; font-size: 11px; }
+  .info-value { font-size: 12px; }
+
+  /* TABLES — make them horizontally scrollable instead of squeezing */
+  .rank-table {
+    display: block;
+    overflow-x: auto;
+    white-space: normal;
+    -webkit-overflow-scrolling: touch;
+    font-size: 11px !important;
+    table-layout: auto !important;
+  }
+  .rank-table thead, .rank-table tbody, .rank-table tr { display: table; width: 100%; min-width: 720px; table-layout: fixed; }
+  .rank-table th, .rank-table td {
+    padding: 8px 6px !important;
+    font-size: 11px;
+    word-break: normal;
+    hyphens: none;
+  }
+  .rank-table th { font-size: 9px !important; }
+
+  /* Image containers — full width, no overflow */
+  img { max-width: 100%; height: auto; display: block; }
+  .map-wrap, .grade-chart-wrap { margin-left: -16px; margin-right: -16px; border-radius: 0; border-left: none; border-right: none; }
+  .map-wrap img, .grade-chart-wrap img { width: 100%; }
+  .map-legend { padding: 14px; }
+  .legend-cluster { padding: 10px 12px; }
+  .legend-cluster h4 { font-size: 12px; }
+  .legend-cluster p { font-size: 12px; }
+
+  /* Concession imagery panels — let images scroll if too wide */
+  .concession-img-block { overflow-x: auto; }
+  .concession-img-block img { width: 100%; height: auto; }
+  .concession-img-block figcaption { font-size: 10px; }
+
+  /* Callouts smaller */
+  .callout { padding: 12px 14px; font-size: 13px; }
+
+  /* Valuation cards */
+  .val-card-header { padding: 12px 14px; }
+  .val-card-title { font-size: 14px; }
+  .val-card-meta { font-size: 11px; }
+  .val-sc-amount { font-size: 16px; }
+  .val-sc-note { font-size: 9px; }
+
+  /* Roadmap and neighbors cards */
+  .roadmap-tier-header { padding: 12px 14px; font-size: 13px; }
+  .roadmap-tier-body { padding: 12px 14px; font-size: 13px; }
+  .neighbor-card { padding: 14px; }
+  .neighbor-name { font-size: 16px; }
+  .neighbor-why { font-size: 13px; }
+
+  /* Short cards */
+  .short-card { padding: 18px 18px; }
+  .short-card h3 { font-size: 17px; }
+  .short-card p { font-size: 13px; }
+
+  /* Section padding */
+  section { padding: 32px 0; }
+
+  /* Glossary panel */
+  .glossary-toggle { width: 38px; height: 38px; bottom: 16px; right: 16px; font-size: 16px; }
+}
+
 /* ============ PDF PRINT STYLES ============ */
 @media print, screen and (max-width: 950px) {
   /* Ranking table — make it fit A4 width */
