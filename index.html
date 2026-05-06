@@ -173,6 +173,15 @@ section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60p
 .short-card h3{font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;margin-bottom:12px;}
 .short-card p{font-size:15px;color:var(--ink-2);line-height:1.65;margin-bottom:10px;}
 
+/* Sticky TOC sidebar (desktop only ≥1280px) */
+.toc-sidebar{position:fixed;top:80px;left:16px;z-index:90;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;width:215px;max-height:calc(100vh - 110px);overflow-y:auto;box-shadow:0 2px 8px rgba(0,0,0,0.06);display:none;font-size:12px;}
+.toc-sidebar h4{font-size:10px;font-weight:700;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line-soft);}
+.toc-sidebar a{display:block;padding:4px 6px;color:var(--ink-2);text-decoration:none;border-radius:4px;margin-bottom:1px;line-height:1.35;font-size:11.5px;}
+.toc-sidebar a:hover{background:var(--accent-light);color:var(--accent);}
+.toc-sidebar a.toc-section{color:var(--ink-mute);font-weight:600;font-size:9.5px;text-transform:uppercase;letter-spacing:0.06em;margin-top:8px;padding:3px 6px;}
+.toc-sidebar a.toc-section:first-child{margin-top:0;}
+@media(min-width:1500px){.toc-sidebar{display:block;}}
+
 /* Glossary panel */
 .glossary-toggle{position:fixed;bottom:24px;right:24px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;}
 .glossary-panel{position:fixed;bottom:80px;right:24px;z-index:199;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;width:360px;max-height:60vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.15);display:none;}
@@ -376,6 +385,40 @@ section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60p
 </head>
 <body>
 
+<!-- Sticky TOC sidebar (desktop only) -->
+<aside class="toc-sidebar">
+  <h4>Содержание</h4>
+  <a href="#s1" class="toc-section">Обзор</a>
+  <a href="#s1">01 — Объём данных</a>
+  <a href="#s2">02 — Итоговый ranking</a>
+  <a href="#s3">03 — Содержание золота</a>
+  <a href="#s4">04 — Карта Ганы</a>
+  <a href="#s5" class="toc-section">Участки портфеля</a>
+  <a href="#s5">05 — Amenam (#1)</a>
+  <a href="#s6">06 — Oworam (#2)</a>
+  <a href="#s7">07 — Akim Apapam (#3)</a>
+  <a href="#s8">08 — Bodukwan (#4)</a>
+  <a href="#s9">09 — MG Emmanuel (#5)</a>
+  <a href="#s10">10 — Pemeso (новый)</a>
+  <a href="#s11">11 — FGM Birim North (#6)</a>
+  <a href="#s12">12 — Grey Dew (новый)</a>
+  <a href="#s13">13 — Obomeng (#7)</a>
+  <a href="#s14" class="toc-section">Стратегия</a>
+  <a href="#s14">14 — Спектральный анализ Akyem</a>
+  <a href="#s15">15 — Окно Zijin / Long Shine</a>
+  <a href="#s16">16 — Оценка стоимости</a>
+  <a href="#s17">17 — План действий</a>
+  <a href="#s18">18 — Соседние участки</a>
+  <a href="#s19">19 — Сделки-аналоги</a>
+  <a href="#s20">20 — Гана 2026 compliance</a>
+  <a href="#s21" class="toc-section">Приложения</a>
+  <a href="#s21">21 — Технические данные</a>
+  <a href="#s22">22 — Zijin / Akyem профиль</a>
+  <a href="#s23">23 — Профили продавцов</a>
+  <a href="#s24">24 — Методология</a>
+  <a href="#changelog">— Журнал изменений</a>
+</aside>
+
 <!-- Glossary button -->
 <button class="glossary-toggle" onclick="document.querySelector('.glossary-panel').classList.toggle('open')" title="Словарь терминов">?</button>
 <div class="glossary-panel">
@@ -464,49 +507,54 @@ section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60p
 <section id="s1">
 <div class="container">
   <div class="slide-label">01 · Что было сделано</div>
-  <h1 class="slide-title">Анализ 9 золотодобывающих участков в Гане</h1>
-  <p class="slide-subtitle">Что мы сделали и какие данные за этим стоят.</p>
+  <h1 class="slide-title">Технический справочник — 9 участков, Гана</h1>
+  <p class="slide-subtitle">Внутренний документ команды. Цифры с источниками и датами. Обновляется по мере поступления новых данных — см. журнал в конце.</p>
 
+  <div class="callout" style="margin-bottom:32px;">
+    <strong>Как пользоваться:</strong> навигация в шапке (1–24) — клик переносит к разделу. Глоссарий справа внизу (значок «?»). Все цифры можно проверить — пути к файлам данных в разделе 22 (Методология). Журнал изменений в конце страницы.
+  </div>
+
+  <h3 style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;margin-bottom:16px;color:var(--ink);">Объём данных</h3>
   <div class="hero-grid">
     <div class="hero-card">
       <div class="hero-number">22</div>
-      <div class="hero-unit">документа от продавцов прочитано</div>
-      <div class="hero-explain">Лицензии, ТЭО, отчёты по бурению — всего 444 страницы</div>
+      <div class="hero-unit">документа от продавцов</div>
+      <div class="hero-explain">444 стр.: лицензии, ТЭО, отчёты по бурению, схемы, переписка</div>
     </div>
     <div class="hero-card">
-      <div class="hero-number">1296</div>
-      <div class="hero-unit">фрагментов в умном поиске</div>
-      <div class="hero-explain">Можем за секунду найти любую цифру в этих документах</div>
+      <div class="hero-number">1 296</div>
+      <div class="hero-unit">чанков в векторной базе</div>
+      <div class="hero-explain">BGE-M3 hybrid embedding, Qdrant; запрос через query_ghana.py</div>
     </div>
     <div class="hero-card">
       <div class="hero-number">500+</div>
-      <div class="hero-unit">проб почвы из участка Pemeso</div>
-      <div class="hero-explain">Анализ грунта на содержание золота — исторические пробы Newmont-era (Aspire/Pemeso блок)</div>
+      <div class="hero-unit">проб почвы Pemeso</div>
+      <div class="hero-explain">Исторические сборы Newmont-era на блоке Aspire/Pemeso</div>
     </div>
     <div class="hero-card">
       <div class="hero-number">8</div>
-      <div class="hero-unit">типов спутниковых данных</div>
-      <div class="hero-explain">Цвет, тепло, радар, магнитное поле, рельеф, гиперспектр, освоение земли</div>
+      <div class="hero-unit">сенсорных стеков на участок</div>
+      <div class="hero-explain">S2, S1, ASTER, Landsat, Hansen, Copernicus DEM, EMAG2v3, EGM2008</div>
     </div>
     <div class="hero-card">
       <div class="hero-number">56+</div>
-      <div class="hero-unit">независимых замеров на каждом участке</div>
-      <div class="hero-explain">Каждый участок проверен с разных ракурсов</div>
+      <div class="hero-unit">метрик на участок</div>
+      <div class="hero-explain">QI, CI, MI, NDVI, dB, lineament, slope, HAND, TMI, PCA…</div>
     </div>
     <div class="hero-card">
-      <div class="hero-number">1079</div>
-      <div class="hero-unit">лицензий из официального реестра Ганы проверено</div>
-      <div class="hero-explain">Чтобы понять что вокруг нас, кто соседи, есть ли свободные блоки</div>
+      <div class="hero-number">1 079</div>
+      <div class="hero-unit">лицензий в кадастре Ганы</div>
+      <div class="hero-explain">Ghana Mining Repository KML, проверены соседи и свободные блоки</div>
     </div>
     <div class="hero-card">
       <div class="hero-number">6 лет</div>
-      <div class="hero-unit">наблюдений со спутника-радара</div>
-      <div class="hero-explain">С 2020 года смотрим как меняется поверхность каждого участка</div>
+      <div class="hero-unit">временной ряд Sentinel-1</div>
+      <div class="hero-explain">2020–2025 backscatter; disturbance + Hansen GFC v1.12 cross-validation</div>
     </div>
     <div class="hero-card">
       <div class="hero-number">49</div>
-      <div class="hero-unit">тепловых снимков ASTER</div>
-      <div class="hero-explain">Тепловые снимки показывают какие минералы под поверхностью</div>
+      <div class="hero-unit">сцен ASTER L1T</div>
+      <div class="hero-explain">VNIR/SWIR/TIR 2000–2003, Ninomiya 2005 индексы (QI/CI/MI/SI)</div>
     </div>
   </div>
 </div>
@@ -893,7 +941,7 @@ section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60p
 
   <div class="concession-header" style="background:#3D2B1A;">
     <div class="concession-rank-line">Ранг #4 · Оценка 37.0 · Уровень Б · Уверенность 80%</div>
-    <div class="concession-title-main">Bodukwan — сильнейший спутниковый сигнал железа в портфеле</div>
+    <div class="concession-title-main">Bodukwan — наибольшая магнитная аномалия (TMI +43 нТл)</div>
     <div class="concession-meta-row">
       <span>Лицензия на разведку: <strong>PL2/803 (истекает октябрь 2026)</strong></span>
       <span>Площадь: <strong>65.1 км²</strong></span>
@@ -1009,7 +1057,7 @@ section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60p
   <p class="slide-subtitle">Aspire Resources Limited · 65 км² · Wassa West · Ранее изучался компанией Newmont</p>
 
   <div class="callout callout-gold">
-    <strong>Потенциально сильнейшее добавление к портфелю</strong> по техническим данным: Newmont провёл анализ осадков рек, пробы почвы, магнитную и гравитационную съёмку — 500+ проб. Район — пояс Prestea–Bogoso, в 15 км от Bogoso и рядом с Tarkwa, Damang.
+    <strong>Самая высокая плотность исторических данных в портфеле:</strong> Newmont (до выхода из Ганы 2025) провёл BLEG-анализ осадков рек, пробы почвы, магнитную и гравитационную съёмку — 500+ проб. Район — пояс Prestea–Bogoso, 15 км от Bogoso, рядом с Tarkwa и Damang. Без NI 43-101.
   </div>
 
   <div class="pemeso-grid">
@@ -1062,7 +1110,7 @@ section{padding:80px 0;border-bottom:1px solid var(--line);scroll-margin-top:60p
 
   <div class="concession-header" style="background:#2D1A4A;">
     <div class="concession-rank-line">Ранг #6 · Оценка 26.4 · Только лицензия · Уверенность 55%</div>
-    <div class="concession-title-main">FGM — сильнейший спутниковый сигнал, нет документов</div>
+    <div class="concession-title-main">FGM — высокая ASTER QI (1.0208), но title-only без ТЭО и проб</div>
     <div class="concession-meta-row">
       <span>Лицензия на добычу: <strong>PL5/152L (2018–2031, действующая)</strong></span>
       <span>Площадь: <strong>44.3 км²</strong></span>
