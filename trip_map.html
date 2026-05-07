@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
+<meta name="theme-color" content="#14110D">
+<title>Карта поездки — 9 участков, Гана</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root{
+  --bg:#F7F5F0;--ink:#14110D;--ink-2:#3A352E;--ink-mute:#6B645A;--line:#E0DCD2;
+  --accent:#1F4D3D;--accent-2:#2C6B55;--gold:#A07B2A;--warn:#B33C2D;
+  --tier-a:#1F4D3D;--tier-b:#2C6B55;--tier-c:#A07B2A;--tier-title:#B33C2D;--tier-empty:#6B645A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--ink);color:#fff;-webkit-font-smoothing:antialiased;overflow:hidden;}
+
+/* Topbar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(20,17,13,0.96);backdrop-filter:blur(8px);color:#fff;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,0.4);}
+.topbar-brand{display:flex;align-items:center;gap:10px;min-width:0;}
+.topbar-seal{width:32px;height:32px;border:1.5px solid rgba(255,255,255,0.7);border-radius:50%;display:grid;place-items:center;font-family:'Source Serif 4',serif;font-size:14px;font-weight:600;flex-shrink:0;background:#1F4D3D;}
+.topbar-title{font-size:13px;font-weight:600;letter-spacing:0.02em;line-height:1.15;}
+.topbar-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.55);margin-top:2px;}
+.topbar-nav{display:flex;align-items:center;gap:6px;}
+.topbar-link{font-size:11px;color:rgba(255,255,255,0.8);text-decoration:none;border:1px solid rgba(255,255,255,0.3);border-radius:14px;padding:5px 11px;white-space:nowrap;transition:all 0.15s;}
+.topbar-link:hover,.topbar-link:active{background:rgba(255,255,255,0.15);}
+@media (max-width:600px){
+  .topbar-meta{display:none;}
+  .topbar-link{padding:5px 9px;font-size:10px;}
+  .topbar-link.hide-mobile{display:none;}
+}
+
+/* Filter bar */
+.filterbar{position:fixed;top:48px;left:0;right:0;z-index:900;background:rgba(20,17,13,0.92);backdrop-filter:blur(6px);padding:6px 12px;display:flex;align-items:center;gap:6px;overflow-x:auto;border-bottom:1px solid rgba(255,255,255,0.08);scrollbar-width:none;}
+.filterbar::-webkit-scrollbar{display:none;}
+.filterbar-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:rgba(255,255,255,0.6);text-transform:uppercase;white-space:nowrap;letter-spacing:0.06em;}
+.fchip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.25);font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:rgba(255,255,255,0.85);white-space:nowrap;transition:all 0.15s;}
+.fchip.active{background:#fff;color:var(--ink);border-color:#fff;}
+.fchip .dot{width:8px;height:8px;border-radius:50%;}
+.fchip-divider{width:1px;height:20px;background:rgba(255,255,255,0.15);flex-shrink:0;margin:0 4px;}
+
+/* Map */
+#map{position:fixed;top:90px;left:0;right:0;bottom:36px;z-index:1;background:#0a0a0a;}
+.leaflet-container{font-family:'Inter',sans-serif;background:#0a0a0a;}
+
+/* Layer switcher */
+.layer-switcher{position:fixed;top:104px;right:10px;z-index:800;background:rgba(20,17,13,0.92);backdrop-filter:blur(8px);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:4px;box-shadow:0 4px 16px rgba(0,0,0,0.5);}
+.layer-btn{font-size:11px;font-weight:600;padding:6px 10px;border-radius:6px;border:none;background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;text-align:left;min-width:78px;transition:all 0.12s;}
+.layer-btn.active{background:rgba(255,255,255,0.15);color:#fff;}
+.layer-btn:hover{background:rgba(255,255,255,0.08);}
+
+/* Geolocate button */
+.geo-btn{position:fixed;bottom:48px;right:10px;z-index:800;width:46px;height:46px;border-radius:50%;background:#1F4D3D;border:2px solid #fff;color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:grid;place-items:center;}
+.geo-btn:active{transform:scale(0.94);}
+.geo-btn.locating{background:var(--gold);}
+
+/* Stats footer */
+.stats-bar{position:fixed;bottom:0;left:0;right:0;height:36px;z-index:900;background:rgba(20,17,13,0.96);color:rgba(255,255,255,0.7);padding:6px 12px;display:flex;gap:14px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;overflow-x:auto;border-top:1px solid rgba(255,255,255,0.06);scrollbar-width:none;}
+.stats-bar::-webkit-scrollbar{display:none;}
+.stats-bar .num{color:#fff;font-weight:600;}
+.stats-bar a{color:rgba(255,255,255,0.7);text-decoration:none;}
+
+/* Popup */
+.leaflet-popup-content-wrapper{background:var(--bg);color:var(--ink);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);padding:0;max-width:340px;}
+.leaflet-popup-content{margin:0;width:auto !important;}
+.leaflet-popup-tip{background:var(--bg);}
+.leaflet-popup-close-button{font-size:22px !important;color:var(--ink-mute) !important;padding:8px !important;}
+
+.pop{font-family:'Inter',sans-serif;}
+.pop-head{padding:14px 16px 10px;border-bottom:1px solid var(--line);}
+.pop-tier{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase;padding:2px 7px;border-radius:6px;margin-bottom:6px;letter-spacing:0.05em;}
+.pop-name{font-size:17px;font-weight:700;color:var(--ink);line-height:1.15;}
+.pop-license{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-mute);margin-top:4px;}
+.pop-headline{font-size:12.5px;color:var(--ink-2);margin-top:8px;line-height:1.4;}
+
+.pop-pills{display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.pill{flex:1;min-width:75px;padding:7px 8px;background:#fff;border:1px solid var(--line);border-radius:8px;text-align:center;}
+.pill-num{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--accent);line-height:1;}
+.pill-num.warn{color:var(--warn);}
+.pill-num.mute{color:var(--ink-mute);}
+.pill-lbl{font-size:9px;color:var(--ink-mute);text-transform:uppercase;margin-top:3px;letter-spacing:0.04em;font-weight:600;}
+
+.pop-section{padding:10px 16px;border-bottom:1px solid var(--line);}
+.pop-section:last-child{border-bottom:none;}
+.pop-section h4{font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;font-family:'JetBrains Mono',monospace;}
+.pop-section p{font-size:12px;color:var(--ink-2);line-height:1.45;}
+.pop-section .coord{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink);}
+.pop-actions{display:flex;gap:6px;padding:10px 16px;background:#f0ede5;border-radius:0 0 14px 14px;}
+.pop-actions a{flex:1;padding:7px 10px;border-radius:7px;text-align:center;text-decoration:none;font-size:11px;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--ink);}
+.pop-actions a.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* Mobile bottom-sheet popup */
+@media (max-width:600px){
+  .leaflet-popup{width:calc(100vw - 20px) !important;}
+  .leaflet-popup-content-wrapper{max-width:none !important;width:100%;}
+  .pop-head{padding:12px 14px 8px;}
+  .pop-pills{padding:8px 14px;gap:5px;}
+  .pill{min-width:70px;padding:6px 6px;}
+  .pop-section{padding:9px 14px;}
+}
+
+/* Tier-coloured polygons handled in JS via path options */
+
+/* Quick-jump bottom sheet (mobile only) */
+.jump-bar{position:fixed;bottom:36px;left:0;right:60px;z-index:850;background:rgba(20,17,13,0.92);padding:6px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;border-top:1px solid rgba(255,255,255,0.06);}
+.jump-bar::-webkit-scrollbar{display:none;}
+.jump-chip{flex-shrink:0;padding:5px 10px;font-size:11px;font-weight:600;border-radius:14px;border:1.5px solid;background:transparent;color:#fff;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;}
+@media (min-width:601px){.jump-bar{display:none;}}
+@media (max-width:600px){#map{bottom:80px;}}
+
+/* I'm here circle */
+.me-pulse{animation:pulse 2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,200,0,0.7);}70%{box-shadow:0 0 0 20px rgba(255,200,0,0);}100%{box-shadow:0 0 0 0 rgba(255,200,0,0);}}
+
+/* Coord status badge in popup */
+.coord-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:5px;margin-left:6px;font-weight:700;}
+.coord-badge.cadastre{background:#dcfce7;color:#14532d;}
+.coord-badge.fs{background:#fef3c7;color:#78350f;}
+.coord-badge.plan{background:#dbeafe;color:#1e3a8a;}
+.coord-badge.approx{background:#fee2e2;color:#7f1d1d;}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-seal">G</div>
+    <div style="min-width:0;">
+      <div class="topbar-title">Карта поездки — 9 участков, Гана</div>
+      <div class="topbar-meta">Для команды · спутник + галамси + спектр · обновлено 2026-05-07</div>
+    </div>
+  </div>
+  <div class="topbar-nav">
+    <a href="index.html" class="topbar-link hide-mobile">Тех. отчёт</a>
+    <a href="world_majors.html" class="topbar-link">Мажоры</a>
+  </div>
+</nav>
+
+<div class="filterbar">
+  <span class="filterbar-label">Tier:</span>
+  <button class="fchip active" data-filter="all"><span class="dot" style="background:#fff;"></span>Все 9</button>
+  <button class="fchip" data-filter="A"><span class="dot" style="background:var(--tier-a);"></span>A</button>
+  <button class="fchip" data-filter="B"><span class="dot" style="background:var(--tier-b);"></span>B</button>
+  <button class="fchip" data-filter="C"><span class="dot" style="background:var(--tier-c);"></span>C</button>
+  <button class="fchip" data-filter="title_only"><span class="dot" style="background:var(--tier-title);"></span>Title</button>
+  <button class="fchip" data-filter="empty"><span class="dot" style="background:var(--tier-empty);"></span>Empty</button>
+  <span class="fchip-divider"></span>
+  <button class="fchip" data-filter="galamsey"><span class="dot" style="background:#dc2626;"></span>Галамси&gt;100ha</button>
+  <button class="fchip" data-filter="spectral"><span class="dot" style="background:#A07B2A;"></span>Spectral≥80%</button>
+</div>
+
+<div id="map"></div>
+
+<div class="layer-switcher">
+  <button class="layer-btn active" data-layer="sat">🛰 Спутник</button>
+  <button class="layer-btn" data-layer="hybrid">🛰+OSM</button>
+  <button class="layer-btn" data-layer="topo">⛰ Topo</button>
+  <button class="layer-btn" data-layer="streets">🛣 Streets</button>
+</div>
+
+<div class="jump-bar" id="jumpBar"></div>
+<button class="geo-btn" id="geoBtn" title="Я тут">📍</button>
+
+<div class="stats-bar">
+  <span><span class="num" id="s-shown">9</span> на карте</span>
+  <span><span class="num" id="s-area">0</span> км² total</span>
+  <span><span class="num" id="s-galamsey">0</span> ha галамси</span>
+  <span><span class="num" id="s-assays">0</span> assays</span>
+  <span style="margin-left:auto;color:rgba(255,255,255,0.5);">Tap polygon → детали</span>
+</div>
+
+<script>
+// ===== DATA =====
+const TRIP_DATA = [{"name":"fgm_birim_north","label":"FGM Birim North","headline":"Spectral twin Akyem (82%) · 30 pillars in cadastre","license":"PL5/152L","operator":"FGM Resources Ghana Limited","area_km2":44.32,"tier":"title_only","coord_source":"official_cadastre","center":[6.43541666665,-0.9583333332999999],"polygon":[[6.4375,-0.9791666667],[6.4375,-0.9708333333],[6.4416666667,-0.9708333333],[6.4416666667,-0.9583333333],[6.4458333333,-0.9583333333],[6.4458333333,-0.9416666667],[6.45,-0.9416666667],[6.45,-0.9208333333],[6.4458333333,-0.9208333333],[6.4458333333,-0.8958333333],[6.4375,-0.8958333333],[6.4375,-0.9416666667],[6.4333333333,-0.9416666667],[6.4333333333,-0.9458333333],[6.4375,-0.9458333333],[6.4375,-0.9625],[6.4333333333,-0.9625],[6.4333333333,-0.9708333333],[6.4208333333,-0.9708333333],[6.4208333333,-1.0083333333],[6.4291666667,-1.0083333333],[6.4291666667,-1.0208333333],[6.4375,-1.0208333333],[6.4375,-1.0125],[6.4333333333,-1.0125],[6.4333333333,-1.0041666667],[6.425,-1.0041666667],[6.425,-0.9791666667],[6.4375,-0.9791666667],[6.4375,-0.9791666667]],"bbox":[[6.4208333333,-1.0208333333],[6.45,-0.8958333333]],"n_assays":0,"n_test_pits":0,"galamsey_ha":51.6,"galamsey_pct":1.1,"hansen_loss_ha":0.0,"spectral_akyem_pct":82.3,"field_check":"Granted ML active · подтвердить полевую работу/добычу. Spectral twin Akyem.","region":"Eastern"},{"name":"amenam","label":"Amenam","headline":"Spectral twin Akyem (89%) · FS 109pp, 18 pillars","license":"APL-pending","operator":"Ignite Machinery Rentals & Mining Ltd","area_km2":9.77,"tier":"A","coord_source":"fs_pillars","center":[6.4104,-0.9938],"polygon":null,"bbox":[[6.4,-1.0458],[6.4208,-0.9417]],"n_assays":0,"n_test_pits":91,"galamsey_ha":22.3,"galamsey_pct":0.8,"hansen_loss_ha":0.0,"spectral_akyem_pct":89.2,"field_check":"ML application pending · искать действующие test pits, оценить access road.","region":"Eastern"},{"name":"oworam","label":"Oworam","headline":"FS 107pp · 127 koz alluvial · 126 km² PL","license":"PL (G)-5/819","operator":"Ignite Machinery Rentals And Mining Ltd","area_km2":126.73,"tier":"A","coord_source":"official_cadastre","center":[5.95833333335,-0.6041666667],"polygon":[[5.95,-0.575],[5.95,-0.5458333333],[5.9833333333,-0.5458333333],[5.9833333333,-0.5625],[5.9875,-0.5625],[5.9875,-0.5583333333],[5.9916666667,-0.5583333333],[5.9916666667,-0.5541666667],[5.9958333333,-0.5541666667],[5.9958333333,-0.55],[6.0,-0.55],[6.0,-0.5416666667],[5.9166666667,-0.5416666667],[5.9166666667,-0.6],[5.9291666667,-0.6],[5.9291666667,-0.6666666667],[5.9541666667,-0.6666666667],[5.9541666667,-0.6541666667],[5.95,-0.6541666667],[5.95,-0.575],[5.95,-0.575]],"bbox":[[5.9166666667,-0.6666666667],[6.0,-0.5416666667]],"n_assays":0,"n_test_pits":94,"galamsey_ha":385.5,"galamsey_pct":3.0,"hansen_loss_ha":0.0,"spectral_akyem_pct":0.0,"field_check":"Active PL · 4× больше заявленного — видеть фактическую границу.","region":"Eastern"},{"name":"akim_apapam","label":"Akim Apapam","headline":"FS 126pp · 6 ALS @ 8.1 g/t avg · NOT in cadastre","license":"APL-?","operator":"Hujak Mining Limited Company","area_km2":8.4,"tier":"A","coord_source":"fs_pillars","center":[6.1292,-0.5938],"polygon":null,"bbox":[[6.0917,-0.6083],[6.1667,-0.5792]],"n_assays":6,"n_test_pits":135,"galamsey_ha":95.2,"galamsey_pct":3.5,"hansen_loss_ha":0.0,"spectral_akyem_pct":16.8,"field_check":"ВНИМАНИЕ: участок не в кадастре. Подтвердить статус ML application у Hujak. Проверить 8 г/т ALS — взять параллельные пробы.","region":"Eastern"},{"name":"mg_emmanuel_afosu","label":"MG Emmanuel Afosu","headline":"Spectral TOP twin Akyem (90%) · но Work Programme не выполнен","license":"PL (G)-5/836","operator":"MG Emmanuel Mining Limited Company","area_km2":2.74,"tier":"C","coord_source":"official_cadastre","center":[6.38125,-1.02708333335],"polygon":[[6.3833333333,-1.0541666667],[6.3833333333,-1.0],[6.3791666667,-1.0],[6.3791666667,-1.0541666667],[6.3833333333,-1.0541666667]],"bbox":[[6.3791666667,-1.0541666667],[6.3833333333,-1.0]],"n_assays":0,"n_test_pits":0,"galamsey_ha":4.1,"galamsey_pct":1.4,"hansen_loss_ha":0.0,"spectral_akyem_pct":90.0,"field_check":"Active PL · но обязательства Work Programme не выполнялись. Оценить причину.","region":"Eastern"},{"name":"bodukwan_moseaso","label":"Bodukwan Moseaso","headline":"1 channel sample 18.26 g/t · 65 km² + 26 km² secondary","license":"PL2/803","operator":"Bodukwan Holding Company Limited","area_km2":65.07,"tier":"B","coord_source":"official_cadastre","center":[5.83333333335,-2.5],"polygon":[[5.8791666667,-2.5],[5.8791666667,-2.4875],[5.8708333333,-2.4875],[5.8708333333,-2.4833333333],[5.8625,-2.4833333333],[5.8625,-2.4958333333],[5.8333333333,-2.4958333333],[5.8333333333,-2.4708333333],[5.7875,-2.4708333333],[5.7875,-2.5],[5.8125,-2.5],[5.8125,-2.5291666667],[5.8375,-2.5291666667],[5.8375,-2.525],[5.8625,-2.525],[5.8625,-2.5125],[5.8583333333,-2.5125],[5.8583333333,-2.5166666667],[5.8416666667,-2.5166666667],[5.8416666667,-2.5208333333],[5.8333333333,-2.5208333333],[5.8333333333,-2.5125],[5.8458333333,-2.5125],[5.8458333333,-2.5083333333],[5.8666666667,-2.5083333333],[5.8666666667,-2.5041666667],[5.875,-2.5041666667],[5.875,-2.5],[5.8791666667,-2.5]],"bbox":[[5.7875,-2.5291666667],[5.8791666667,-2.4708333333]],"n_assays":1,"n_test_pits":0,"galamsey_ha":219.0,"galamsey_pct":3.3,"hansen_loss_ha":0.0,"spectral_akyem_pct":3.0,"field_check":"Active PL · 218 ha галамси внутри — кто и как давно. Channel sample 18 g/t верифицировать.","region":"Western North"},{"name":"obomeng","label":"Obomeng","headline":"PDF от продавца не получен · координаты приблизительные","license":"?","operator":"(unknown - not in registry)","area_km2":25.0,"tier":"empty","coord_source":"approximate","center":[6.62,-1.25],"polygon":null,"bbox":[[6.55,-1.32],[6.69,-1.18]],"n_assays":0,"n_test_pits":0,"galamsey_ha":532.4,"galamsey_pct":2.2,"hansen_loss_ha":0.0,"spectral_akyem_pct":null,"field_check":"Координаты прикинуты — попросить у продавца KML/Plan of Land. Без этого проверка бесполезна.","region":"Ashanti"},{"name":"pemeso_aspire","label":"Pemeso (Aspire)","headline":"Newmont опционировал ранее · 500 soil samples peak 1200 ppb · 65 km²","license":"unknown","operator":"Aspire Resources Limited","area_km2":64.9,"tier":"A","coord_source":"fs_pillars","center":[5.62,-1.872],"polygon":null,"bbox":[[5.5944,-1.9286],[5.6667,-1.8139]],"n_assays":0,"n_test_pits":0,"galamsey_ha":0,"galamsey_pct":0,"hansen_loss_ha":0,"spectral_akyem_pct":null,"field_check":"Newmont отказался от opciona — узнать причину. Пересдать почвенные пробы.","region":"Western"},{"name":"grey_dew_prestea","label":"Grey Dew Prestea","headline":"P1-P20 pillars из Plan of Land · 14 km² Prestea-Huni Valley","license":"unknown","operator":"Grey Dew Limited Company","area_km2":14.03,"tier":"A","coord_source":"plan_of_land","center":[5.648,-1.908],"polygon":null,"bbox":[[5.6292,-1.9333],[5.6667,-1.8833]],"n_assays":0,"n_test_pits":0,"galamsey_ha":0,"galamsey_pct":0,"hansen_loss_ha":0,"spectral_akyem_pct":null,"field_check":"Только Plan of Land без геологии — спросить assays/drillhole logs.","region":"Western"}];
+
+const TIER_CFG = {
+  "A":          {color:"#1F4D3D", label:"Tier A — есть assays/keys"},
+  "B":          {color:"#2C6B55", label:"Tier B — есть spectral/cadastre"},
+  "C":          {color:"#A07B2A", label:"Tier C — work programme/title"},
+  "title_only": {color:"#B33C2D", label:"Title only — лицензия без работ"},
+  "empty":      {color:"#6B645A", label:"Empty — данных нет"},
+};
+
+const COORD_CFG = {
+  "official_cadastre": {badge:"cadastre", text:"Гос. кадастр Ганы (active)"},
+  "fs_pillars":        {badge:"fs", text:"Pillars из feasibility"},
+  "plan_of_land":      {badge:"plan", text:"Plan of Land документ"},
+  "approximate":       {badge:"approx", text:"Прикидочные координаты"},
+};
+
+// ===== MAP INIT =====
+const map = L.map('map', {
+  center: [6.2, -1.5],
+  zoom: 8,
+  zoomControl: true,
+  attributionControl: true,
+});
+
+const baseLayers = {
+  sat: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Esri World Imagery',
+    maxZoom: 19,
+  }),
+  topo: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenTopoMap (CC-BY-SA)',
+    maxZoom: 17,
+  }),
+  streets: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OSM © CARTO',
+    maxZoom: 19,
+    subdomains: 'abcd',
+  }),
+};
+
+const labelsLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Esri Reference',
+  maxZoom: 19,
+  opacity: 0.85,
+});
+
+let activeBase = baseLayers.sat;
+activeBase.addTo(map);
+
+// ===== POLYGON LAYERS =====
+const polygonLayers = {};
+const allLayers = [];
+
+function styleForTier(tier, isPolygonReal) {
+  const cfg = TIER_CFG[tier] || TIER_CFG.empty;
+  return {
+    color: cfg.color,
+    fillColor: cfg.color,
+    weight: isPolygonReal ? 2.5 : 2,
+    fillOpacity: 0.32,
+    opacity: 1,
+    dashArray: isPolygonReal ? null : '6,4',
+  };
+}
+
+function fmtCoord(lat, lon) {
+  return `${lat.toFixed(4)}°, ${lon.toFixed(4)}°`;
+}
+
+function popupHtml(d) {
+  const tierCfg = TIER_CFG[d.tier] || TIER_CFG.empty;
+  const coordCfg = COORD_CFG[d.coord_source] || COORD_CFG.approximate;
+  const galamseyCls = d.galamsey_ha >= 100 ? 'warn' : (d.galamsey_ha > 0 ? '' : 'mute');
+  const spectralCls = d.spectral_akyem_pct >= 80 ? '' : (d.spectral_akyem_pct === null ? 'mute' : (d.spectral_akyem_pct < 30 ? 'mute' : ''));
+  const spectralVal = d.spectral_akyem_pct === null ? '—' : d.spectral_akyem_pct + '%';
+  const assaysCls = d.n_assays > 0 ? '' : 'mute';
+  const wazeUrl = `https://www.waze.com/ul?ll=${d.center[0]},${d.center[1]}&navigate=yes`;
+  const gmapsUrl = `https://www.google.com/maps?q=${d.center[0]},${d.center[1]}&z=14`;
+  return `
+    <div class="pop">
+      <div class="pop-head">
+        <span class="pop-tier" style="background:${tierCfg.color}">${d.tier}</span>
+        <div class="pop-name">${d.label}</div>
+        <div class="pop-license">${d.license} · ${d.operator}</div>
+        <div class="pop-headline">${d.headline}</div>
+      </div>
+      <div class="pop-pills">
+        <div class="pill"><div class="pill-num">${d.area_km2.toFixed(1)}</div><div class="pill-lbl">км²</div></div>
+        <div class="pill"><div class="pill-num ${galamseyCls}">${d.galamsey_ha}</div><div class="pill-lbl">галамси ha</div></div>
+        <div class="pill"><div class="pill-num ${spectralCls}">${spectralVal}</div><div class="pill-lbl">spectral</div></div>
+        <div class="pill"><div class="pill-num ${assaysCls}">${d.n_assays}</div><div class="pill-lbl">assays</div></div>
+      </div>
+      <div class="pop-section">
+        <h4>Координаты</h4>
+        <p><span class="coord">${fmtCoord(d.center[0], d.center[1])}</span><span class="coord-badge ${coordCfg.badge}">${coordCfg.text}</span></p>
+      </div>
+      <div class="pop-section">
+        <h4>Что искать на земле</h4>
+        <p>${d.field_check}</p>
+      </div>
+      <div class="pop-actions">
+        <a href="${gmapsUrl}" target="_blank" class="primary">Google Maps ↗</a>
+        <a href="${wazeUrl}" target="_blank">Waze ↗</a>
+      </div>
+    </div>`;
+}
+
+function addConcession(d) {
+  const isReal = !!d.polygon;
+  let layer;
+  if (isReal) {
+    layer = L.polygon(d.polygon, styleForTier(d.tier, true));
+  } else if (d.bbox) {
+    layer = L.rectangle(d.bbox, styleForTier(d.tier, false));
+  } else {
+    layer = L.circleMarker(d.center, {...styleForTier(d.tier, false), radius: 14});
+  }
+  layer.bindPopup(popupHtml(d), {maxWidth: 340, autoPan: true, className: 'pop-wrap'});
+  layer.bindTooltip(d.label, {sticky: true, direction: 'top', offset: [0, -4], className: 'pop-tooltip'});
+  layer.concessionData = d;
+  layer.addTo(map);
+  polygonLayers[d.name] = layer;
+  allLayers.push(layer);
+
+  // Galamsey indicator: separate red circle scaled by ha
+  if (d.galamsey_ha >= 50) {
+    const r = Math.min(40, 6 + Math.sqrt(d.galamsey_ha));
+    const galCircle = L.circleMarker(d.center, {
+      radius: r,
+      color: '#dc2626',
+      weight: 1,
+      fillColor: '#dc2626',
+      fillOpacity: 0.18,
+      interactive: false,
+      className: 'galamsey-ring',
+    });
+    galCircle.galamseyForName = d.name;
+    galCircle.addTo(map);
+    allLayers.push(galCircle);
+  }
+
+  // Label marker (small)
+  const labelMarker = L.marker(d.center, {
+    icon: L.divIcon({
+      className: 'name-label',
+      html: `<div style="background:rgba(20,17,13,0.85);color:#fff;font-size:11px;font-weight:600;padding:3px 8px;border-radius:8px;white-space:nowrap;border:1px solid ${TIER_CFG[d.tier].color};box-shadow:0 2px 6px rgba(0,0,0,0.4);font-family:Inter,sans-serif;">${d.label}</div>`,
+      iconSize: null,
+      iconAnchor: [40, 10],
+    }),
+    interactive: false,
+  });
+  labelMarker.labelForName = d.name;
+  labelMarker.addTo(map);
+  allLayers.push(labelMarker);
+}
+
+TRIP_DATA.forEach(addConcession);
+
+// Auto-fit
+const all = TRIP_DATA.flatMap(d => d.polygon || (d.bbox ? d.bbox : [d.center]));
+if (all.length) map.fitBounds(L.latLngBounds(all).pad(0.15));
+
+// ===== FILTERS =====
+let activeFilter = 'all';
+
+function applyFilter() {
+  const filtered = TRIP_DATA.filter(d => {
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'galamsey') return d.galamsey_ha > 100;
+    if (activeFilter === 'spectral') return d.spectral_akyem_pct !== null && d.spectral_akyem_pct >= 80;
+    return d.tier === activeFilter;
+  }).map(d => d.name);
+
+  allLayers.forEach(l => {
+    const n = l.concessionData?.name || l.galamseyForName || l.labelForName;
+    if (filtered.includes(n)) {
+      if (!map.hasLayer(l)) l.addTo(map);
+    } else {
+      if (map.hasLayer(l)) map.removeLayer(l);
+    }
+  });
+
+  const visible = TRIP_DATA.filter(d => filtered.includes(d.name));
+  document.getElementById('s-shown').textContent = visible.length;
+  document.getElementById('s-area').textContent = visible.reduce((a,d) => a + d.area_km2, 0).toFixed(1);
+  document.getElementById('s-galamsey').textContent = visible.reduce((a,d) => a + d.galamsey_ha, 0).toFixed(0);
+  document.getElementById('s-assays').textContent = visible.reduce((a,d) => a + d.n_assays, 0);
+}
+
+document.querySelectorAll('.fchip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.fchip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    applyFilter();
+  });
+});
+
+applyFilter();
+
+// ===== LAYER SWITCHER =====
+document.querySelectorAll('.layer-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const k = btn.dataset.layer;
+    document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    if (map.hasLayer(activeBase)) map.removeLayer(activeBase);
+    if (map.hasLayer(labelsLayer)) map.removeLayer(labelsLayer);
+
+    if (k === 'hybrid') {
+      activeBase = baseLayers.sat;
+      activeBase.addTo(map);
+      labelsLayer.addTo(map);
+    } else {
+      activeBase = baseLayers[k];
+      activeBase.addTo(map);
+    }
+  });
+});
+
+// ===== JUMP-BAR (mobile) =====
+const jumpBar = document.getElementById('jumpBar');
+TRIP_DATA.forEach(d => {
+  const btn = document.createElement('button');
+  btn.className = 'jump-chip';
+  btn.style.borderColor = TIER_CFG[d.tier].color;
+  btn.style.color = TIER_CFG[d.tier].color;
+  btn.style.background = 'rgba(255,255,255,0.08)';
+  btn.textContent = d.label;
+  btn.addEventListener('click', () => {
+    const layer = polygonLayers[d.name];
+    if (layer) {
+      map.flyTo(d.center, 13, {duration: 0.7});
+      setTimeout(() => layer.openPopup(), 700);
+    }
+  });
+  jumpBar.appendChild(btn);
+});
+
+// ===== GEOLOCATE =====
+const geoBtn = document.getElementById('geoBtn');
+let meMarker = null;
+geoBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) { alert('Геолокация не поддерживается'); return; }
+  geoBtn.classList.add('locating');
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const ll = [pos.coords.latitude, pos.coords.longitude];
+      if (meMarker) map.removeLayer(meMarker);
+      meMarker = L.circleMarker(ll, {
+        radius: 10, color:'#FFC800', weight:3, fillColor:'#FFC800', fillOpacity:0.7,
+        className: 'me-pulse',
+      }).bindPopup(`<b>Вы тут</b><br>${fmtCoord(ll[0], ll[1])}<br>точность ±${Math.round(pos.coords.accuracy)} м`).addTo(map);
+      map.flyTo(ll, 14, {duration: 0.8});
+      geoBtn.classList.remove('locating');
+    },
+    (err) => {
+      alert('Ошибка геолокации: ' + err.message);
+      geoBtn.classList.remove('locating');
+    },
+    {enableHighAccuracy: true, timeout: 12000}
+  );
+});
+
+// ===== HASH NAVIGATION =====
+function handleHash() {
+  const h = location.hash.slice(1);
+  if (!h) return;
+  const layer = polygonLayers[h];
+  const d = TRIP_DATA.find(x => x.name === h);
+  if (layer && d) {
+    map.flyTo(d.center, 13, {duration: 0.5});
+    setTimeout(() => layer.openPopup(), 500);
+  }
+}
+window.addEventListener('hashchange', handleHash);
+setTimeout(handleHash, 800);
+</script>
+</body>
+</html>
