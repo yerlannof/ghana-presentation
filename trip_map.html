@@ -503,10 +503,10 @@ document.getElementById('togglePoints').addEventListener('click', function() {
 });
 
 // ===== LAYER SWITCHER =====
-document.querySelectorAll('.layer-btn').forEach(btn => {
+document.querySelectorAll('.layer-btn[data-layer]').forEach(btn => {
   btn.addEventListener('click', () => {
     const k = btn.dataset.layer;
-    document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.layer-btn[data-layer]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
     if (map.hasLayer(activeBase)) map.removeLayer(activeBase);
