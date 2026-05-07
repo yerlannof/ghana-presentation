@@ -93,6 +93,10 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--ink);color
 .pop-actions a{flex:1;padding:7px 10px;border-radius:7px;text-align:center;text-decoration:none;font-size:11px;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--ink);}
 .pop-actions a.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
 
+.doc-link{display:block;padding:7px 10px;margin-top:5px;background:#fff;border:1px solid var(--line);border-radius:7px;font-size:12px;color:var(--accent);text-decoration:none;line-height:1.3;font-weight:500;transition:all 0.12s;}
+.doc-link:first-of-type{margin-top:0;}
+.doc-link:hover,.doc-link:active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
 /* Mobile bottom-sheet popup */
 @media (max-width:600px){
   .leaflet-popup-content{width:calc(100vw - 60px) !important;max-width:320px;}
@@ -191,6 +195,37 @@ const COORD_CFG = {
   "approximate":       {badge:"approx", text:"Прикидочные координаты"},
 };
 
+// PDF документы для каждой концессии (в /docs/)
+const DOCS = {
+  "fgm_birim_north": [],
+  "amenam": [{f:"amenam_feasibility_study.pdf", t:"Amenam FS (Ignite Machinery, 109pp)"}],
+  "oworam": [{f:"oworam_feasibility_study.pdf", t:"Oworam FS (Ignite Machinery, 107pp)"}],
+  "akim_apapam": [
+    {f:"akim_apapam_hujak_feasibility.pdf", t:"Hujak FS Akim Apapam (126pp)"},
+    {f:"akim_apapam_dated.pdf", t:"Akim Apapam — dated agreement"},
+    {f:"hudak_mining.pdf", t:"Hudak Mining (related entity)"},
+  ],
+  "mg_emmanuel_afosu": [{f:"mg_emmanuel.pdf", t:"MG Emmanuel — work programme"}],
+  "bodukwan_moseaso": [
+    {f:"bodukwan_field_report.pdf", t:"Bodukwan field report"},
+    {f:"bodukwan_ashkenazi_2025-04.pdf", t:"Ashkenazi report (apr 2025)"},
+    {f:"bodukwan_regulator_memo.pdf", t:"Memo от регулятора (Michael Kotoka)"},
+    {f:"heavy_mineral_petrography.pdf", t:"Heavy mineral & petrography"},
+  ],
+  "obomeng": [],
+  "pemeso_aspire": [{f:"grey_dew_pemeso_merged.pdf", t:"Pemeso/Grey Dew merged FS"}],
+  "grey_dew_prestea": [{f:"grey_dew_pemeso_merged.pdf", t:"Pemeso/Grey Dew merged FS"}],
+};
+
+// Дополнительные общие документы
+const GLOBAL_DOCS = [
+  {f:"spravka_partner_mukhtar.pdf", t:"Справка по партнёру Mukhtar"},
+  {f:"adb_bank.pdf", t:"Adb bank (банковский документ)"},
+  {f:"luduchris_mining.pdf", t:"Luduchris Mining (related)"},
+  {f:"oce1.pdf", t:"OCE1"},
+  {f:"a4coa_km26078748_280285-133200318.pdf", t:"A4COA KM26078748"},
+];
+
 // ===== MAP INIT =====
 const map = L.map('map', {
   center: [6.2, -1.5],
@@ -253,6 +288,16 @@ function popupHtml(d) {
   const assaysCls = d.n_assays > 0 ? '' : 'mute';
   const wazeUrl = `https://www.waze.com/ul?ll=${d.center[0]},${d.center[1]}&navigate=yes`;
   const gmapsUrl = `https://www.google.com/maps?q=${d.center[0]},${d.center[1]}&z=14`;
+  const docs = DOCS[d.name] || [];
+  const docsHtml = docs.length ? `
+      <div class="pop-section">
+        <h4>📄 Документы (${docs.length})</h4>
+        ${docs.map(doc => `<a href="docs/${doc.f}" target="_blank" class="doc-link">${doc.t} ↗</a>`).join('')}
+      </div>` : `
+      <div class="pop-section">
+        <h4>📄 Документы</h4>
+        <p style="color:var(--ink-mute);font-style:italic;">Нет PDF от продавца — запросить.</p>
+      </div>`;
   return `
     <div class="pop">
       <div class="pop-head">
@@ -275,6 +320,7 @@ function popupHtml(d) {
         <h4>Что искать на земле</h4>
         <p>${d.field_check}</p>
       </div>
+      ${docsHtml}
       <div class="pop-actions">
         <a href="${gmapsUrl}" target="_blank" class="primary">Google Maps ↗</a>
         <a href="${wazeUrl}" target="_blank">Waze ↗</a>
