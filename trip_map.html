@@ -475,7 +475,10 @@ function applyFilter() {
   document.getElementById('s-shown').textContent = visible.length;
   document.getElementById('s-area').textContent = visible.reduce((a,d) => a + d.area_km2, 0).toFixed(1);
   document.getElementById('s-galamsey').textContent = visible.reduce((a,d) => a + d.galamsey_ha, 0).toFixed(0);
-  document.getElementById('s-assays').textContent = visible.reduce((a,d) => a + d.n_assays, 0);
+  const visibleNames = visible.map(d => d.name);
+  const visiblePoints = SAMPLE_POINTS.filter(p => visibleNames.includes(p.c));
+  document.getElementById('s-points').textContent = visiblePoints.length;
+  document.getElementById('s-max').textContent = visiblePoints.length ? Math.max(...visiblePoints.map(p => p.g)).toFixed(2) : '—';
 }
 
 document.querySelectorAll('.fchip').forEach(btn => {
