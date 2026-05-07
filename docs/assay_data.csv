@@ -1,0 +1,348 @@
+concession,sample_id,sample_type,grade_g_t,depth_m,page,source_pdf,notes
+akim_apapam,KP1,test_pit,0.29,2.9,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP2,test_pit,0.27,1.0,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP3,test_pit,0.95,2.2,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP4,test_pit,0.25,3.0,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP5,test_pit,0.21,3.15,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP6,test_pit,0.8,2.3,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP7,test_pit,0.86,2.4,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP8,test_pit,0.57,3.2,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP9,test_pit,0.67,1.6,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP10,test_pit,0.49,3.4,41,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; phase1 preliminary
+akim_apapam,KP1,test_pit,0.29,5.3,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP2,test_pit,0.27,4.8,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP3,test_pit,0.95,3.7,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP4,test_pit,0.25,3.0,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP5,test_pit,0.21,4.06,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP6,test_pit,0.8,3.7,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP7,test_pit,0.86,3.5,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP8,test_pit,0.57,4.3,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP9,test_pit,0.67,4.2,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP10,test_pit,0.49,4.4,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP11,test_pit,0.32,5.0,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP12,test_pit,0.76,6.01,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP13,test_pit,0.19,3.3,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP14,test_pit,0.95,4.7,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP15,test_pit,0.76,7.18,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP16,test_pit,0.19,6.58,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP17,test_pit,0.19,2.59,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP18,test_pit,0.06,2.55,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP19,test_pit,0.32,2.0,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP20,test_pit,0.29,3.7,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP21,test_pit,0.45,2.2,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP22,test_pit,0.52,3.1,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP23,test_pit,0.19,2.1,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP24,test_pit,0.59,2.8,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP25,test_pit,0.61,2.9,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP26,test_pit,0.57,2.3,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP27,test_pit,0.41,2.9,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP28,test_pit,0.65,4.5,122,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP37,test_pit,0.4,2.4,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP38,test_pit,0.57,2.6,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP39,test_pit,0.21,4.8,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP40,test_pit,0.19,3.38,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP41,test_pit,0.73,3.6,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP42,test_pit,0.76,2.8,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP43,test_pit,0.83,3.0,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP44,test_pit,0.57,2.5,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP45,test_pit,0.48,1.6,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP46,test_pit,0.25,1.6,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP47,test_pit,0.61,1.4,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP48,test_pit,0.76,0.9,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP49,test_pit,0.95,1.3,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP50,test_pit,0.78,2.4,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP51,test_pit,0.48,2.7,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP52,test_pit,0.63,3.3,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP53,test_pit,0.65,3.6,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP54,test_pit,0.32,2.0,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP55,test_pit,0.62,2.0,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP56,test_pit,0.57,5.25,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP57,test_pit,0.19,2.0,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP58,test_pit,0.57,1.3,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP59,test_pit,0.48,1.6,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP60,test_pit,0.19,3.1,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP61,test_pit,0.19,2.2,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP62,test_pit,0.19,2.1,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP63,test_pit,0.19,1.85,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP64,test_pit,0.29,3.3,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP65,test_pit,0.24,2.1,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP66,test_pit,0.42,2.5,123,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP76,test_pit,0.21,3.2,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP77,test_pit,0.21,2.5,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP78,test_pit,0.19,2.2,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP79,test_pit,0.21,3.1,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP80,test_pit,0.19,1.8,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP81,test_pit,0.7,1.5,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP82,test_pit,0.19,1.6,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP83,test_pit,0.1,1.8,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP84,test_pit,0.27,2.6,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP85,test_pit,0.38,2.4,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP86,test_pit,0.19,4.6,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP87,test_pit,0.19,2.5,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP88,test_pit,0.38,4.1,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP89,test_pit,0.57,2.2,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP90,test_pit,0.19,2.5,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP91,test_pit,0.19,2.3,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP92,test_pit,0.36,2.6,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP93,test_pit,0.19,1.4,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP94,test_pit,0.19,2.1,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP95,test_pit,0.19,1.6,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP96,test_pit,0.4,1.2,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP97,test_pit,0.19,1.5,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP98,test_pit,0.76,1.2,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP99,test_pit,0.19,1.8,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP100,test_pit,0.95,1.8,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP101,test_pit,0.57,1.2,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP102,test_pit,0.46,4.8,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP103,test_pit,0.48,1.4,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP104,test_pit,0.38,1.5,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP105,test_pit,0.19,0.8,124,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP115,test_pit,0.84,5.3,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP116,test_pit,0.75,1.8,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP117,test_pit,0.84,4.4,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP118,test_pit,0.61,2.2,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP119,test_pit,0.4,2.3,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP120,test_pit,0.87,1.65,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP121,test_pit,0.25,2.7,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP122,test_pit,0.19,1.0,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP123,test_pit,0.52,2.6,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP124,test_pit,0.38,1.7,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP125,test_pit,0.65,4.65,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP126,test_pit,0.35,1.8,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP127,test_pit,0.86,4.42,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP128,test_pit,0.26,1.6,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP129,test_pit,0.62,1.6,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP130,test_pit,0.59,2.18,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP131,test_pit,0.8,2.3,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP132,test_pit,0.51,1.2,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP133,test_pit,0.26,3.5,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP134,test_pit,0.19,2.7,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP135,test_pit,0.58,5.1,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP136,test_pit,0.65,2.8,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP137,test_pit,0.56,5.0,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP138,test_pit,0.82,3.9,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP139,test_pit,0.61,2.1,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP140,test_pit,0.75,4.4,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP141,test_pit,0.51,3.1,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,KP142,test_pit,0.52,4.85,125,Hujak Mining Company Ltd-Akim Apapam_Feasibility_Report-23072025.pdf,g/m3; appendix1
+akim_apapam,T1,ALS_bulk_sample,7.79,,1,KM26078748.csv / A4COA_KM26078748_280285-133200318.pdf,ALS Ghana KM26078748 March 2026; ppm=g/t Au
+akim_apapam,T2,ALS_bulk_sample,8.21,,1,KM26078748.csv / A4COA_KM26078748_280285-133200318.pdf,ALS Ghana KM26078748 March 2026; ppm=g/t Au
+akim_apapam,S1,ALS_bulk_sample,6.9,,1,KM26078748.csv / A4COA_KM26078748_280285-133200318.pdf,ALS Ghana KM26078748 March 2026; ppm=g/t Au
+akim_apapam,S2,ALS_bulk_sample,7.89,,1,KM26078748.csv / A4COA_KM26078748_280285-133200318.pdf,ALS Ghana KM26078748 March 2026; ppm=g/t Au
+akim_apapam,S3,ALS_bulk_sample,8.7,,1,KM26078748.csv / A4COA_KM26078748_280285-133200318.pdf,ALS Ghana KM26078748 March 2026; ppm=g/t Au
+akim_apapam,S4,ALS_bulk_sample,9.03,,1,KM26078748.csv / A4COA_KM26078748_280285-133200318.pdf,ALS Ghana KM26078748 March 2026; ppm=g/t Au
+amenam,AMPIT001,test_pit,0.79,7.3,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT002,test_pit,0.44,2.2,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT003,test_pit,1.0,2.1,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT004,test_pit,1.6,7.1,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT005,test_pit,0.1,8.1,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT006,test_pit,0.55,7.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT007,test_pit,0.0,0.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT008,test_pit,0.53,6.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT009,test_pit,0.51,5.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT010,test_pit,0.61,7.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT011,test_pit,1.13,7.4,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT012,test_pit,0.2,6.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT013,test_pit,1.37,1.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT014,test_pit,0.2,3.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT015,test_pit,0.79,6.1,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT016,test_pit,0.44,7.7,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT017,test_pit,1.3,1.6,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT018,test_pit,1.6,6.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT019,test_pit,0.71,2.3,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT020,test_pit,0.91,6.2,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT021,test_pit,1.6,0.22,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT022,test_pit,0.71,8.4,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT023,test_pit,0.15,7.2,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT024,test_pit,0.11,6.22,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT025,test_pit,0.53,6.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT026,test_pit,1.0,7.3,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT027,test_pit,0.79,5.4,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT028,test_pit,1.37,2.1,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT029,test_pit,0.54,6.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT030,test_pit,0.79,2.2,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT031,test_pit,0.2,2.3,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT032,test_pit,0.4,7.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT033,test_pit,1.6,6.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT034,test_pit,1.45,7.6,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT035,test_pit,0.0,4.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT036,test_pit,1.11,4.82,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT037,test_pit,1.43,7.6,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT038,test_pit,0.56,7.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT039,test_pit,3.45,1.22,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT040,test_pit,0.99,2.1,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT041,test_pit,1.45,6.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT042,test_pit,0.81,7.7,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT043,test_pit,1.11,5.7,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT044,test_pit,0.3,5.3,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT045,test_pit,1.41,2.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT046,test_pit,0.46,2.7,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT047,test_pit,0.54,3.7,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT048,test_pit,0.9,6.4,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT049,test_pit,0.8,6.6,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT050,test_pit,0.5,2.2,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT051,test_pit,0.0,6.7,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT052,test_pit,0.2,3.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT053,test_pit,1.1,7.3,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT054,test_pit,1.4,7.2,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT055,test_pit,0.67,7.6,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT056,test_pit,0.9,3.3,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT057,test_pit,1.2,7.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT058,test_pit,1.4,7.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT059,test_pit,0.1,3.2,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT060,test_pit,1.11,1.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT061,test_pit,0.4,4.4,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT062,test_pit,1.15,7.4,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT063,test_pit,4.11,2.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT064,test_pit,0.7,2.4,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT065,test_pit,0.0,1.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT066,test_pit,0.1,1.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT067,test_pit,0.5,2.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT068,test_pit,0.0,7.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT069,test_pit,0.0,7.3,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT070,test_pit,0.0,5.6,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT071,test_pit,0.0,6.92,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT072,test_pit,0.0,7.2,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT073,test_pit,0.0,5.6,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT074,test_pit,0.5,6.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT075,test_pit,0.0,3.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT076,test_pit,0.06,7.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT077,test_pit,0.2,6.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT078,test_pit,0.46,0.22,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT079,test_pit,1.2,2.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT080,test_pit,0.4,7.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT081,test_pit,1.9,5.7,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT082,test_pit,0.5,2.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT083,test_pit,0.9,6.1,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT084,test_pit,1.34,7.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT085,test_pit,0.6,5.1,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT086,test_pit,0.0,2.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT087,test_pit,0.85,7.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT088,test_pit,0.56,4.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT089,test_pit,0.0,0.0,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT090,test_pit,0.85,8.6,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT091,test_pit,3.1,4.4,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT092,test_pit,0.73,1.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT093,test_pit,1.5,7.8,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT094,test_pit,1.17,6.5,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+amenam,AMPIT095,test_pit,1.4,6.9,106-109,AMENAM FEASIBILITY STUDY REPORT_ IGNITE MACHINERY RENTALS & MINING LIMITED - AMENAM CONCESSION211025.pdf,g/m3; UTM30N
+oworam,OWPT001,test_pit,0.81,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT002,test_pit,0.74,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT003,test_pit,0.53,2.6,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT004,test_pit,0.7,2.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT005,test_pit,0.47,1.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT006,test_pit,0.58,2.1,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT007,test_pit,0.85,2.4,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT008,test_pit,0.62,2.4,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT009,test_pit,0.76,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT010,test_pit,0.52,1.7,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT011,test_pit,0.46,1.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT012,test_pit,0.39,1.7,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT013,test_pit,0.59,1.7,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT014,test_pit,0.46,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT015,test_pit,0.64,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT016,test_pit,0.18,2.1,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT017,test_pit,0.2,3.1,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT018,test_pit,0.19,2.7,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT019,test_pit,0.81,2.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT020,test_pit,0.19,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT021,test_pit,0.2,2.6,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT022,test_pit,0.17,2.4,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT023,test_pit,1.2,2.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT024,test_pit,0.19,2.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT025,test_pit,0.76,2.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT026,test_pit,0.21,3.3,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT027,test_pit,0.2,3.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT028,test_pit,0.9,3.3,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT029,test_pit,0.98,3.2,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT030,test_pit,1.1,2.3,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT031,test_pit,0.0,1.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT032,test_pit,0.0,1.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT033,test_pit,1.51,3.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT034,test_pit,1.01,2.2,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT035,test_pit,0.0,2.1,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT036,test_pit,1.12,1.6,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT037,test_pit,1.03,1.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT038,test_pit,1.46,2.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT039,test_pit,0.81,3.6,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT040,test_pit,0.74,1.7,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT041,test_pit,0.96,2.62,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT042,test_pit,0.0,3.2,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT043,test_pit,0.47,3.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT044,test_pit,0.0,3.2,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT045,test_pit,0.81,3.2,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT046,test_pit,0.72,3.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT047,test_pit,0.0,3.3,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT048,test_pit,0.54,2.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT049,test_pit,0.94,2.6,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT050,test_pit,0.63,3.2,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT051,test_pit,0.6,2.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT052,test_pit,0.8,3.7,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT053,test_pit,0.9,2.4,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT054,test_pit,0.16,2.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT055,test_pit,0.6,2.4,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT056,test_pit,0.7,2.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT057,test_pit,0.87,2.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT058,test_pit,0.93,2.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT059,test_pit,0.91,3.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT060,test_pit,1.02,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT061,test_pit,0.82,3.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT062,test_pit,1.22,3.51,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT063,test_pit,0.91,3.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT064,test_pit,0.67,3.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT065,test_pit,0.72,3.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT066,test_pit,0.86,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT067,test_pit,0.29,3.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT068,test_pit,0.82,3.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT069,test_pit,0.51,2.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT070,test_pit,1.6,4.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT071,test_pit,0.61,3.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT072,test_pit,0.8,2.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT073,test_pit,0.29,3.4,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT074,test_pit,0.1,3.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT075,test_pit,0.62,2.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT076,test_pit,0.71,2.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT077,test_pit,1.0,2.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT078,test_pit,0.77,2.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT079,test_pit,0.5,2.6,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT080,test_pit,1.0,3.3,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT081,test_pit,0.0,3.1,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT082,test_pit,0.0,1.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT083,test_pit,0.78,2.9,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT084,test_pit,0.11,2.8,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT085,test_pit,0.82,2.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT086,test_pit,0.07,3.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT087,test_pit,0.93,2.0,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT088,test_pit,0.95,3.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT089,test_pit,1.15,2.51,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT090,test_pit,1.05,3.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT091,test_pit,0.64,3.7,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT092,test_pit,0.0,3.1,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT093,test_pit,0.82,2.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+oworam,OWPT094,test_pit,0.0,3.5,104-107,FEASIBILITY STUDY REPORT_ OWORAM GOLD PROJECT _IGNITE MACHINERY_080126.pdf,g/m3; UTM30N AYENSU grid
+bodukwan_moseaso,25MOCH001,channel_sample,0.14,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Moseaso_Channel; March-April 2025 campaign
+bodukwan_moseaso,25MOCH002,channel_sample,18.26,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Moseaso_Channel; March-April 2025 campaign
+bodukwan_moseaso,25MOCH003,channel_sample,0.5,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Moseaso_Channel; March-April 2025 campaign
+bodukwan_moseaso,25MOCH005,channel_sample,0.18,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Moseaso_Channel; March-April 2025 campaign
+bodukwan_moseaso,25ATL009,grab_sample,0.13,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Atobrakrom_Crossline; March-April 2025 campaign
+bodukwan_moseaso,25AGL006,grab_sample,0.21,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Agroyesum_Crossline; March-April 2025 campaign
+bodukwan_moseaso,25OCAG002,grab_sample,0.26,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Outside_Concession; March-April 2025 campaign
+bodukwan_moseaso,25ATCH009,channel_sample,0.08,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Atobrahkrom_Channel; March-April 2025 campaign
+bodukwan_moseaso,25ATCH010,channel_sample,0.07,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Atobrahkrom_Channel; March-April 2025 campaign
+bodukwan_moseaso,25OCAG006,grab_sample,0.07,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Outside_Concession; March-April 2025 campaign
+bodukwan_moseaso,25BOAG002,auger_sample,0.09,,5-6,Bodukwan Ashkenazi April 2025 Report.pdf,mg/kg=g/t; location=Boni_Auger; March-April 2025 campaign
+pemeso_aspire,PE-001,soil_sample,1.2,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=1200 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-002,soil_sample,0.78,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=780 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-003,soil_sample,0.65,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=650 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-004,soil_sample,0.54,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=540 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-005,soil_sample,0.43,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=430 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-006,soil_sample,0.38,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=380 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-007,soil_sample,0.32,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=320 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-008,soil_sample,0.29,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=290 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-009,soil_sample,0.25,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=250 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-010,soil_sample,0.21,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=210 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-011,soil_sample,0.19,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=190 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-012,soil_sample,0.17,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=170 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-013,soil_sample,0.16,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=160 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-014,soil_sample,0.14,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=140 ppb soil; coords approximate from scanned table; UTM30N
+pemeso_aspire,PE-015,soil_sample,0.13,0.4,17-20,pemeso_grey_dew_summary.md (extracted from grey_dew_pemeso_merged.pdf),Au=130 ppb soil; coords approximate from scanned table; UTM30N
